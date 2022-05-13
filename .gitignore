@@ -5,6 +5,7 @@
 /tmp/*
 /vendor/*
 /composer.lock
+/webroot/img/perfil/*
 
 # OS generated files #
 ######################
@@ -51,3 +52,5 @@ nbproject/*
 # yarn
 yarn-debug.log
 yarn-error.log
+
+

@@ -92,27 +92,23 @@ class ClienteTable extends Table
             ->notEmptyString('clave');
 
         $validator
-            ->scalar('imagen_perfil')
-            ->maxLength('imagen_perfil', 500)
-            ->allowEmptyFile('imagen_perfil');
-
-        $validator
             ->scalar('tel')
             ->maxLength('tel', 9)
             ->allowEmptyString('tel');
 
         $validator
-            ->allowEmptyFile('imagen_perfil')
+            ->scalar('imagen_perfil')
             ->add('imagen_perfil', [
                 'mimeType' => [
-                    'rule' => ['mimeType', ['image/jpeg', 'image/png']],
-                    'message' => 'Solo se aceptan imagenes jpg y png',
+                    'rule' => ['mimeType', ['image/jpeg', 'image/png', 'image/jpg']],
+                    'message' => 'Solo se aceptan imagenes jpg, jpeg y png',
                 ],
                 'fileSize' => [
-                    'rule' => ['fileSize', '<=', '1MB'],
-                    'message' => 'La imagen debe ser menor a 1MB',
+                    'rule' => ['fileSize', '<=', '2MB'],
+                    'message' => 'La imagen debe ser menor a 2MB',
                 ],
-            ]);
+            ])
+            ->allowEmptyFile('imagen_perfil');
 
         return $validator;
     }
