@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Auth\DefaultPasswordHasher as AuthDefaultPasswordHasher;
 
 /**
  * Cliente Entity
@@ -44,4 +45,12 @@ class Cliente extends Entity
         'lista_negra' => true,
         'reserva' => true,
     ];
+
+
+    protected function _setClave(string $clave) : ?string
+    {
+        if (strlen($clave) > 0) {
+            return (new AuthDefaultPasswordHasher())->hash($clave);
+        }
+    }
 }
