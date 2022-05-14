@@ -22,6 +22,7 @@ class BarberoController extends AppController
         $barbero = $this->paginate($this->Barbero);
 
         $this->set(compact('barbero'));
+        $this->set('_serialize', ['barbero']);
     }
 
     /**
