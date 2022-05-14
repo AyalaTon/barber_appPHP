@@ -92,12 +92,16 @@ class ClienteTable extends Table
             ->notEmptyString('clave');
 
         $validator
+            ->sameAs('confirmar_clave', 'clave', 'Las contraseñas no coinciden!');
+
+        $validator
             ->scalar('tel')
             ->maxLength('tel', 9)
             ->allowEmptyString('tel');
-
-        $validator
+        
+            $validator
             ->scalar('imagen_perfil')
+            ->allowEmptyFile('imagen_perfil')
             ->add('imagen_perfil', [
                 'mimeType' => [
                     'rule' => ['mimeType', ['image/jpeg', 'image/png', 'image/jpg']],
@@ -107,8 +111,7 @@ class ClienteTable extends Table
                     'rule' => ['fileSize', '<=', '2MB'],
                     'message' => 'La imagen debe ser menor a 2MB',
                 ],
-            ])
-            ->allowEmptyFile('imagen_perfil');
+            ]);
 
         return $validator;
     }
