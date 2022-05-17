@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -96,6 +97,9 @@ class BarberoTable extends Table
             ->maxLength('clave', 18)
             ->requirePresence('clave', 'create')
             ->notEmptyString('clave');
+
+        $validator
+            ->sameAs('confirmar_clave', 'clave', 'Las contraseñas no coinciden!');
 
         $validator
             ->scalar('imagen_perfil')
