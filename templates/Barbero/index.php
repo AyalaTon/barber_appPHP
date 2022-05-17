@@ -1,10 +1,14 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Barbero[]|\Cake\Collection\CollectionInterface $barbero
  */
 ?>
 <div class="barbero index content">
+
+    <?= $this->Html->link(__('Logout'), ['action' => 'logout'], ['class' => 'button float-right']) ?>
+
     <?= $this->Html->link(__('New Barbero'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Barbero') ?></h3>
     <div class="table-responsive">
@@ -22,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($barbero as $barbero): ?>
+                <?php foreach ($barbero as $barbero) : ?>
                 <tr>
                     <td><?= $this->Number->format($barbero->id) ?></td>
                     <td><?= h($barbero->usuario) ?></td>
@@ -49,6 +53,7 @@
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+        </p>
     </div>
 </div>

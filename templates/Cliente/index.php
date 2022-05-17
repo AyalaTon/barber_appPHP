@@ -1,10 +1,13 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Cliente[]|\Cake\Collection\CollectionInterface $cliente
  */
 ?>
 <div class="cliente index content">
+    <?= $this->Html->link(__('Logout'), ['action' => 'logout'], ['class' => 'button float-right']) ?>
+
     <?= $this->Html->link(__('New Cliente'), ['action' => 'add'], ['class' => 'button float-right']) ?>
     <h3><?= __('Cliente') ?></h3>
     <div class="table-responsive">
@@ -22,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($cliente as $cliente): ?>
+                <?php foreach ($cliente as $cliente) : ?>
                 <tr>
                     <td><?= $this->Number->format($cliente->id) ?></td>
                     <td><?= h($cliente->usuario) ?></td>
@@ -49,6 +52,7 @@
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+        </p>
     </div>
 </div>

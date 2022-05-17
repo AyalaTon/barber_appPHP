@@ -90,11 +90,13 @@ endif;
                         Accede a nuestro sitio web para realizar tus reservas
                     </h2>
                 </div>
-                <!-- <div class="row" style="display: flex; justify-content:center;">
-                    <?= $this->Html->link(__('Soy Cliente'), ['cliente/action' => 'login'], ['class' => 'button']) ?>
-                </div> -->
+
+
                 <div class="row" style="display: flex; justify-content:center;">
-                    <?= $this->Html->link(__('iniciar sesion'), array('controller' => 'Barbero', 'action' => 'login'), ['class' => 'button']) ?>
+                    <?= $this->Html->link(__('Soy Cliente'), array('controller' => 'Cliente', 'action' => 'login'), ['class' => 'button']) ?>
+                </div>
+                <div class="row" style="display: flex; justify-content:center;">
+                    <?= $this->Html->link(__('Soy Barbero'), array('controller' => 'Barbero', 'action' => 'login'), ['class' => 'button']) ?>
                 </div>
                 <div class="row" style="display: flex; justify-content:center;">
                     <?= $this->Html->link(__('Registrarme como Cliente'), array('controller' => 'cliente', 'action' => 'registrar'), ['class' => 'button button-outline']) ?>
