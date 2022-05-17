@@ -52,7 +52,9 @@ return static function (RouteBuilder $routes) {
          * to use (in this case, templates/Pages/home.php)...
          */
         // !importente, este es el original
-        $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        // $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
+        
+        $builder->connect('/', ['controller' => 'Pages', 'action' => 'displayHomePage']);
 
         // esta es una posible version
         // $builder->connect("/", ["controller" => "Site", "action" => "index"]);

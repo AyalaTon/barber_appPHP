@@ -6,6 +6,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\Auth\DefaultPasswordHasher as AuthDefaultPasswordHasher;
+// use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 /**
  * Barbero Entity

@@ -36,6 +36,7 @@ return [
      */
     'Datasources' => [
         'default' => [
+            // 'host' => 'us-cdbr-east-05.cleardb.net',
             'host' => 'us-cdbr-east-05.cleardb.net',
             /*
              * CakePHP will use the default DB port based on the driver selected
