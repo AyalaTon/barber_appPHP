@@ -104,4 +104,20 @@ class BarbershopController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function agregar()
+    {
+        $barbershop = $this->Barbershop->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $barbershop = $this->Barbershop->patchEntity($barbershop, $this->request->getData());
+            if ($this->Barbershop->save($barbershop)) {
+                $this->Flash->success(__('The barbershop has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The barbershop could not be saved. Please, try again.'));
+        }
+        $barbero = (int)$_SESSION['Auth']['id'];
+        $this->set(compact('barbershop', 'barbero'));
+    }
 }

@@ -7,6 +7,8 @@
 ?>
 <div class="barbero index content">
 
+    <?= $this->Html->link(__('Agregar Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar'), ['class' => 'button float-right']) ?>
+
     <?= $this->Html->link(__('Logout'), ['action' => 'logout'], ['class' => 'button float-right']) ?>
 
     <?= $this->Html->link(__('New Barbero'), ['action' => 'add'], ['class' => 'button float-right']) ?>

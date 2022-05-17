@@ -24,10 +24,12 @@
                     echo $this->Form->control('email');
                     echo $this->Form->control('website');
                     echo $this->Form->control('habilitado');
-                    echo $this->Form->control('barbero._ids', ['options' => $barbero]);
+                    //echo $this->Form->control('barbero._ids', ['options' => $barbero]);
+                    echo $this->Form->control('barbero',array('default'=>$barbero, 'disabled' => 'disabled'));
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Html->link(__('Volver'), array('controller' => 'Barbero', 'action' => 'index'), ['class' => 'button']) ?>
+            <?= $this->Form->button(__('Agregar')) ?>
             <?= $this->Form->end() ?>
         </div>
     </div>
