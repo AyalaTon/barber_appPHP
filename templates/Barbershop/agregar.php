@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Barbershop $barbershop
@@ -18,15 +19,19 @@
             <fieldset>
                 <legend><?= __('Add Barbershop') ?></legend>
                 <?php
-                    echo $this->Form->control('nombre');
-                    echo $this->Form->control('direccion');
-                    echo $this->Form->control('tel');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('website');
-                    echo $this->Form->control('habilitado');
-                    //echo $this->Form->control('barbero._ids', ['options' => $barbero]);
-                    echo $this->Form->control('barbero',array('default'=>$barbero, 'disabled' => 'disabled'));
+                echo $this->Form->control('nombre');
+                echo $this->Form->control('direccion');
+                echo $this->Form->control('tel');
+                echo $this->Form->control('email');
+                echo $this->Form->control('website');
+                echo $this->Form->control('habilitado');
                 ?>
+                <div hidden>
+                    <?php
+                    echo $this->Form->control('barbero._ids', ['options' => $barbero, 'default' => $barberoLogeado]);
+                    ?>
+                </div>
+
             </fieldset>
             <?= $this->Html->link(__('Volver'), array('controller' => 'Barbero', 'action' => 'index'), ['class' => 'button']) ?>
             <?= $this->Form->button(__('Agregar')) ?>

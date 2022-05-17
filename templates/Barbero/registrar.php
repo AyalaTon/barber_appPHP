@@ -13,9 +13,15 @@
             echo $this->Form->control('confirmar_clave', ['type' => 'password']);
             echo $this->Form->control('imagen_perfil', ['type' => 'file']);
             echo $this->Form->control('tel');
-            echo $this->Form->control('barbershop._ids', ['options' => $barbershop]);
-            echo $this->Form->submit('Registrar', array('class' => 'button'));
             ?>
+            <div hidden>
+                <?php
+                echo $this->Form->control('barbershop._ids', ['options' => $barbershop]);
+                ?>
+            </div>
+
+            <?php echo $this->Form->submit('Registrar', array('class' => 'button'));?>
+
         </fieldset>
         <?= $this->Form->end() ?>
     </div>

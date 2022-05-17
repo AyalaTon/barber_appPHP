@@ -117,7 +117,8 @@ class BarbershopController extends AppController
             }
             $this->Flash->error(__('The barbershop could not be saved. Please, try again.'));
         }
-        $barbero = (int)$_SESSION['Auth']['id'];
-        $this->set(compact('barbershop', 'barbero'));
+        $barbero = $this->Barbershop->Barbero->find('list', ['limit' => 200])->all();
+        $barberoLogeado = (int)$_SESSION['Auth']['id'];
+        $this->set(compact('barbershop', 'barbero','barberoLogeado'));
     }
 }
