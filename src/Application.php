@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use Cake\Core\Configure;
@@ -145,45 +147,35 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        debug($request);
-        exit;
-        if ($request->prefix == 'Barbero') {
-                $authenticationService = new AuthenticationService([
-                    'unauthenticatedRedirect' => Router::url('/barbero/login'),
-                    'queryParam' => 'redirect',
-                ]);
+        if ($request->getAttributes()['params']['controller'] == 'Barbero') {
+            $authenticationService = new AuthenticationService([
+                'unauthenticatedRedirect' => Router::url('/barbero/login'),
+                'queryParam' => 'redirect',
+            ]);
 
-                // Load identifiers, ensure we check email and password fields
-                $authenticationService->loadIdentifier('Authentication.Password', [
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'clave',
-                    ],
-                    'resolver'=>[
-                        'className'=>'Authentication.Orm',
-                        'userModel' => 'Barbero',
-                        // 'userModel' => 'Cliente' || 'Barbero',
-                    ],
-                    // 'resolver'=>[
-                    //     'className'=>'Authentication.Orm',
-                    //     'userModel' => 'Cliente',
-                    //     // 'userModel' => 'Cliente' || 'Barbero',
-                    // ],
-                ]);
-                
-                // Load the authenticators, you want session first
-                $authenticationService->loadAuthenticator('Authentication.Session');
-                // Configure form data check to pick email and password
-                $authenticationService->loadAuthenticator('Authentication.Form', [
-                    'fields' => [
-                        'username' => 'email',
-                        'password' => 'clave',
-                    ],
-                    // 'userModel' => 'Barbero',
-                    // 'loginUrl' => Router::url('/barbero/login'),
-                ]);
+            // Load identifiers, ensure we check email and password fields
+            $authenticationService->loadIdentifier('Authentication.Password', [
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'clave',
+                ],
+                'resolver' => [
+                    'className' => 'Authentication.Orm',
+                    'userModel' => 'Barbero',
+                ],
+            ]);
 
-                return $authenticationService;
+            // Load the authenticators, you want session first
+            $authenticationService->loadAuthenticator('Authentication.Session');
+            // Configure form data check to pick email and password
+            $authenticationService->loadAuthenticator('Authentication.Form', [
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'clave',
+                ],
+            ]);
+
+            return $authenticationService;
         } else {
             $authenticationService = new AuthenticationService([
                 'unauthenticatedRedirect' => Router::url('/cliente/login'),
@@ -196,18 +188,13 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                     'username' => 'email',
                     'password' => 'clave',
                 ],
-                'resolver'=>[
-                    'className'=>'Authentication.Orm',
+                'resolver' => [
+                    'className' => 'Authentication.Orm',
                     'userModel' => 'Cliente',
                     // 'userModel' => 'Cliente' || 'Barbero',
                 ],
-                // 'resolver'=>[
-                //     'className'=>'Authentication.Orm',
-                //     'userModel' => 'Cliente',
-                //     // 'userModel' => 'Cliente' || 'Barbero',
-                // ],
             ]);
-            
+
             // Load the authenticators, you want session first
             $authenticationService->loadAuthenticator('Authentication.Session');
             // Configure form data check to pick email and password
@@ -216,8 +203,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                     'username' => 'email',
                     'password' => 'clave',
                 ],
-                // 'userModel' => 'Barbero',
-                // 'loginUrl' => Router::url('/barbero/login'),
+
             ]);
 
             return $authenticationService;
