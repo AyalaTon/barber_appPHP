@@ -10,6 +10,7 @@
             echo $this->Form->control('nombre');
             echo $this->Form->control('email');
             echo $this->Form->control('clave', ['type' => 'password']);
+            echo $this->Form->control('confirmar_clave', ['type' => 'password']);
             echo $this->Form->control('imagen_perfil', ['type' => 'file']);
             echo $this->Form->control('tel');
             echo $this->Form->control('barbershop._ids', ['options' => $barbershop]);
