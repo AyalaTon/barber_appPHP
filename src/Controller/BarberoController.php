@@ -139,7 +139,7 @@ class BarberoController extends AppController
             if ($this->Barbero->save($barbero)) {
                 $this->Flash->success(__('El barbero ha sido creado con éxito.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Cliente', 'action' => 'login']);
             }
             $this->Flash->error(__('El barbero no ha podido ser creado. Por favor, intente nuevamente.'));
         }
