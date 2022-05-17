@@ -19,7 +19,7 @@ class BarberoController extends AppController
      */
     public function index()
     {
-        debug($this->Authentication->Barbero);
+
         // exit;
         $barbero = $this->paginate($this->Barbero);
 
@@ -167,7 +167,7 @@ class BarberoController extends AppController
                 'controller' => 'Barbero',
                 'action' => 'index',
             ]);
-    
+
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed
@@ -185,5 +185,4 @@ class BarberoController extends AppController
             return $this->redirect(['controller' => 'Barbero', 'action' => 'login']);
         }
     }
-
 }
