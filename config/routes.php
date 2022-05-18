@@ -53,7 +53,7 @@ return static function (RouteBuilder $routes) {
          */
         // !importente, este es el original
         // $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-        
+
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'displayHomePage']);
 
         // esta es una posible version
@@ -95,4 +95,14 @@ return static function (RouteBuilder $routes) {
      * });
      * ```
      */
+
+    $routes->prefix("Api", function (RouteBuilder $builder) {
+
+        $builder->setExtensions(["json", "xml"]);
+
+        $builder->connect("/listar-clientes", ["controller" => "Cliente", "action" => "listarClientes"]);
+        $builder->connect("/agregar-cliente", ["controller" => "Cliente", "action" => "agregarCliente"]);
+        $builder->connect("/modificar-cliente/{id}", ["controller" => "Cliente", "action" => "modificarCliente"])->setPass(["id"]);
+        $builder->connect("/eliminar-cliente/{id}", ["controller" => "Cliente", "action" => "eliminarCliente"])->setPass(["id"]);
+    });
 };
