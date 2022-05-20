@@ -222,7 +222,8 @@ class ClienteController extends AppController
             //Creamos el correo
             $mailer = new Mailer();
             //Seteamos la configuracion al correo
-            $mailer->setTransport('mailtrap');
+            $mailer->setTransport('gmail'); //Para enviar por Gmail y no usar el entorno de pruebas de mailtrap
+            //$mailer->setTransport('mailtrap'); //Para utilizar el entorno de pruebas de mailtrap
 
             //Creamos el mensaje
             $mailer

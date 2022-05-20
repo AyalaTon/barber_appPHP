@@ -231,9 +231,9 @@ return [
         // Sample SMTP configuration
         'gmail' => [
             'host' => 'smtp.gmail.com',
-            'port' => 465,
-            'username' => 'tapelaubarberapp@gmail.com',
-            'password' => 'federico12349',
+            'port' => 587,
+            'username' => env('EMAIL_USERNAME'),
+            'password' => env('EMAIL_PASSWORD'),
             'className' => 'Smtp',
             'tls' => true
         ]
