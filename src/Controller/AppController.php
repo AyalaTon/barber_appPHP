@@ -68,6 +68,8 @@ class AppController extends Controller
             'agregarCliente',
             'modificarCliente',
             'eliminarCliente',
+            'olvidarContrasena',
+            'restablecerContrasena',
         ]);
     }
     

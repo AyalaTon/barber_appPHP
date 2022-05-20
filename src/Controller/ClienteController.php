@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Mailer\Mailer;
+use Cake\Utility\Security;
+use Cake\Mailer\TransportFactory;
+
 /**
  * Cliente Controller
  *
@@ -131,11 +135,10 @@ class ClienteController extends AppController
                         $image->moveTo($targetPath);
                     //Guardamos el registro
                     $cliente->imagen_perfil = $cliente->usuario . '.' . $ext;
-                }else{
+                } else {
                     //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
                     $cliente->imagen_perfil = 'default.png';
                 }
-
             } else {
                 $cliente->imagen_perfil = 'default.png';
             }
@@ -170,7 +173,7 @@ class ClienteController extends AppController
                 'controller' => 'Cliente',
                 'action' => 'index',
             ]);
-    
+
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed
@@ -186,6 +189,66 @@ class ClienteController extends AppController
         if ($result->isValid()) {
             $this->Authentication->logout();
             return $this->redirect(['controller' => 'Cliente', 'action' => 'login']);
+        }
+    }
+
+    public function olvidarContrasena()
+    {
+        if ($this->request->is('post')) {
+            $myEmail = $this->request->getData('email');
+            $cliente = $this->Cliente->findByEmail($myEmail)->first();
+            $myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
+            $cliente->clave = $myToken;
+            if ($this->Cliente->save($cliente)) {
+                $this->Flash->success(__('Se ha enviado un link para restablecer su contraseña a su correo electrónico(' . $myEmail . ').'));
+            }
+
+            $dest = $myEmail;
+            $subjetc = "Restablecer contraseña";
+            $body = 'Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: http://localhost:8888/cliente/restablecerContrasena/' . $cliente->clave;
+            $headers = "From: tapelaubarberapp@gmail.com";
+            if (mail($dest, $subjetc, $body, $headers)) {
+              echo "Email successfully sent to $dest ...";
+            } else {
+              echo "Failed to send email...";
+            }
+
+            /*TransportFactory::setConfig('mailtrap', [
+                'host' => 'smtp.mailtrap.io',
+                'port' => 2525,
+                'username' => 'd88e91893889e5',
+                'password' => 'bf4754e19fe31e',
+                'className' => 'Smtp'
+            ]);
+
+            $mailer = new Mailer();
+            $mailer
+                ->setEmailFormat('html')
+                ->setTo($myEmail)
+                ->setFrom('tapelau@tapelau.com.uy')
+                ->setSubject('Restablecer contraseña')
+                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: http://localhost:8888/cliente/restablecerContrasena/' . $cliente->clave);
+            $mailer->deliver();*/
+
+            /*$email = new Mailer('default');
+            $email->emailFormat('html');
+            $email->from('federzvz@gmail.com', 'Tapelau App');
+            $email->subject('Restablecer contraseña');
+            $email->to($myEmail);
+            $email->send('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: http://localhost:8888/cliente/restablecerContrasena/' . $cliente->clave);*/
+        }
+    }
+
+    public function restablecerContrasena($token)
+    {
+        if ($this->request->is('post')) {
+            $cliente = $this->Cliente->get($this->Auth->user('id'));
+            $cliente->password = $this->request->getData('password');
+            if ($this->Cliente->save($cliente)) {
+                $this->Flash->success(__('La contraseña ha sido cambiada'));
+                return $this->redirect(['controller' => 'Cliente', 'action' => 'index']);
+            }
+            $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
 }
