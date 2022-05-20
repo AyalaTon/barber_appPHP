@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-// use Cake\Auth\DefaultPasswordHasher as AuthDefaultPasswordHasher;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
+
 /**
  * Cliente Entity
  *
@@ -16,6 +16,7 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
  * @property string $clave
  * @property string|null $imagen_perfil
  * @property string|null $tel
+ * @property string|null $token
  *
  * @property \App\Model\Entity\CalificacionCliente[] $calificacion_cliente
  * @property \App\Model\Entity\CalificacionCorte[] $calificacion_corte
@@ -40,12 +41,21 @@ class Cliente extends Entity
         'clave' => true,
         'imagen_perfil' => true,
         'tel' => true,
+        'token' => true,
         'calificacion_cliente' => true,
         'calificacion_corte' => true,
         'lista_negra' => true,
         'reserva' => true,
     ];
 
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array<string>
+     */
+    protected $_hidden = [
+        'token',
+    ];
 
     protected function _setClave(string $clave) : ?string
     {

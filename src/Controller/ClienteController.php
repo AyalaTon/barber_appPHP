@@ -201,9 +201,9 @@ class ClienteController extends AppController
             //Obtenemos el usuario que tiene ese email
             $cliente = $this->Cliente->findByEmail($myEmail)->first();
             //Creamos un Token para el usuario
-            //$myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
+            $myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
             //Seteamos el token en el usuario
-            //$cliente->token = $myToken;
+            $cliente->token = $myToken;
             //Guardamos el usuario
             if ($this->Cliente->save($cliente)) {
                 //Enviamos mensaje de éxito
@@ -230,7 +230,7 @@ class ClienteController extends AppController
                 ->setTo($myEmail)
                 ->setFrom('tapelau@tapelau.com.uy')
                 ->setSubject('Restablecer contraseña')
-                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/'.urlencode(base64_encode((string)$cliente->id)).'">Restablecer contraseña</a>');
+                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/'.$cliente->token.'">Restablecer contraseña</a>');
         }
     }
 
@@ -238,7 +238,7 @@ class ClienteController extends AppController
     {
         if ($this->request->is('post')) {
             //Obtenemos el usuario que tiene ese token
-            $cliente = $this->Cliente->findById(base64_decode(urldecode($token)))->first();
+            $cliente = $this->Cliente->findByToken($token)->first();
             /*echo "1##".$token.'<br>';
             echo "2##".$cliente->clave.'<br>';*/
             //Seteamos la nueva contraseña
