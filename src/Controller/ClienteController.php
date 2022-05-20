@@ -7,6 +7,7 @@ namespace App\Controller;
 use Cake\Mailer\Mailer;
 use Cake\Utility\Security;
 use Cake\Mailer\TransportFactory;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 /**
  * Cliente Controller
@@ -195,25 +196,22 @@ class ClienteController extends AppController
     public function olvidarContrasena()
     {
         if ($this->request->is('post')) {
+            //Obtenemos el email del usuario
             $myEmail = $this->request->getData('email');
+            //Obtenemos el usuario que tiene ese email
             $cliente = $this->Cliente->findByEmail($myEmail)->first();
-            $myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
-            $cliente->clave = $myToken;
+            //Creamos un Token para el usuario
+            //$myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
+            //Seteamos el token en el usuario
+            //$cliente->token = $myToken;
+            //Guardamos el usuario
             if ($this->Cliente->save($cliente)) {
-                $this->Flash->success(__('Se ha enviado un link para restablecer su contraseña a su correo electrónico(' . $myEmail . ').'));
+                //Enviamos mensaje de éxito
+                $this->Flash->success(__('Se ha enviado un link para restablecer su contraseña a su correo electrónico(' . $cliente->email . ').'));
             }
 
-            $dest = $myEmail;
-            $subjetc = "Restablecer contraseña";
-            $body = 'Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: http://localhost:8888/cliente/restablecerContrasena/' . $cliente->clave;
-            $headers = "From: tapelaubarberapp@gmail.com";
-            if (mail($dest, $subjetc, $body, $headers)) {
-              echo "Email successfully sent to $dest ...";
-            } else {
-              echo "Failed to send email...";
-            }
-
-            /*TransportFactory::setConfig('mailtrap', [
+            //Configuramos el correo
+            TransportFactory::setConfig('mailtrap', [
                 'host' => 'smtp.mailtrap.io',
                 'port' => 2525,
                 'username' => 'd88e91893889e5',
@@ -221,29 +219,32 @@ class ClienteController extends AppController
                 'className' => 'Smtp'
             ]);
 
+            //Creamos el correo
             $mailer = new Mailer();
+            //Seteamos la configuracion al correo
+            $mailer->setTransport('mailtrap');
+
+            //Creamos el mensaje
             $mailer
                 ->setEmailFormat('html')
                 ->setTo($myEmail)
                 ->setFrom('tapelau@tapelau.com.uy')
                 ->setSubject('Restablecer contraseña')
-                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: http://localhost:8888/cliente/restablecerContrasena/' . $cliente->clave);
-            $mailer->deliver();*/
-
-            /*$email = new Mailer('default');
-            $email->emailFormat('html');
-            $email->from('federzvz@gmail.com', 'Tapelau App');
-            $email->subject('Restablecer contraseña');
-            $email->to($myEmail);
-            $email->send('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: http://localhost:8888/cliente/restablecerContrasena/' . $cliente->clave);*/
+                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/'.urlencode(base64_encode((string)$cliente->id)).'">Restablecer contraseña</a>');
         }
     }
 
     public function restablecerContrasena($token)
     {
         if ($this->request->is('post')) {
-            $cliente = $this->Cliente->get($this->Auth->user('id'));
-            $cliente->password = $this->request->getData('password');
+            //Obtenemos el usuario que tiene ese token
+            $cliente = $this->Cliente->findById(base64_decode(urldecode($token)))->first();
+            /*echo "1##".$token.'<br>';
+            echo "2##".$cliente->clave.'<br>';*/
+            //Seteamos la nueva contraseña
+            $cliente->clave = $this->request->getData('clave');
+            /*echo "3##".$cliente->clave.'<br>';
+            debug($cliente);*/
             if ($this->Cliente->save($cliente)) {
                 $this->Flash->success(__('La contraseña ha sido cambiada'));
                 return $this->redirect(['controller' => 'Cliente', 'action' => 'index']);
