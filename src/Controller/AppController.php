@@ -70,6 +70,19 @@ class AppController extends Controller
             'eliminarCliente',
             'olvidarContrasena',
             'restablecerContrasena',
+            'obtenerCliente',
+            'obtenerClientePorEmail',
+            'obtenerClientePorUsuario',
+
+            //API-Barberos:
+            'listarBarberos',
+            'agregarBarbero',
+            'modificarBarbero',
+            'eliminarBarbero',
+            'obtenerBarbero',
+            'obtenerBarberoPorEmail',
+            'obtenerBarberoPorUsuario',
+            'login',
         ]);
     }
     

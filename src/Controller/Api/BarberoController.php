@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Controller\AppController;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 class BarberoController extends AppController
 {
@@ -235,6 +236,33 @@ class BarberoController extends AppController
         ]);
 
         $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+    }
+
+    //Verificar login de Barbero API
+    public function login()
+    {
+        $this->request->allowMethod(['get', 'post']);
+        $result = $this->Authentication->getResult();
+        debug($this->request);
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result->isValid()) {
+            // success response
+            $status = true;
+            $message = "Barbero found";
+        }
+        // display error if user submitted and authentication failed
+        if ($this->request->is('post') && !$result->isValid()) {
+            // error response
+            $status = false;
+            $message = "Barbero not found";
+        }
+
+        $this->set([
+            "status" => $status,
+            "message" => $message,
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message"]);
     }
     
 }
