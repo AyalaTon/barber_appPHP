@@ -1,5 +1,4 @@
 <?php
-
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -19,7 +18,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,60 +28,22 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->meta('icon') ?>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-
 <body>
-    <?php
-    $controlador = $this->request->getAttributes()['params']['controller'];
-    $url_link;
-    if ($controlador == 'Barbero') {
-        $url_link = '/barbero';
-    } else if ($controlador == 'Cliente') {
-        $url_link = '/cliente';
-    }
-    if ($this->request->getAttributes()['identity'] != null) {
-        $user_data = $_SESSION['Auth'];
-        $image_url = 'perfil/' . $user_data['imagen_perfil'];
-    }
-    ?>
     <nav class="top-nav">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build($url_link) ?>"><span>💈Tapelau💈</span></a>
+            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
         </div>
-        <?php
-        if ($this->request->getAttributes()['identity'] != null) {
-
-        ?>
         <div class="top-nav-links">
-            <div class="dropdown">
-                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                <div class="dropdown-content">
-                    <ul>
-
-                        <li>
-                            <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
-                        </li>
-
-                    </ul>
-                    <?= $this->Html->link('Cerrar sesión', ['action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
-                </div>
-            </div>
-
+            <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
+            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
         </div>
-        <?php
-        } else {
-
-        ?>
-        <?= $this->Html->link('Volver', '/'); ?>
-        <?php
-        }
-        ?>
-
     </nav>
     <main class="main">
         <div class="container">
@@ -94,5 +54,4 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <footer>
     </footer>
 </body>
-
 </html>
