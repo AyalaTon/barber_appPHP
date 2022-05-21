@@ -39,12 +39,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 <body>
     <?php
-    $controlador = $this->request->getAttributes()['params']['controller'];
+    $params = $this->request->getAttributes()['params'];
+    $controlador = $params['controller'];
     $url_link;
-    if ($controlador == 'Barbero') {
-        $url_link = '/barbero';
-    } else if ($controlador == 'Cliente') {
-        $url_link = '/cliente';
+    if ($params['action'] == 'login' || $params['action'] == 'registrar') {
+        $url_link = '/';
+    } else {
+        if ($controlador == 'Barbero') {
+            $url_link = '/barbero';
+        } else if ($controlador == 'Cliente') {
+            $url_link = '/cliente';
+        }
     }
     if ($this->request->getAttributes()['identity'] != null) {
         $user_data = $_SESSION['Auth'];
@@ -64,7 +69,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
                 <div class="dropdown-content">
                     <ul>
-
+                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
                         <li>
                             <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
                         </li>
@@ -76,11 +81,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
         </div>
         <?php
-        } else {
 
-        ?>
-        <?= $this->Html->link('Volver', '/'); ?>
-        <?php
         }
         ?>
 

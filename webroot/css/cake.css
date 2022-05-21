@@ -271,7 +271,7 @@ th {
 .img_perfil {
     width: 49x;
     height: 49px;
-    border-radius: 50%;
+    border-radius: 9999%;
     border: solid grey 2px;
 }
 
