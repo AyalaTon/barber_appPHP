@@ -145,4 +145,93 @@ class ClienteController extends AppController
 
         $this->viewBuilder()->setOption("serialize", ["status", "message"]);
     }
+
+    // Obtener Cliente api
+    public function obtenerCliente()
+    {
+        $this->request->allowMethod(["get"]);
+
+        $emp_id = $this->request->getParam("id");
+
+        $cliente = $this->Cliente->get($emp_id);
+
+        if (!empty($cliente)) {
+            // Cliente found
+            $status = true;
+            $message = "Cliente found";
+        } else {
+            // not found
+            $status = false;
+            $message = "Cliente not found";
+        }
+
+        $this->set([
+            "status" => $status,
+            "message" => $message,
+            "data" => $cliente
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+    }
+
+    // Obtener Cliente por email api
+    public function obtenerClientePorEmail()
+    {
+        $this->request->allowMethod(["get"]);
+
+        $email = $this->request->getParam("email");
+
+        $cliente = $this->Cliente->find()->where([
+            "email" => $email
+        ])->first();
+
+        if (!empty($cliente)) {
+            // Cliente found
+            $status = true;
+            $message = "Cliente found";
+        } else {
+            // not found
+            $status = false;
+            $message = "Cliente not found";
+        }
+
+        $this->set([
+            "status" => $status,
+            "message" => $message,
+            "data" => $cliente
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+    }
+
+    // Obtener Cliente por usuario api
+    public function obtenerClientePorUsuario()
+    {
+        $this->request->allowMethod(["get"]);
+
+        $usuario = $this->request->getParam("usuario");
+
+        $cliente = $this->Cliente->find()->where([
+            "usuario" => $usuario
+        ])->first();
+
+        if (!empty($cliente)) {
+            // Cliente found
+            $status = true;
+            $message = "Cliente found";
+        } else {
+            // not found
+            $status = false;
+            $message = "Cliente not found";
+        }
+
+        $this->set([
+            "status" => $status,
+            "message" => $message,
+            "data" => $cliente
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+    }
+
 }
