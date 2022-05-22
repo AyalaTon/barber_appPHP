@@ -143,7 +143,7 @@ class ClienteController extends AppController
             "status" => $status,
             "message" => $message
         ]);
-
+        $this->Cliente->logout();
         $this->viewBuilder()->setOption("serialize", ["status", "message"]);
     }
 
@@ -153,43 +153,25 @@ class ClienteController extends AppController
 
         $result = $this->Authentication->getResult();
 
-        debug($result);
+        // debug($result);
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             // redirect to /articles after login success
             $status = true;
             $message = "Cliente logged in";
+            $data = $result->getData();
         } else {
             $status = false;
             $message = "Cliente not found";
+            $data = null;
         }
-
-
-        // $formData = $this->request->getData();
-        // $clave = $formData['clave'];
-        // debug($formData);
-        // $cliente = $this->Cliente->find()->where([
-        //     "email" => $formData['email']
-        // ]);
-
-
-        // debug($cliente);
-
-        // if (!empty($cliente)) {
-        //     if ((new DefaultPasswordHasher())->check($clave, $cliente['clave'])) {
-        //         $status = true;
-        //         $message = "Cliente " . $cliente['email'] . " logged in";
-        //     }
-        // } else {
-        //     $status = false;
-        //     $message = "Cliente not found";
-        // }
 
         $this->set([
             "status" => $status,
-            "message" => $message
+            "message" => $message,
+            "data" => $data
         ]);
 
-        $this->viewBuilder()->setOption("serialize", ["status", "message"]);
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
     }
 }

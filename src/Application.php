@@ -148,6 +148,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
+
         // debug($request->getAttributes()['params']);
         if ($request->getAttributes()['params']['controller'] == 'Barbero' && $request->getAttributes()['params']['action'] == 'login') {
             $authenticationService = new AuthenticationService([
@@ -210,6 +211,36 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ]);
             // debug($authenticationService);
             return $authenticationService;
+        } else if ($request->getAttributes()['params']['controller'] == 'Cliente' && $request->getAttributes()['params']['action'] == 'loginCliente') {
+            // debug('entra aca');
+
+            $authenticationService = new AuthenticationService();
+
+            // Load identifiers, ensure we check email and password fields
+            $authenticationService->loadIdentifier('Authentication.Password', [
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'clave',
+                ],
+                'resolver' => [
+                    'className' => 'Authentication.Orm',
+                    'userModel' => 'Cliente',
+                    // 'userModel' => 'Cliente' || 'Barbero',
+                ],
+            ]);
+
+            // Load the authenticators, you want session first
+            $authenticationService->loadAuthenticator('Authentication.Session');
+            // Configure form data check to pick email and password
+            $authenticationService->loadAuthenticator('Authentication.Form', [
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'clave',
+                ],
+
+            ]);
+            // debug($authenticationService);
+            return $authenticationService;
         } else {
             $authenticationService = new AuthenticationService([
                 'unauthenticatedRedirect' => Router::url('/'),
@@ -236,9 +267,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                     'username' => 'email',
                     'password' => 'clave',
                 ],
-
             ]);
-            // debug($authenticationService);
+
             return $authenticationService;
         }
     }
