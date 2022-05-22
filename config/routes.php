@@ -100,9 +100,11 @@ return static function (RouteBuilder $routes) {
 
         $builder->setExtensions(["json", "xml"]);
 
+        // Clientes
         $builder->connect("/listar-clientes", ["controller" => "Cliente", "action" => "listarClientes"]);
         $builder->connect("/agregar-cliente", ["controller" => "Cliente", "action" => "agregarCliente"]);
         $builder->connect("/modificar-cliente/{id}", ["controller" => "Cliente", "action" => "modificarCliente"])->setPass(["id"]);
         $builder->connect("/eliminar-cliente/{id}", ["controller" => "Cliente", "action" => "eliminarCliente"])->setPass(["id"]);
+        $builder->connect("/login-cliente", ["controller" => "Cliente", "action" => "loginCliente"]);
     });
 };

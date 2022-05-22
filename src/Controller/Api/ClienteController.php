@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Controller\AppController;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 class ClienteController extends AppController
 {
@@ -116,7 +117,7 @@ class ClienteController extends AppController
     public function eliminarCliente()
     {
         $this->request->allowMethod(["delete"]);
-        
+
         $emp_id = $this->request->getParam("id");
 
         $cliente = $this->Cliente->get($emp_id);
@@ -137,6 +138,52 @@ class ClienteController extends AppController
             $status = false;
             $message = "Cliente doesn't exists";
         }
+
+        $this->set([
+            "status" => $status,
+            "message" => $message
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message"]);
+    }
+
+    public function loginCliente()
+    {
+        $this->request->allowMethod(["post"]);
+
+        $result = $this->Authentication->getResult();
+
+        debug($result);
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result->isValid()) {
+            // redirect to /articles after login success
+            $status = true;
+            $message = "Cliente logged in";
+        } else {
+            $status = false;
+            $message = "Cliente not found";
+        }
+
+
+        // $formData = $this->request->getData();
+        // $clave = $formData['clave'];
+        // debug($formData);
+        // $cliente = $this->Cliente->find()->where([
+        //     "email" => $formData['email']
+        // ]);
+
+
+        // debug($cliente);
+
+        // if (!empty($cliente)) {
+        //     if ((new DefaultPasswordHasher())->check($clave, $cliente['clave'])) {
+        //         $status = true;
+        //         $message = "Cliente " . $cliente['email'] . " logged in";
+        //     }
+        // } else {
+        //     $status = false;
+        //     $message = "Cliente not found";
+        // }
 
         $this->set([
             "status" => $status,

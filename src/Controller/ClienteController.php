@@ -166,6 +166,7 @@ class ClienteController extends AppController
     public function login()
     {
         $this->request->allowMethod(['get', 'post']);
+        // debug($this->request);
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
@@ -231,7 +232,7 @@ class ClienteController extends AppController
                 ->setTo($myEmail)
                 ->setFrom('tapelau@tapelau.com.uy')
                 ->setSubject('Restablecer contraseña')
-                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/'.$cliente->token.'">Restablecer contraseña</a>');
+                ->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/' . $cliente->token . '">Restablecer contraseña</a>');
         }
     }
 

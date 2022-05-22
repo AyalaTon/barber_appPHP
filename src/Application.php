@@ -32,6 +32,7 @@ use Cake\Routing\Middleware\RoutingMiddleware;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Identifier\IdentifierInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Cake\Routing\Router;
 use Psr\Http\Message\ServerRequestInterface;
@@ -108,9 +109,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware());
 
-            // Cross Site Request Forgery (CSRF) Protection Middleware
-            // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
-            /*->add(new CsrfProtectionMiddleware([
+        // Cross Site Request Forgery (CSRF) Protection Middleware
+        // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
+        /*->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
             ]));*/
 
@@ -147,7 +148,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        if ($request->getAttributes()['params']['controller'] == 'Barbero') {
+        // debug($request->getAttributes()['params']);
+        if ($request->getAttributes()['params']['controller'] == 'Barbero' && $request->getAttributes()['params']['action'] == 'login') {
             $authenticationService = new AuthenticationService([
                 'unauthenticatedRedirect' => Router::url('/barbero/login'),
                 'queryParam' => 'redirect',
@@ -176,12 +178,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ]);
 
             return $authenticationService;
-        }/* else if (substr($request->getAttributes()['params']['_matchedRoute'], 0, 4) == '/api') {
-            $authenticationService = new AuthenticationService();
-            $authenticationService->loadAuthenticator('Authentication.Session');
-            return $authenticationService;
+        } else if ($request->getAttributes()['params']['controller'] == 'Cliente' && $request->getAttributes()['params']['action'] == 'login') {
 
-        } */else {
             $authenticationService = new AuthenticationService([
                 'unauthenticatedRedirect' => Router::url('/cliente/login'),
                 'queryParam' => 'redirect',
@@ -210,7 +208,37 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 ],
 
             ]);
+            // debug($authenticationService);
+            return $authenticationService;
+        } else {
+            $authenticationService = new AuthenticationService([
+                'unauthenticatedRedirect' => Router::url('/'),
+                'queryParam' => 'redirect',
+            ]);
 
+            // Load identifiers, ensure we check email and password fields
+            $authenticationService->loadIdentifier('Authentication.Password', [
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'clave',
+                ],
+                'resolver' => [
+                    'className' => 'Authentication.Orm',
+                    'userModel' => 'Barbero',
+                ],
+            ]);
+
+            // Load the authenticators, you want session first
+            $authenticationService->loadAuthenticator('Authentication.Session');
+            // Configure form data check to pick email and password
+            $authenticationService->loadAuthenticator('Authentication.Form', [
+                'fields' => [
+                    'username' => 'email',
+                    'password' => 'clave',
+                ],
+
+            ]);
+            // debug($authenticationService);
             return $authenticationService;
         }
     }
