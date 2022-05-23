@@ -6,7 +6,7 @@
     <fieldset>
         <legend><?= __('Please enter your username and password') ?></legend>
         <?= $this->Form->control('email', ['required' => true]) ?>
-        <?= $this->Form->control('clave', ['required' => true]) ?>
+        <?= $this->Form->control('clave',['type'=>'password'], ['required' => true]) ?>
     </fieldset>
     <?= $this->Form->submit(__('Login')); ?>
     <?= $this->Form->end() ?>

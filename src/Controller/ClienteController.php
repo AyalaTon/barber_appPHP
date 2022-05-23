@@ -147,7 +147,7 @@ class ClienteController extends AppController
             if ($this->Cliente->save($cliente)) {
                 $this->Flash->success(__('The cliente has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'login']);
             }
             $this->Flash->error(__('The cliente could not be saved. Please, try again.'));
         }
