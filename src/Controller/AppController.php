@@ -66,13 +66,28 @@ class AppController extends Controller
             'add',
             'displayHomePage',
             'registrar',
+            'olvidarContrasena',
+            'restablecerContrasena',
+
+            //API-Clientes:
             'listarClientes',
             'agregarCliente',
             'modificarCliente',
             'eliminarCliente',
-            'olvidarContrasena',
-            'restablecerContrasena',
             'loginCliente',
+            'obtenerCliente',
+            'obtenerClientePorEmail',
+            'obtenerClientePorUsuario',
+
+            //API-Barberos:
+            'listarBarberos',
+            'agregarBarbero',
+            'modificarBarbero',
+            'eliminarBarbero',
+            'obtenerBarbero',
+            'obtenerBarberoPorEmail',
+            'obtenerBarberoPorUsuario',
+            'loginBarbero',
         ]);
     }
 }

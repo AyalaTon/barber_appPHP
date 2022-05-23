@@ -100,11 +100,25 @@ return static function (RouteBuilder $routes) {
 
         $builder->setExtensions(["json", "xml"]);
 
-        // Clientes
+        //Builder para el controlador Cliente
         $builder->connect("/listar-clientes", ["controller" => "Cliente", "action" => "listarClientes"]);
         $builder->connect("/agregar-cliente", ["controller" => "Cliente", "action" => "agregarCliente"]);
         $builder->connect("/modificar-cliente/{id}", ["controller" => "Cliente", "action" => "modificarCliente"])->setPass(["id"]);
         $builder->connect("/eliminar-cliente/{id}", ["controller" => "Cliente", "action" => "eliminarCliente"])->setPass(["id"]);
         $builder->connect("/login-cliente", ["controller" => "Cliente", "action" => "loginCliente"]);
+        $builder->connect("/cliente/obtener-cliente/{id}", ["controller" => "Cliente", "action" => "obtenerCliente"]);
+        $builder->connect("/cliente/obtener-cliente-por-email/{email}", ["controller" => "Cliente", "action" => "obtenerClientePorEmail"]);
+        $builder->connect("/cliente/obtener-cliente-por-usuario/{usuario}", ["controller" => "Cliente", "action" => "obtenerClientePorUsuario"]);
+
+        //Builder para el controlador Barbero
+        $builder->connect("/barbero/listar-barberos", ["controller" => "Barbero", "action" => "listarBarberos"]);
+        $builder->connect("/barbero/agregar-barbero", ["controller" => "Barbero", "action" => "agregarBarbero"]);
+        $builder->connect("/barbero/modificar-barbero/{id}", ["controller" => "Barbero", "action" => "modificarBarbero"])->setPass(["id"]);
+        $builder->connect("/barbero/eliminar-barbero/{id}", ["controller" => "Barbero", "action" => "eliminarBarbero"])->setPass(["id"]);
+        $builder->connect("/barbero/obtener-barbero/{id}", ["controller" => "Barbero", "action" => "obtenerBarbero"]);
+        $builder->connect("/barbero/obtener-barbero-por-email/{email}", ["controller" => "Barbero", "action" => "obtenerBarberoPorEmail"]);
+        $builder->connect("/barbero/obtener-barbero-por-usuario/{usuario}", ["controller" => "Barbero", "action" => "obtenerBarberoPorUsuario"]);
+        $builder->connect("/barbero/login", ["controller" => "Barbero", "action" => "login"]);
+
     });
 };
