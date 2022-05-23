@@ -239,30 +239,32 @@ class BarberoController extends AppController
     }
 
     //Verificar login de Barbero API
-    public function login()
+    public function loginBarbero()
     {
-        $this->request->allowMethod(['get', 'post']);
+        $this->request->allowMethod(["post"]);
+
         $result = $this->Authentication->getResult();
-        debug($this->request);
+
+        // debug($result);
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            // success response
+            // redirect to /articles after login success
             $status = true;
-            $message = "Barbero found";
-        }
-        // display error if user submitted and authentication failed
-        if ($this->request->is('post') && !$result->isValid()) {
-            // error response
+            $message = "Barbero: Sesión iniciada correctamente.";
+            $data = $result->getData();
+            $this->Authentication->logout(); // cerrar sesión luego de cargar exitosamente los datos del usuario autenticado
+        } else {
             $status = false;
-            $message = "Barbero not found";
+            $message = "Email o contraseña incorrectos.";
+            $data = null;
         }
 
         $this->set([
             "status" => $status,
             "message" => $message,
+            "data" => $data
         ]);
 
-        $this->viewBuilder()->setOption("serialize", ["status", "message"]);
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
     }
-    
 }

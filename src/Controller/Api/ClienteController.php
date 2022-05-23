@@ -160,6 +160,7 @@ class ClienteController extends AppController
             $status = true;
             $message = "Cliente logged in";
             $data = $result->getData();
+            $this->Authentication->logout(); // cerrar sesión luego de cargar exitosamente los datos del usuario autenticado
         } else {
             $status = false;
             $message = "Cliente not found";
