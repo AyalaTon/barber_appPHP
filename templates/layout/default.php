@@ -56,42 +56,57 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         $image_url = 'perfil/' . $user_data['imagen_perfil'];
     }
     ?>
-    <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build($url_link) ?>"><span>💈Tapelau💈</span></a>
-        </div>
-        <?php
-        if ($this->request->getAttributes()['identity'] != null) {
 
-        ?>
-        <div class="top-nav-links">
-            <div class="dropdown">
-                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                <div class="dropdown-content">
-                    <ul>
-                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
-                        <li>
-                            <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
-                        </li>
-
-                    </ul>
-                    <?= $this->Html->link('Cerrar sesión', ['action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
-                </div>
+    <section class="row">
+        <aside class="column column-20 sidebar">
+            <div class="side-nav sidebar_menu">
+                <h4 class="heading">Navegación</h4>
+                <ul>
+                    <li>Home</li>
+                    <li>Mapa</li>
+                    <li>Barberias</li>
+                </ul>
             </div>
+        </aside>
+        <div class="column column-80">
+            <nav class="top-nav">
+                <div class="top-nav-title">
+                    <a href="<?= $this->Url->build($url_link) ?>"><span>💈Tapelau💈</span></a>
+                </div>
+                <?php
+                if ($this->request->getAttributes()['identity'] != null) {
 
+                ?>
+                <div class="top-nav-links">
+                    <div class="dropdown">
+                        <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
+                        <div class="dropdown-content">
+                            <ul>
+                                <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
+                                <li>
+                                    <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
+                                </li>
+
+                            </ul>
+                            <?= $this->Html->link('Cerrar sesión', ['action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
+                        </div>
+                    </div>
+
+                </div>
+                <?php
+
+                }
+                ?>
+            </nav>
+            <main class="main">
+                <div class="container">
+                    <?= $this->Flash->render() ?>
+                    <?= $this->fetch('content') ?>
+                </div>
+            </main>
         </div>
-        <?php
+    </section>
 
-        }
-        ?>
-
-    </nav>
-    <main class="main">
-        <div class="container">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
-    </main>
     <footer>
     </footer>
 </body>

@@ -300,4 +300,20 @@ th {
 }
 
 
+/* ------------------------------------------------- */
+
+.sidebar {
+    background-color: #606c76;
+    padding: 50px !important;
+}
+
+.sidebar_menu {
+    color: black !important;
+}
+
+.row {
+    width: 100% !important;
+}
+
+
 /* Creado por Pablo FIN*/
