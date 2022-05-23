@@ -121,19 +121,27 @@ class BarberoController extends AppController
                 $image = $this->request->getData('imagen_perfil');
                 //Obtenemos el nombre de la imagen
                 $name = $image->getClientFilename();
-                //Obtenemos la extensión de la imagen
-                $ext = substr(strtolower(strrchr($name, '.')), 1);
-                //Si no existe el directorio para guardar la imagen de perfil la creamos
-                if (!is_dir(WWW_ROOT . 'img' . DS . 'perfil')) {
-                    mkdir(WWW_ROOT . 'img' . DS . 'perfil', 0775);
+                //Si el nombre de la imagen no está vacío, es porque no seleccionó niguna imágen
+                if ($name !== '') {
+                    //Obtenemos la extensión de la imagen
+                    $ext = substr(strtolower(strrchr($name, '.')), 1);
+                    //Si no existe el directorio para guardar la imagen de perfil la creamos
+                    if (!is_dir(WWW_ROOT . 'img' . DS . 'perfil')) {
+                        mkdir(WWW_ROOT . 'img' . DS . 'perfil', 0775);
+                    }
+                    //Establecemos la ruta dónde queremos guardar la imagen
+                    $targetPath = WWW_ROOT . 'img' . DS . 'perfil' . DS . $barbero->usuario . '.' . $ext;
+                    //Movemos la imagen a la carpeta
+                    if ($name)
+                        $image->moveTo($targetPath);
+                    //Guardamos el registro
+                    $barbero->imagen_perfil = $barbero->usuario . '.' . $ext;
+                } else {
+                    //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
+                    $barbero->imagen_perfil = 'default.png';
                 }
-                //Establecemos la ruta dónde queremos guardar la imagen
-                $targetPath = WWW_ROOT . 'img' . DS . 'perfil' . DS . $barbero->usuario . '.' . $ext;
-                //Movemos la imagen a la carpeta
-                if ($name)
-                    $image->moveTo($targetPath);
-                //Guardamos el registro
-                $barbero->imagen_perfil = $barbero->usuario . '.' . $ext;
+            } else {
+                $barbero->imagen_perfil = 'default.png';
             }
 
             if ($this->Barbero->save($barbero)) {
