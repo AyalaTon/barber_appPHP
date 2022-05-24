@@ -74,4 +74,14 @@ class PagesController extends AppController
     {
         return $this->display('home');
     }
+
+    public function mapa(): Response
+    {
+        return $this->display('mapa');
+    }
+
+    public function publicaciones(): Response
+    {
+        return $this->display('publicaciones');
+    }
 }

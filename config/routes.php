@@ -55,6 +55,8 @@ return static function (RouteBuilder $routes) {
         // $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'displayHomePage']);
+        $builder->connect('/mapa', ['controller' => 'Pages', 'action' => 'mapa']);
+        $builder->connect('/publicaciones', ['controller' => 'Pages', 'action' => 'publicaciones']);
 
         // esta es una posible version
         // $builder->connect("/", ["controller" => "Site", "action" => "index"]);

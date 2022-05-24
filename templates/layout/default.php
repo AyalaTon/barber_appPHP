@@ -23,6 +23,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <head>
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://kit.fontawesome.com/65752bfe62.js" crossorigin="anonymous"></script>
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
@@ -49,6 +50,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             $url_link = '/barbero';
         } else if ($controlador == 'Cliente') {
             $url_link = '/cliente';
+        }else{
+            $url_link = '/mapa';
         }
     }
     if ($this->request->getAttributes()['identity'] != null) {
@@ -56,7 +59,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         $image_url = 'perfil/' . $user_data['imagen_perfil'];
     }
     ?>
-    <nav class="top-nav">
+    <nav class="top-nav" style="box-shadow: 0 4px 6px -6px #222;">
         <div class="top-nav-title">
             <a href="<?= $this->Url->build($url_link) ?>"><span>💈Tapelau💈</span></a>
         </div>
@@ -64,27 +67,48 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         if ($this->request->getAttributes()['identity'] != null) {
 
         ?>
-        <div class="top-nav-links">
-            <div class="dropdown">
-                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                <div class="dropdown-content">
-                    <ul>
-                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
-                        <li>
-                            <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
-                        </li>
+            <div class="top-nav-links">
+                <div class="dropdown">
+                    <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
+                    <div class="dropdown-content">
+                        <ul>
+                            <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
+                            <li>
+                                <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
+                            </li>
 
-                    </ul>
-                    <?= $this->Html->link('Cerrar sesión', ['action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
+                        </ul>
+                        <?= $this->Html->link('Cerrar sesión', ['action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
         <?php
 
         }
         ?>
+    </nav>
+    <nav class="top-nav">
+        <?php
+        if ($this->request->getAttributes()['identity'] != null) {
 
+        ?>
+            <div class="top-nav-links" style="
+                display: flex;
+                justify-content: space-around;
+                padding: 10px;
+                z-index: 2;
+                position: relative;
+                width: 100%;
+                text-align: center;
+                font-size: 4rem;
+                ">
+                <a href="http://localhost:8765/mapa" style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i class="fas fa-map-marked-alt"></i><h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Barberías</h6></a>
+                <a href="http://localhost:8765/publicaciones" style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i class="fas fa-inbox"></i><h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Publicaciones</h6></a>            
+            </div>
+        <?php
+        }
+        ?>
     </nav>
     <main class="main">
         <div class="container">
