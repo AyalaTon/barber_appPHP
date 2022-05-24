@@ -29,9 +29,10 @@ class BarberoFixture extends TestFixture
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'nombre' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
-                'clave' => 'Lorem ipsum dolo',
+                'clave' => 'Lorem ipsum dolor sit amet',
                 'imagen_perfil' => 'Lorem ipsum dolor sit amet',
                 'tel' => 'Lorem i',
+                'token' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

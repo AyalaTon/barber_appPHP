@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+// use Cake\Auth\DefaultPasswordHasher as AuthDefaultPasswordHasher;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 /**
@@ -17,6 +18,7 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
  * @property string $clave
  * @property string|null $imagen_perfil
  * @property string|null $tel
+ * @property string|null $token
  *
  * @property \App\Model\Entity\CalificacionCliente[] $calificacion_cliente
  * @property \App\Model\Entity\Corte[] $corte
@@ -42,6 +44,7 @@ class Barbero extends Entity
         'clave' => true,
         'imagen_perfil' => true,
         'tel' => true,
+        'token' => true,
         'calificacion_cliente' => true,
         'corte' => true,
         'horario_barbero' => true,
@@ -49,6 +52,9 @@ class Barbero extends Entity
         'barbershop' => true,
     ];
 
+    protected $_hidden = [
+        'token',
+    ];
     protected function _setClave(string $clave): ?string
     {
         if (strlen($clave) > 0) {
