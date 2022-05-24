@@ -175,7 +175,7 @@ class ClienteController extends AppController
                 'controller' => 'Cliente',
                 'action' => 'index',
             ]);
-
+            $_SESSION["tipo"] =  "cliente";
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed

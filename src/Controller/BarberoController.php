@@ -180,7 +180,7 @@ class BarberoController extends AppController
                 'controller' => 'Barbero',
                 'action' => 'index',
             ]);
-
+            $_SESSION["tipo"] =  "barbero";
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed

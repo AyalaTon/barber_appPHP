@@ -78,7 +78,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             </li>
 
                         </ul>
-                        <?= $this->Html->link('Cerrar sesión', ['action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
+                        <?= $this->Html->link('Cerrar sesión',['controller' => $_SESSION['tipo'],'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
                     </div>
                 </div>
 
