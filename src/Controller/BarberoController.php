@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Mailer\Mailer;
+use Cake\Utility\Security;
+use Cake\Mailer\TransportFactory;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+
 /**
  * Barbero Controller
  *
@@ -191,6 +196,67 @@ class BarberoController extends AppController
         if ($result->isValid()) {
             $this->Authentication->logout();
             return $this->redirect(['controller' => 'Barbero', 'action' => 'login']);
+        }
+    }
+
+    public function olvidarContrasena()
+    {
+        if ($this->request->is('post')) {
+            //Obtenemos el email del usuario
+            $myEmail = $this->request->getData('email');
+            //Obtenemos el usuario que tiene ese email
+            $barbero = $this->Barbero->findByEmail($myEmail)->first();
+            //Creamos un Token para el usuario
+            $myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
+            //Seteamos el token en el usuario
+            $barbero->token = $myToken;
+            //Guardamos el usuario
+            if ($this->Barbero->save($barbero)) {
+                //Enviamos mensaje de éxito
+                $this->Flash->success(__('Se ha enviado un link para restablecer su contraseña a su correo electrónico(' . $barbero->email . ').'));
+            }
+
+            //Configuramos el correo
+            TransportFactory::setConfig('mailtrap', [
+                'host' => 'smtp.mailtrap.io',
+                'port' => 2525,
+                'username' => 'd88e91893889e5',
+                'password' => 'bf4754e19fe31e',
+                'className' => 'Smtp'
+            ]);
+
+            //Creamos el correo
+            $mailer = new Mailer();
+            //Seteamos la configuracion al correo
+            $mailer->setTransport('gmail'); //Para enviar por Gmail y no usar el entorno de pruebas de mailtrap
+            //$mailer->setTransport('mailtrap'); //Para utilizar el entorno de pruebas de mailtrap
+
+            //Creamos el mensaje
+            $mailer
+                ->setEmailFormat('html')
+                ->setTo($myEmail)
+                // ->setFrom('tapelau@tapelau.com.uy')
+                ->setSubject('Restablecer contraseña')
+                ->deliver('Hola ' . $barbero->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/barbero/restablecerContrasena/' . $barbero->token . '">Restablecer contraseña</a>');
+        }
+    }
+
+    public function restablecerContrasena($token)
+    {
+        if ($this->request->is('post')) {
+            //Obtenemos el usuario que tiene ese token
+            $barbero = $this->Barbero->findByToken($token)->first();
+            /*echo "1##".$token.'<br>';
+            echo "2##".$cliente->clave.'<br>';*/
+            //Seteamos la nueva contraseña
+            $barbero->clave = $this->request->getData('clave');
+            /*echo "3##".$cliente->clave.'<br>';
+            debug($cliente);*/
+            if ($this->Barbero->save($barbero)) {
+                $this->Flash->success(__('La contraseña ha sido cambiada'));
+                return $this->redirect(['controller' => 'Barbero', 'action' => 'login']);
+            }
+            $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
 }

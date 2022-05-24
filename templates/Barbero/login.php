@@ -9,6 +9,7 @@
         <?= $this->Form->control('clave',['type'=>'password'], ['required' => true]) ?>
     </fieldset>
     <?= $this->Form->submit(__('Login')); ?>
+    <?= $this->Html->link(__('Olvide mi contraseña'), ['action' => 'olvidarContrasena'], ['class'=>'button']) ?>
     <?= $this->Form->end() ?>
 <!-- 
      -->
