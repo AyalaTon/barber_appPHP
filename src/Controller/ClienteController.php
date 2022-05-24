@@ -249,7 +249,7 @@ class ClienteController extends AppController
             debug($cliente);*/
             if ($this->Cliente->save($cliente)) {
                 $this->Flash->success(__('La contraseña ha sido cambiada'));
-                return $this->redirect(['controller' => 'Cliente', 'action' => 'index']);
+                return $this->redirect(['controller' => 'Cliente', 'action' => 'login']);
             }
             $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
