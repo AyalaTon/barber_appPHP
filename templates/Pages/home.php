@@ -78,8 +78,11 @@ endif;
                 <img alt="CakePHP" src="https://cakephp.org/v2/img/logos/CakePHP_Logo.svg" width="350" />
             </a> -->
             <h1>
-                💈Bienvenid@ a Barber App💈
+                💈Bienvenid@s💈
             </h1>
+            <img src="img/logo-1.svg" width="100%" height="200px" alt="logo Tapelau">
+
+            </img>
         </div>
     </header>
     <main class="main">

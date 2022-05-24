@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -94,7 +93,7 @@ class BarberoTable extends Table
 
         $validator
             ->scalar('clave')
-            ->maxLength('clave', 18)
+            ->maxLength('clave', 255)
             ->requirePresence('clave', 'create')
             ->notEmptyString('clave');
 
@@ -110,6 +109,11 @@ class BarberoTable extends Table
             ->scalar('tel')
             ->maxLength('tel', 9)
             ->allowEmptyString('tel');
+
+        $validator
+            ->scalar('token')
+            ->maxLength('token', 255)
+            ->allowEmptyString('token');
 
         return $validator;
     }
