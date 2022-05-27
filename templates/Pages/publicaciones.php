@@ -15,6 +15,13 @@
 </div>
 <?= $this->Html->css(['publicaciones']) ?>
 <div class="publicacion index content">
+<?php
+    if($allowAddPost){
+    ?>
+    <a href="http://localhost:8765/publicacion/add"><button class="float-right" style="height: 70px"> <img src="/img/NewPost.png" style="width: 65px; height: 65px"></img> </button></a>
+    <?php
+    }
+    ?>
     <?php foreach ($publicacionesInvertidas as $publicacion) : ?>
         <div class="tweet-wrap">
             <div class="tweet-header">

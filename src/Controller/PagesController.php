@@ -84,6 +84,12 @@ class PagesController extends AppController
 
     public function publicaciones()
     {
+        $tipoUser = $_SESSION['tipo'];
+        if($tipoUser == 'barbero'){
+            $allowAddPost = true;
+        } else {
+            $allowAddPost = false;
+        } 
         //Encuentro todas las publicaciones
         $publicacion = $this->loadModel('Publicacion')->find('all');
         $publicaciones = Array();
@@ -98,6 +104,6 @@ class PagesController extends AppController
         for($i = count($publicaciones) - 1; $i >= 0; $i--) {
             array_push($publicacionesInvertidas, $publicaciones[$i]);
         }
-        $this->set(compact('publicacionesInvertidas'));
+        $this->set(compact('publicacionesInvertidas','allowAddPost'));
     }
 }
