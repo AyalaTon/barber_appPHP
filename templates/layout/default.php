@@ -50,7 +50,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             $url_link = '/barbero';
         } else if ($controlador == 'Cliente') {
             $url_link = '/cliente';
-        }else{
+        } else {
             $url_link = '/mapa';
         }
     }
@@ -67,22 +67,45 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         if ($this->request->getAttributes()['identity'] != null) {
 
         ?>
-            <div class="top-nav-links">
-                <div class="dropdown">
-                    <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                    <div class="dropdown-content">
-                        <ul>
-                            <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
-                            <li>
-                                <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
-                            </li>
+        <div class="top-nav-links">
+            <div class="dropdown">
+                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
+                <div class="dropdown-content">
+                    <ul>
+                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
+                        <li>
+                            <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
+                        </li>
+                        <!-- Si es Barbero lista 👇 -->
+                        <?php
+                            if ($controlador == 'Barbero') {
+                            ?>
+                        <!-- Si es Barbero sin barberia lista 👇 -->
+                        <?php
+                                if ($_SESSION['barberia_'] == null) {
+                                ?>
+                        <li>
+                            <?= $this->Html->link('Agregar/Unirme a barberia', '/barberia'); ?>
+                        </li>
+                        <?php
+                                }
+                                ?>
 
-                        </ul>
-                        <?= $this->Html->link('Cerrar sesión',['controller' => $_SESSION['tipo'],'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
-                    </div>
+
+                        <!-- Si es Cliente lista 👇 -->
+                        <?php
+                            } else if ($controlador == 'Cliente') {
+                            ?>
+
+                        <?php
+                            }
+                            ?>
+                    </ul>
+                    <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
                 </div>
-
             </div>
+
+        </div>
         <?php
 
         }
@@ -93,7 +116,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         if ($this->request->getAttributes()['identity'] != null) {
 
         ?>
-            <div class="top-nav-links" style="
+        <div class="top-nav-links" style="
                 display: flex;
                 justify-content: space-around;
                 padding: 10px;
@@ -103,9 +126,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 text-align: center;
                 font-size: 4rem;
                 ">
-                <a href="http://localhost:8765/mapa" style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i class="fas fa-map-marked-alt"></i><h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Barberías</h6></a>
-                <a href="http://localhost:8765/publicaciones" style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i class="fas fa-inbox"></i><h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Publicaciones</h6></a>            
-            </div>
+            <a href="http://localhost:8765/mapa"
+                style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
+                    class="fas fa-map-marked-alt"></i>
+                <h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Barberías</h6>
+            </a>
+            <a href="http://localhost:8765/publicaciones"
+                style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
+                    class="fas fa-inbox"></i>
+                <h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Publicaciones</h6>
+            </a>
+        </div>
         <?php
         }
         ?>
