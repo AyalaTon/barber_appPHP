@@ -58,6 +58,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         $user_data = $_SESSION['Auth'];
         $image_url = 'perfil/' . $user_data['imagen_perfil'];
     }
+    $tipoUser = $_SESSION['tipo'];
+    // $barbero = $_SESSION['Auth'];
     ?>
     <nav class="top-nav" style="box-shadow: 0 4px 6px -6px #222;">
         <div class="top-nav-title">
@@ -65,8 +67,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
         <?php
         if ($this->request->getAttributes()['identity'] != null) {
-
-        ?>
+            ?>
             <div class="top-nav-links">
                 <div class="dropdown">
                     <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
@@ -76,17 +77,24 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                             <li>
                                 <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
                             </li>
-
+                            
                         </ul>
                         <?= $this->Html->link('Cerrar sesión',['controller' => $_SESSION['tipo'],'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
+                        <?php
+                        if($tipoUser == "barbero"){
+                        ?>
+                            <?= $this->Html->link(__('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar'), ['class' => 'button float-right boton_cerrar'])?>
+                        <?php
+                        }
+                        ?>
+                        </div>
                     </div>
+                    
                 </div>
-
-            </div>
         <?php
 
-        }
-        ?>
+}
+?>
     </nav>
     <nav class="top-nav">
         <?php
