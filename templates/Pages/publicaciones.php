@@ -20,13 +20,14 @@
             <div class="tweet-header">
                 <img src="https://i.imgur.com/NtMjMeh.jpg" alt="" class="avator">
                 <div class="tweet-header-info">
-                    <?= $publicacion->barbershopInfo->nombre ?> <span>@BarberoDueño</span><span>01/18/2001 (En un futuro...)
+                    <?= $publicacion->barbershopInfo->nombre; ?> <span>@BarberoDueño</span><span>01/18/2001 (En un futuro...)
                     </span>
-                    <p><?= $publicacion->contenido ?></p>
+                    <p> <?= $publicacion->contenido;?> </p>
                 </div>
             </div>
             <div class="tweet-img-wrap">
-                <img src="<?= $publicacion->imagen ?>" alt="" class="tweet-img">
+                
+            <?= !file_exists($publicacion->image_urlServer) ? $this->Html->image($publicacion->image_urlServer,  array('alt' => '', 'class' => 'tweet-img')) : '' ?>
             </div>
         </div>
     <?php endforeach; ?>
