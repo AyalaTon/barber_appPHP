@@ -8,11 +8,13 @@ use Cake\Mailer\Mailer;
 use Cake\Utility\Security;
 use Cake\Mailer\TransportFactory;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Cake\ORM\Query;
 
 /**
  * Barbero Controller
  *
  * @property \App\Model\Table\BarberoTable $Barbero
+ * @var \App\Model\Entity\BarberoBarbershop $BarberoBarbershop
  * @method \App\Model\Entity\Barbero[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class BarberoController extends AppController
@@ -175,12 +177,26 @@ class BarberoController extends AppController
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            // redirect to /articles after login success
+
+            //redirect to /articles after login success
+
+            $barberoLogeado = $result->getData()['id'];
+            // $barbero = $this->Barbero->get($barberoLogeado);
+            // $barberia = $this->BarberoBarbershop->find('all', ['conditions' => ['Barbero.id' => $barberoLogeado]])->first();
+            $query = $this->Barbero->find('all')->contain(['Barbershop'])->where(['Barbero.id' => $barberoLogeado]);
+            $barberias = $query->first()['barbershop'];
+            $barberia_ = null;
+
+            foreach ($barberias as $barberia) {
+                $barberia_ = $barberia;
+            }
+
             $redirect = $this->request->getQuery('redirect', [
                 'controller' => 'Barbero',
                 'action' => 'index',
             ]);
             $_SESSION["tipo"] =  "barbero";
+            $_SESSION["barberia_"] =  $barberia_;
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed
