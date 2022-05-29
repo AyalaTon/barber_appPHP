@@ -80,12 +80,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <?php
                             if ($controlador == 'Barbero') {
                             ?>
-                        <!-- Si es Barbero sin barberia lista 👇 -->
+                        <!-- Si es Barbero con barberia lista 👇 -->
                         <?php
-                                if ($_SESSION['barberia_'] == null) {
+                                if ($_SESSION['barberia_'] != null) {
                                 ?>
                         <li>
-                            <?= $this->Html->link('Agregar/Unirme a barberia', '/barberia'); ?>
+                            <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
                         </li>
                         <?php
                                 }

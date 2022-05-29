@@ -186,14 +186,11 @@ class BarberoController extends AppController
             $query = $this->Barbero->find('all')->contain(['Barbershop'])->where(['Barbero.id' => $barberoLogeado]);
             $barberias = $query->first()['barbershop'];
             $barberia_ = null;
+
             foreach ($barberias as $barberia) {
                 $barberia_ = $barberia;
             }
-            // debug($barberia);
-            // debug($id_barberia);
-            // debug($query);
-            // debug($barberiaDeLogueado);
-            // $this->set(compact('barberia'));
+
             $redirect = $this->request->getQuery('redirect', [
                 'controller' => 'Barbero',
                 'action' => 'index',
