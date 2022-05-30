@@ -75,7 +75,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <ul>
                             <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
                             <li>
-                                <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
+                                <?= $this->Html->link('Perfil', $url_link . '/mi_perfil/' . $user_data['id']); ?>
                             </li>
                             
                         </ul>

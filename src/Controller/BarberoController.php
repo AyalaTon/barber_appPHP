@@ -259,4 +259,12 @@ class BarberoController extends AppController
             $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
+
+    public function miPerfil($id = null){
+        $barbero = $this->Barbero->get($id, [
+            'contain' => ['Barbershop', 'CalificacionCliente', 'Corte', 'HorarioBarbero', 'ListaNegra'],
+        ]);
+
+        $this->set(compact('barbero'));
+    }
 }
