@@ -77,35 +77,13 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <li>
                             <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
                         </li>
-
-                    </ul>
-                    <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
-                    <?php
-                        if ($tipoUser == "barbero") {
-                        ?>
-                    <?= $this->Html->link(__('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar'), ['class' => 'button float-right boton_cerrar']) ?>
-                    <?php
-                        }
-                        ?>
-                </div>
-            </div>
-
-        </div>
-
-        ?>
-        <div class="top-nav-links">
-            <div class="dropdown">
-                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                <div class="dropdown-content">
-                    <ul>
-                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
-                        <li>
-                            <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
-                        </li>
                         <!-- Si es Barbero lista 👇 -->
                         <?php
-                            if ($controlador == 'Barbero') {
+                            if ($tipoUser == 'barbero') {
                             ?>
+                        <li>
+                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
+                        </li>
                         <!-- Si es Barbero con barberia lista 👇 -->
                         <?php
                                 if ($_SESSION['barberia_'] != null) {
@@ -120,7 +98,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
                         <!-- Si es Cliente lista 👇 -->
                         <?php
-                            } else if ($controlador == 'Cliente') {
+                            } else if ($tipoUser == 'cliente') {
                             ?>
 
                         <?php
