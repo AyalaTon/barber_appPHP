@@ -57,14 +57,6 @@
                 'y': -32.7116,
                 'name': 'Barberia 3',
                 'address': 'Direccion de la barberia 3'
-            },
-            {
-                'id': 4,
-                'color': 'negro',
-                'x': -58.0686,
-                'y': -32.3216,
-                'name': 'Barberia 4',
-                'address': 'Direccion de la barberia 4 de Pay'
             }
         ];
         var features = [];
