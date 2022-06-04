@@ -148,7 +148,7 @@ class BarbershopController extends AppController
         //Se obtiene la barberia del barbero logeado.
         $barbershopDeBarbero = $this->Barbershop->BarberoBarbershop->findByBarberoId($barberoLogeado)->all();
         //  ($barberoLogeado)->first();
-        debug($barbershopDeBarbero);
+        // debug($barbershopDeBarbero);
 
         $options = array(
             'fields' => array(
