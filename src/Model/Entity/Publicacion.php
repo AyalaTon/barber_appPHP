@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property int $barbershop_id
  * @property string $contenido
  * @property string|null $imagen
+ * @property \Cake\I18n\FrozenTime|null $created
  *
  * @property \App\Model\Entity\Barbershop $barbershop
  */
@@ -30,6 +31,7 @@ class Publicacion extends Entity
         'barbershop_id' => true,
         'contenido' => true,
         'imagen' => true,
+        'created' => true,
         'barbershop' => true,
     ];
 }

@@ -175,6 +175,7 @@ class ClienteController extends AppController
                 'controller' => 'Cliente',
                 'action' => 'index',
             ]);
+            session_start();
             $_SESSION["tipo"] =  "cliente";
             return $this->redirect($redirect);
         }
