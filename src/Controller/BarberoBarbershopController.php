@@ -110,4 +110,31 @@ class BarberoBarbershopController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function barberoInvitado($idBarberoInvitado)
+    {
+
+        if ($this->request->is('get')) {
+
+            $barbero = $this->BarberoBarbershop->Barbero->findById($idBarberoInvitado)->first();
+
+            $barbershop = $this->BarberoBarbershop->Barbershop->findById((int)$_SESSION['barberia_']['id'])->first();
+
+            // .........................
+            $data = [
+                'barbero_id' => $barbero->id,
+                'barbershop_id' => $barbershop->id,
+
+            ];
+            $entity = $this->BarberoBarbershop->newEntity($data, ['validate' => false]);
+
+            if ($this->BarberoBarbershop->save($entity)) {
+                $this->Flash->success(__('El barbero ha sido agregado a tu barberia.'));
+            } else {
+                $this->Flash->error(__('El barbero no ha sido agregado a tu barberia.'));
+            }
+            // .........................
+            return $this->redirect(['controller' => 'Barbero', 'action' => 'index']);
+        }
+    }
 }

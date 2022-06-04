@@ -57,8 +57,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     if ($this->request->getAttributes()['identity'] != null) {
         $user_data = $_SESSION['Auth'];
         $image_url = 'perfil/' . $user_data['imagen_perfil'];
+        $tipoUser = $_SESSION['tipo'];
     }
-    $tipoUser = $_SESSION['tipo'];
     // $barbero = $_SESSION['Auth'];
     ?>
     <nav class="top-nav" style="box-shadow: 0 4px 6px -6px #222;">
@@ -81,15 +81,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <?php
                             if ($tipoUser == 'barbero') {
                             ?>
-                        <li>
-                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
-                        </li>
+
                         <!-- Si es Barbero con barberia lista 👇 -->
                         <?php
                                 if ($_SESSION['barberia_'] != null) {
                                 ?>
                         <li>
                             <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
+                        </li>
+                        <?php
+                                } else {
+                                ?>
+                        <li>
+                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
                         </li>
                         <?php
                                 }

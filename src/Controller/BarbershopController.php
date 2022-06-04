@@ -124,6 +124,8 @@ class BarbershopController extends AppController
         $this->set(compact('barbershop', 'barbero', 'barberoLogeado'));
     }
 
+
+
     public function invitar()
     {
 

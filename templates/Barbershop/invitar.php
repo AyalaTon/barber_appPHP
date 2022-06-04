@@ -34,11 +34,15 @@
                             class="img_perfil" />
                     </td>
                     <td>
-                        <?= $this->Form->postLink(
-                                __('Invitar'),
-                                ['action' => 'invitar', $barberoSinBarberia->id],
-                                ['confirm' => __('¿Está seguro de que desea invitar a este barbero?')]
-                            ) ?>
+
+                        <?=
+                            $this->Html->link('Invitar', array(
+                                'controller' => 'BarberoBarbershop',
+                                'action' => 'barberoInvitado',
+                                $barberoSinBarberia->id,
+                            ));
+
+                            ?>
                     </td>
                 </tr>
                 <?php } ?>
