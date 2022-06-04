@@ -15,6 +15,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Usuario</th>
                     <th>Nombre</th>
                     <th>Imagen</th>
@@ -24,6 +25,7 @@
             <tbody>
                 <?php foreach ($barberosSinBarberias as $barberoSinBarberia) { ?>
                 <tr>
+                    <td><?= $barberoSinBarberia->id ?></td>
                     <td><?= $barberoSinBarberia->usuario ?></td>
                     <td><?= $barberoSinBarberia->nombre ?></td>
                     <td>
@@ -41,7 +43,9 @@
                 </tr>
                 <?php } ?>
             </tbody>
+
         </table>
+
 
     </div>
 </div>

@@ -126,29 +126,34 @@ class BarbershopController extends AppController
 
     public function invitar()
     {
+
+        $barberoLogeado = (int)$_SESSION['Auth']['id'];
         $barbershop = $this->Barbershop->newEmptyEntity();
         if ($this->request->is('post')) {
-            $barbershop = $this->Barbershop->patchEntity($barbershop, $this->request->getData());
-            if ($this->Barbershop->save($barbershop)) {
+            $barberoId = $this->request->getData('barbero_id');
+            $barbershopId = $this->request->getData('barbershop_id');
+
+            if ($this->Barbershop->BarberoBarbershop->save($barbershop)) {
                 $this->Flash->success(__('The barbershop has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The barbershop could not be saved. Please, try again.'));
         }
+
         $barbero = $this->Barbershop->Barbero->find('list', ['limit' => 200])->all();
-        $barberoLogeado = (int)$_SESSION['Auth']['id'];
-        // get the barberos without barbershop
-        // $barberos = $this->Barbershop->Barbero->find('all')->where(['Barbero.barbershop_id' => null]);
-        // $barberos = $this->Barbershop->find('all')->where(['Barbershop.barbero_id' => $barberoLogeado]);
-        // $query = $this->Barbero->find('all')->contain(['Barbershop'])->where(['Barbero.id' => $barberoLogeado]);
+
+        //Se obtiene la barberia del barbero logeado.
+        $barbershopDeBarbero = $this->Barbershop->BarberoBarbershop->findByBarberoId($barberoLogeado)->all();
+        //  ($barberoLogeado)->first();
+        debug($barbershopDeBarbero);
 
         $options = array(
             'fields' => array(
                 'BarberoBarbershop.barbero_id',
             ),
         );
-        // $this->loadModel('BarberoBarbershop');
+
         $data = $this->Barbershop->BarberoBarbershop->find('all', $options);
 
         $barberosSinBarberias = $this->Barbershop->Barbero->find('all')->contain(['BarberoBarbershop'])->where(['Barbero.id NOT IN' => $data])->all()->toArray();
