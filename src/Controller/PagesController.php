@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Core\Configure;
@@ -80,8 +82,28 @@ class PagesController extends AppController
         return $this->display('mapa');
     }
 
-    public function publicaciones(): Response
+    public function publicaciones()
     {
-        return $this->display('publicaciones');
+        $tipoUser = $_SESSION['tipo'];
+        if($tipoUser == 'barbero'){
+            $allowAddPost = true;
+        } else {
+            $allowAddPost = false;
+        } 
+        //Encuentro todas las publicaciones
+        $publicacion = $this->loadModel('Publicacion')->find('all');
+        $publicaciones = Array();
+        $publicacionesInvertidas = Array(); //Mas reciente primero
+        //Recorro todas las publicaciones y le seteo un campo barbershopInfo que contiene la información de la barbería 
+        foreach ($publicacion as $publicacion) :
+            $publicacion->barbershopInfo = $this->loadModel('Barbershop')->find('all')->where(['Barbershop.id' => $publicacion->barbershop_id])->first();
+            $publicacion->image_urlServer = 'http://localhost/barber_appPHP/webroot/img/publicaciones/'.$publicacion->imagen;
+            array_push($publicaciones, $publicacion);
+        endforeach;
+        //Invierto el array para que el mas reciente sea el primero
+        for($i = count($publicaciones) - 1; $i >= 0; $i--) {
+            array_push($publicacionesInvertidas, $publicaciones[$i]);
+        }
+        $this->set(compact('publicacionesInvertidas','allowAddPost'));
     }
 }

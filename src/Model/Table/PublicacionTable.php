@@ -69,10 +69,17 @@ class PublicacionTable extends Table
             ->notEmptyString('contenido');
 
         $validator
-            ->scalar('imagen')
-            ->maxLength('imagen', 500)
-            ->allowEmptyFile('imagen');
-
+            ->allowEmptyFile('imagen')
+            ->add('imagen', [
+                'mimeType' => [
+                    'rule' => ['mimeType', ['image/jpeg', 'image/png', 'image/jpg']],
+                    'message' => 'Solo se aceptan imagenes jpg, jpeg y png',
+                ],
+                'fileSize' => [
+                    'rule' => ['fileSize', '<=', '2MB'],
+                    'message' => 'La imagen debe ser menor a 2MB',
+                ],
+            ]);
         return $validator;
     }
 

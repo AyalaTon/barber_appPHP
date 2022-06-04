@@ -57,12 +57,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     if ($this->request->getAttributes()['identity'] != null) {
         $user_data = $_SESSION['Auth'];
         $image_url = 'perfil/' . $user_data['imagen_perfil'];
-        $tipoUser = $_SESSION['tipo'];
     }
-<<<<<<< Updated upstream
-=======
+    $tipoUser = $_SESSION['tipo'];
     // $barbero = $_SESSION['Auth'];
->>>>>>> Stashed changes
     ?>
     <nav class="top-nav" style="box-shadow: 0 4px 6px -6px #222;">
         <div class="top-nav-title">
@@ -70,7 +67,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
         <?php
         if ($this->request->getAttributes()['identity'] != null) {
-
         ?>
         <div class="top-nav-links">
             <div class="dropdown">
@@ -83,8 +79,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         </li>
                         <!-- Si es Barbero lista 👇 -->
                         <?php
-                            if ($controlador == 'Barbero') {
+                            if ($tipoUser == 'barbero') {
                             ?>
+                        <li>
+                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
+                        </li>
                         <!-- Si es Barbero con barberia lista 👇 -->
                         <?php
                                 if ($_SESSION['barberia_'] != null) {
@@ -99,7 +98,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
                         <!-- Si es Cliente lista 👇 -->
                         <?php
-                            } else if ($controlador == 'Cliente') {
+                            } else if ($tipoUser == 'cliente') {
                             ?>
 
                         <?php
