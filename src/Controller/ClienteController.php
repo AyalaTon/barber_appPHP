@@ -175,7 +175,10 @@ class ClienteController extends AppController
                 'controller' => 'Cliente',
                 'action' => 'index',
             ]);
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            // session_start();
             $_SESSION["tipo"] =  "cliente";
             return $this->redirect($redirect);
         }

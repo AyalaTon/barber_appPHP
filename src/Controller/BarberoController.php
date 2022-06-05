@@ -195,7 +195,12 @@ class BarberoController extends AppController
                 'controller' => 'Barbero',
                 'action' => 'index',
             ]);
-            session_start();
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            // if (!isset($_SESSION)) {
+            //     session_start();
+            // }
             $_SESSION["tipo"] =  "barbero";
             $_SESSION["barberia_"] =  $barberia_;
             return $this->redirect($redirect);
