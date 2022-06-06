@@ -293,7 +293,7 @@ class ClienteController extends AppController
                 ->setFrom('tapelau@tapelau.com.uy')
                 ->setSubject('Restablecer contraseña');
             try {
-                $mailer->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/' . $cliente->token . '">Restablecer contraseña</a>');
+                $mailer->deliver('Hola ' . $cliente->nombre . ', para restablecersdadasd su contraseña haga click en el siguiente enlace: <br><a href="http://192.168.56.1/barber_appPHP/cliente/restablecerContrasena/' . $cliente->token . '">Restablecer contraseña</a>');
                 $status = true;
                 $message = "Cliente logged in";
                 $data = $cliente;
@@ -310,6 +310,25 @@ class ClienteController extends AppController
             ]);
 
             $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+        }
+    }
+
+    public function restablecerContrasena($token)
+    {
+        if ($this->request->is('post')) {
+            //Obtenemos el usuario que tiene ese token
+            $cliente = $this->Cliente->findByToken($token)->first();
+            /*echo "1##".$token.'<br>';
+            echo "2##".$cliente->clave.'<br>';*/
+            //Seteamos la nueva contraseña
+            $cliente->clave = $this->request->getData('clave');
+            /*echo "3##".$cliente->clave.'<br>';
+            debug($cliente);*/
+            if ($this->Cliente->save($cliente)) {
+                $this->Flash->success(__('La contraseña ha sido cambiada'));
+                return $this->redirect(['controller' => 'Cliente', 'action' => 'login']);
+            }
+            $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
 }
