@@ -15,6 +15,9 @@ use Cake\ORM\Entity;
  * @property string|null $email
  * @property string|null $website
  * @property \Cake\I18n\FrozenDate $habilitado
+ * @property string|null $latitud
+ * @property string|null $longitud
+ * @property string|null $imagen_perfil
  *
  * @property \App\Model\Entity\Publicacion[] $publicacion
  * @property \App\Model\Entity\Barbero[] $barbero
@@ -37,6 +40,9 @@ class Barbershop extends Entity
         'email' => true,
         'website' => true,
         'habilitado' => true,
+        'latitud' => true,
+        'longitud' => true,
+        'imagen_perfil' => true,
         'publicacion' => true,
         'barbero' => true,
     ];

@@ -9,20 +9,21 @@
 <div class="row">
     <div class="column-responsive">
         <div class="barbershop form content">
-            <?= $this->Form->create($barbershop) ?>
+            <?= $this->Form->create($barbershop, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Add Barbershop') ?></legend>
                 <?php
                 echo $this->Form->control('nombre');
                 ?>
-
+                <legend>Seleccione en el mapa el lugar donde se encuentra la barbería</legend>
                 <body onload='init();'>
-                    <div id="Map" style="height: 650px"></div>
-
+                    <div id="Map" style="height: 400px"></div>
                 </body>
-                
                 <?php
-                echo $this->Form->control('direccion');
+                echo $this->Form->control('direccion', array('readonly' => 'readonly'));
+                echo $this->Form->control('longitud', array('readonly' => 'readonly'));
+                echo $this->Form->control('latitud', array('readonly' => 'readonly'));
+                echo $this->Form->control('imagen_perfil', ['type' => 'file']);
                 echo $this->Form->control('tel');
                 echo $this->Form->control('email');
                 echo $this->Form->control('website');
@@ -118,7 +119,10 @@
             lonlat1 = new OpenLayers.LonLat(lonlat.lon, lonlat.lat).transform(toProjection, fromProjection);
             const addressResposne = reverseGeocode(lonlat1.lon, lonlat1.lat);
             reverseGeocode(lonlat1.lon, lonlat1.lat).then((data) => {
-                alert("Lon:" + lonlat1.lon + " | Lat: " + lonlat1.lat + "| Direccion:" + data.display_name);
+                //alert("Lon:" + lonlat1.lon + " | Lat: " + lonlat1.lat + "| Direccion:" + data.display_name);
+                document.getElementById("direccion").value = data.display_name;
+                document.getElementById("latitud").value = lonlat1.lat;
+                document.getElementById("longitud").value = lonlat1.lon;
             });
         },
 
