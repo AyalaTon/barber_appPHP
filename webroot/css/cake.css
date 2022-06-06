@@ -275,6 +275,34 @@ th {
     border: solid grey 2px;
 }
 
+.img_perfil_barbershop {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 9999%;
+    border: solid grey 2px;
+}
+
+.img_perfil_barbershop_card {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 9999%;
+    border: solid grey 2px;
+}
+
+.card_barberos {
+    margin-top: 2rem;
+    padding: 0 1.5rem !important;
+    border-radius: 8%;
+    background-color: #7692bd;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.card_barberos_content {
+    align-items: center;
+    justify-content: center;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
