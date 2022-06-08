@@ -35,8 +35,7 @@
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
-                            <img class="img_perfil_barbershop_card" src="https://i.imgur.com/LuqJuye.jpg"
-                                alt="<?= h($barbershop->barbero[$i]->imagen_perfil) ?>">
+                            <?= $this->Html->image('perfil/'.$barbershop->barbero[$i]->imagen_perfil,  array('alt' => 'noImage', 'class' => 'img_perfil_barbershop_card')); ?>
                         </div>
                         <div class="column column-40">
                             <h5 style="margin: 0 !important;">
@@ -44,7 +43,7 @@
                             </h5>
                         </div>
                         <div class="column column-30">
-                            Reservar <?php echo $i ?>
+                            
                         </div>
                     </div>
                 </div>
@@ -54,8 +53,7 @@
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
-                            <img class="img_perfil_barbershop_card" src="https://i.imgur.com/LuqJuye.jpg"
-                                alt="<?= h($barbershop->barbero[$i + 1]->imagen_perfil) ?>">
+                            <?= $this->Html->image('perfil/'.$barbershop->barbero[$i + 1]->imagen_perfil,  array('alt' => 'noImage', 'class' => 'img_perfil_barbershop_card')); ?>
                         </div>
                         <div class="column column-40">
                             <h5 style="margin: 0 !important;">
@@ -63,7 +61,7 @@
                             </h5>
                         </div>
                         <div class="column column-30">
-                            Reservar <?php echo $i + 1 ?>
+                            
                         </div>
                     </div>
                 </div>
@@ -73,16 +71,15 @@
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
-                            <img class="img_perfil_barbershop_card" src="https://i.imgur.com/LuqJuye.jpg"
-                                alt="<?= h($barbershop->barbero[$i + 2]->imagen_perfil) ?>">
+                            <?= $this->Html->image('perfil/'.$barbershop->barbero[$i + 2]->imagen_perfil,  array('alt' => 'noImage', 'class' => 'img_perfil_barbershop_card')); ?>
                         </div>
-                        <div class="column column-40">
+                        <div class="column-responsive column-40">
                             <h5 style="margin: 0 !important;">
                                 <b><?= h($barbershop->barbero[$i + 2]->nombre) ?></b>
                             </h5>
                         </div>
                         <div class="column column-30">
-                            Reservar <?php echo $i + 2 ?>
+                            
                         </div>
                     </div>
                 </div>
