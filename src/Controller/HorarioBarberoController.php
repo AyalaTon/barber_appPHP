@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -49,6 +50,7 @@ class HorarioBarberoController extends AppController
      */
     public function add()
     {
+
         $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
         if ($this->request->is('post')) {
             $horarioBarbero = $this->HorarioBarbero->patchEntity($horarioBarbero, $this->request->getData());
@@ -62,6 +64,24 @@ class HorarioBarberoController extends AppController
         $barbero = $this->HorarioBarbero->Barbero->find('list', ['limit' => 200])->all();
         $this->set(compact('horarioBarbero', 'barbero'));
     }
+
+    public function agregar()
+    {
+        $this->loadModel('HorarioBarbero');
+        $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $horarioBarbero = $this->HorarioBarbero->patchEntity($horarioBarbero, $this->request->getData());
+            if ($this->HorarioBarbero->save($horarioBarbero)) {
+                $this->Flash->success(__('The horario barbero has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The horario barbero could not be saved. Please, try again.'));
+        }
+        $barbero = $this->HorarioBarbero->Barbero->find('list', ['limit' => 200])->all();
+        $this->set(compact('horarioBarbero', 'barbero'));
+    }
+
 
     /**
      * Edit method
