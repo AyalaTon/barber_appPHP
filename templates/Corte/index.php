@@ -29,7 +29,7 @@
                     <td><?= $corte->has('barbero') ? $this->Html->link($corte->barbero->id, ['controller' => 'Barbero', 'action' => 'view', $corte->barbero->id]) : '' ?></td>
                     <td><?= h($corte->nombre) ?></td>
                     <td><?= h($corte->descripcion) ?></td>
-                    <td><?= h($corte->imagen) ?></td>
+                    <td> <img src='<?= h($corte->imagen) ?>'></td>
                     <td><?= $this->Number->format($corte->precio) ?></td>
                     <td><?= h($corte->tiempo_estimado) ?></td>
                     <td><?= $this->Number->format($corte->tipo) ?></td>

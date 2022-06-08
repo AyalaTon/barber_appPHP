@@ -49,6 +49,9 @@ class CorteController extends AppController
      */
     public function add()
     {
+        // $result = $this->Authentication->getResult();
+        // $barberoLogeado = $result->getData()['id'];
+        $barberoLogeado = (int)$_SESSION['Auth']['id'];
         $corte = $this->Corte->newEmptyEntity();
         if ($this->request->is('post')) {
             $corte = $this->Corte->patchEntity($corte, $this->request->getData());
@@ -60,7 +63,27 @@ class CorteController extends AppController
             $this->Flash->error(__('The corte could not be saved. Please, try again.'));
         }
         $barbero = $this->Corte->Barbero->find('list', ['limit' => 200])->all();
-        $this->set(compact('corte', 'barbero'));
+        
+        // $tipoCorte = $this->loadModel('TipoCorte')->find('list', ['limit' => 200])->all(); 
+        $tipoCortes = $this->loadModel('TipoCorte')->find('all')->toArray(); 
+        $tipoCortes2 = json_encode($tipoCortes);
+        $listaNombre = null;
+        foreach ($tipoCortes as $tipoCorte) {
+            $listaNombre[$tipoCorte->id] = $tipoCorte->nombre;
+        }
+        $listaImagenes = null;
+        foreach ($tipoCortes as $tipoCorte) {
+            $listaImagenes[$tipoCorte->id] = $tipoCorte->imagen;
+        }
+        $listaDescripciones = null;
+        foreach ($tipoCortes as $tipoCorte) {
+            $listaDescripciones[$tipoCorte->id] = $tipoCorte->descripcion;
+        }
+        // debug($tipoCortes2);
+        // debug($listaNombre);
+        // debug($listaImagen);
+        // debug($barberoLogeado);
+        $this->set(compact('corte', 'barbero', 'barberoLogeado', 'tipoCorte', 'listaNombre', 'listaImagenes', 'listaDescripciones'));
     }
 
     /**
