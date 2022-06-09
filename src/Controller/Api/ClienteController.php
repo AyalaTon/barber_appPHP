@@ -44,6 +44,27 @@ class ClienteController extends AppController
         // form data
         $formData = $this->request->getData();
 
+        function base64_to_jpeg($base64_string, $output_file)
+        {
+            // open the output file for writing
+            $ifp = fopen($output_file, 'wb');
+
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            // $data = explode(',', $base64_string);
+
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($base64_string));
+
+            // clean up the file resource
+            fclose($ifp);
+
+            return $output_file;
+        }
+
+
+
         // email address check rules
         $empData = $this->Cliente->find()->where([
             "email" => $formData['email']
@@ -56,6 +77,17 @@ class ClienteController extends AppController
         } else {
             // insert new Cliente
             $empObject = $this->Cliente->newEmptyEntity();
+
+            if (!empty($formData['imagen_perfil'])) {
+                $imagen_perfil_base64 = $formData['imagen_perfil'];
+
+                base64_to_jpeg($imagen_perfil_base64, WWW_ROOT . 'img' . DS . 'perfil' . $formData['usuario'] . '.jpeg');
+
+                $formData['imagen_perfil'] = $formData['usuario'] . '.jpeg';
+            } else {
+                $formData['imagen_perfil'] = 'default.jpeg';
+            }
+            // $formData['imagen_perfil'] = $formData['usuario'] . '.jpeg';
 
             $empObject = $this->Cliente->patchEntity($empObject, $formData);
 
@@ -302,7 +334,7 @@ class ClienteController extends AppController
                 $message = "Ha ocurrido un error al enviar un correo a " . $myEmail;
                 $data = null;
             }
-            
+
             $this->set([
                 "status" => $status,
                 "message" => $message,
