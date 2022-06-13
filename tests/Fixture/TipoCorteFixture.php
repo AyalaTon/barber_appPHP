@@ -26,7 +26,9 @@ class TipoCorteFixture extends TestFixture
         $this->records = [
             [
                 'id' => 1,
-                'tipo' => 'Lorem ipsum dolor sit amet',
+                'nombre' => 'Lorem ipsum dolor sit amet',
+                'descripcion' => 'Lorem ipsum dolor sit amet',
+                'imagen' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

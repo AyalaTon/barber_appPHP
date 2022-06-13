@@ -33,7 +33,6 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
     <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
     <?= $this->Html->script('jquery-3.6.0.min.js'); ?>
-
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -102,6 +101,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <?php
                                 }
                                 ?>
+                        <li>
+                            <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index')) ?>
+                        </li>
 
 
                         <!-- Si es Cliente lista 👇 -->

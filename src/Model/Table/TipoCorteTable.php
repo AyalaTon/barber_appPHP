@@ -51,10 +51,19 @@ class TipoCorteTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->scalar('tipo')
-            ->maxLength('tipo', 50)
-            ->requirePresence('tipo', 'create')
-            ->notEmptyString('tipo');
+            ->scalar('nombre')
+            ->maxLength('nombre', 50)
+            ->allowEmptyString('nombre');
+
+        $validator
+            ->scalar('descripcion')
+            ->maxLength('descripcion', 500)
+            ->allowEmptyString('descripcion');
+
+        $validator
+            ->scalar('imagen')
+            ->maxLength('imagen', 500)
+            ->allowEmptyFile('imagen');
 
         return $validator;
     }
