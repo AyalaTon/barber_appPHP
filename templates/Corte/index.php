@@ -5,7 +5,7 @@
  */
 ?>
 <div class="corte index content">
-    <?= $this->Html->link(__('New Corte'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('New Corte'), ['action' => 'agregar'], ['class' => 'button float-right']) ?>
     <h3><?= __('Corte') ?></h3>
     <div class="table-responsive">
         <table>
