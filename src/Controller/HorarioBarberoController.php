@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Cake\I18n\FrozenDate;
+use Cake\I18n\FrozenTime;
 
 /**
  * HorarioBarbero Controller
@@ -18,6 +22,7 @@ class HorarioBarberoController extends AppController
      */
     public function index()
     {
+        $this->loadModel('HorarioBarbero');
         $this->paginate = [
             'contain' => ['Barbero'],
         ];
@@ -49,6 +54,7 @@ class HorarioBarberoController extends AppController
      */
     public function add()
     {
+
         $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
         if ($this->request->is('post')) {
             $horarioBarbero = $this->HorarioBarbero->patchEntity($horarioBarbero, $this->request->getData());
@@ -62,6 +68,55 @@ class HorarioBarberoController extends AppController
         $barbero = $this->HorarioBarbero->Barbero->find('list', ['limit' => 200])->all();
         $this->set(compact('horarioBarbero', 'barbero'));
     }
+
+    public function agregar()
+    {
+        $this->loadModel('HorarioBarbero');
+
+        $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+        if ($this->request->is('post')) {
+
+            // set values to horario barbero
+            $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+            if ($this->request->getData()['dias'] == 0) {
+                $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+                $horarioBarbero->barbero_id = $_SESSION['Auth']['id'];
+                $horarioBarbero->fecha = $this->request->getData('fecha_desde');
+                $horarioBarbero->hora_inicio = $this->request->getData('hora_inicio');
+                $horarioBarbero->hora_fin = $this->request->getData('hora_fin');
+                $horarioBarbero->disponible = true;
+                if ($this->HorarioBarbero->save($horarioBarbero)) {
+                    $this->Flash->success(__('El horario se ha guardado correctamente.'));
+                    return $this->redirect(['action' => 'index']);
+                }
+            } else if ($this->request->getData()['dias'] == 1 || $this->request->getData()['dias'] == 2 || $this->request->getData()['dias'] == 3) {
+                $fechaDesde = new FrozenDate($this->request->getData('fecha_desde'));
+                $fechaHasta = new FrozenDate($this->request->getData('fecha_hasta'));
+
+                try {
+                    while ($fechaDesde <= $fechaHasta) {
+                        $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+                        $horarioBarbero->barbero_id = $_SESSION['Auth']['id'];
+                        $horarioBarbero->fecha = $fechaDesde;
+                        $horarioBarbero->hora_inicio = $this->request->getData('hora_inicio');
+                        $horarioBarbero->hora_fin = $this->request->getData('hora_fin');
+                        $horarioBarbero->disponible = true;
+                        $this->HorarioBarbero->save($horarioBarbero);
+                        $fechaDesde = $fechaDesde->modify('+1 day');
+                    }
+                    $this->Flash->success(__('Los horarios se han guardado correctamente.'));
+                    return $this->redirect(['action' => 'index']);
+                } catch (\Exception $e) {
+                    $this->Flash->error(__('Los horarios no se pudieron guardar. Por favor, intente nuevamente.'));
+                }
+            } else {
+                return $this->redirect(['action' => 'index']);
+            }
+        }
+        $barbero = $this->HorarioBarbero->Barbero->find('list', ['limit' => 200])->all();
+        $this->set(compact('horarioBarbero', 'barbero'));
+    }
+
 
     /**
      * Edit method
