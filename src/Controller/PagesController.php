@@ -77,9 +77,15 @@ class PagesController extends AppController
         return $this->display('home');
     }
 
-    public function mapa(): Response
+    public function mapa()
     {
-        return $this->display('mapa');
+        $barberias = $this->loadModel('Barbershop')->find('all');
+        $listaBarberias = Array();
+        foreach ($barberias as $barberia) :
+            array_push($listaBarberias, $barberia);
+        endforeach;
+        $this->set(compact('listaBarberias'));
+        $this->display('mapa');
     }
 
     public function publicaciones()

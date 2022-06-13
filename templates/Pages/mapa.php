@@ -1,4 +1,3 @@
-
 <head>
     <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -32,9 +31,30 @@
     <div id="map" class="map">
         <div id="popup"></div>
     </div>
+    <?php
+    //Convertimos la lista de Barberias a JSON encoded (EN PHP)
+    //Luego en JavaScript convertimos el JSON a un array de objetos, utilizando la variable de PHP (EN JAVASCRIPT)
+    $listaBarberiasConvertidas = array();
+    foreach ($listaBarberias as $barberia) {
+        if ($barberia->latitud != null && $barberia->longitud != null) {
+            $listaBarberiasConvertidas[] = array(
+                'id' => (int)$barberia->id,
+                'color' => 'negro',
+                'x' => (double)$barberia->longitud,
+                'y' => (double)$barberia->latitud,
+                'name' => $barberia->nombre,
+                'address' => $barberia->direccion
+            );
+        }
+    }
+    $listaBarberiasJSONENCODE = json_encode($listaBarberiasConvertidas);
+    ?>
     <script type="text/javascript">
         window.scrollTo(0, document.body.scrollHeight);
-        var locations = [{
+        <?php echo "var locationsJSONCODE = '$listaBarberiasJSONENCODE';" ?>
+        var locations = JSON.parse(locationsJSONCODE);
+        console.log(locations);
+        /*var locations = [{
                 'id': 1,
                 'color': 'amarillo',
                 'x': -57.6240,
@@ -49,16 +69,9 @@
                 'y': -32.7035,
                 'name': 'Barberia 2',
                 'address': 'Calle tanto y calle otra tanto.'
-            },
-            {
-                'id': 3,
-                'color': 'negro',
-                'x': -57.6474,
-                'y': -32.7116,
-                'name': 'Barberia 3',
-                'address': 'Direccion de la barberia 3'
             }
         ];
+        console.log(locations);*/
         var features = [];
         $.each(locations, function() {
             var that = this;

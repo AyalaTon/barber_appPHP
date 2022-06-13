@@ -94,6 +94,30 @@ class BarbershopTable extends Table
             ->requirePresence('habilitado', 'create')
             ->notEmptyDate('habilitado');
 
+        $validator
+            ->scalar('latitud')
+            ->maxLength('latitud', 255)
+            ->notEmptyString('latitud');
+
+        $validator
+            ->scalar('longitud')
+            ->maxLength('longitud', 255)
+            ->notEmptyString('longitud');
+
+            $validator
+            ->scalar('imagen_perfil')
+            ->allowEmptyFile('imagen_perfil')
+            ->add('imagen_perfil', [
+                'mimeType' => [
+                    'rule' => ['mimeType', ['image/jpeg', 'image/png', 'image/jpg']],
+                    'message' => 'Solo se aceptan imagenes jpg, jpeg y png',
+                ],
+                'fileSize' => [
+                    'rule' => ['fileSize', '<=', '2MB'],
+                    'message' => 'La imagen debe ser menor a 2MB',
+                ],
+            ]);
+
         return $validator;
     }
 }

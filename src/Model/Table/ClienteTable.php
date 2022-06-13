@@ -107,17 +107,17 @@ class ClienteTable extends Table
 
         $validator
             ->scalar('imagen_perfil')
-            ->allowEmptyFile('imagen_perfil')
-            ->add('imagen_perfil', [
-                'mimeType' => [
-                    'rule' => ['mimeType', ['image/jpeg', 'image/png', 'image/jpg']],
-                    'message' => 'Solo se aceptan imagenes jpg, jpeg y png',
-                ],
-                'fileSize' => [
-                    'rule' => ['fileSize', '<=', '2MB'],
-                    'message' => 'La imagen debe ser menor a 2MB',
-                ],
-            ]);
+            ->allowEmptyFile('imagen_perfil');
+        // ->add('imagen_perfil', [
+        //     // 'mimeType' => [
+        //     //     'rule' => ['mimeType', ['image/jpeg', 'image/png', 'image/jpg']],
+        //     //     'message' => 'Solo se aceptan imagenes jpg, jpeg y png',
+        //     // ],
+        //     'fileSize' => [
+        //         'rule' => ['fileSize', '<=', '2MB'],
+        //         'message' => 'La imagen debe ser menor a 2MB',
+        //     ],
+        // ]);
 
         return $validator;
     }

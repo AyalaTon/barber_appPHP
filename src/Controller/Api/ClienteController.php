@@ -44,6 +44,27 @@ class ClienteController extends AppController
         // form data
         $formData = $this->request->getData();
 
+        function base64_to_jpeg($base64_string, $output_file)
+        {
+            // open the output file for writing
+            $ifp = fopen($output_file, 'wb');
+
+            // split the string on commas
+            // $data[ 0 ] == "data:image/png;base64"
+            // $data[ 1 ] == <actual base64 string>
+            // $data = explode(',', $base64_string);
+
+            // we could add validation here with ensuring count( $data ) > 1
+            fwrite($ifp, base64_decode($base64_string));
+
+            // clean up the file resource
+            fclose($ifp);
+
+            return $output_file;
+        }
+
+
+
         // email address check rules
         $empData = $this->Cliente->find()->where([
             "email" => $formData['email']
@@ -56,6 +77,17 @@ class ClienteController extends AppController
         } else {
             // insert new Cliente
             $empObject = $this->Cliente->newEmptyEntity();
+
+            if (!empty($formData['imagen_perfil'])) {
+                $imagen_perfil_base64 = $formData['imagen_perfil'];
+
+                base64_to_jpeg($imagen_perfil_base64, WWW_ROOT . 'img' . DS . 'perfil' . $formData['usuario'] . '.jpeg');
+
+                $formData['imagen_perfil'] = $formData['usuario'] . '.jpeg';
+            } else {
+                $formData['imagen_perfil'] = 'default.jpeg';
+            }
+            // $formData['imagen_perfil'] = $formData['usuario'] . '.jpeg';
 
             $empObject = $this->Cliente->patchEntity($empObject, $formData);
 
@@ -293,7 +325,7 @@ class ClienteController extends AppController
                 ->setFrom('tapelau@tapelau.com.uy')
                 ->setSubject('Restablecer contraseña');
             try {
-                $mailer->deliver('Hola ' . $cliente->nombre . ', para restablecer su contraseña haga click en el siguiente enlace: <br><a href="http://localhost:8765/cliente/restablecerContrasena/' . $cliente->token . '">Restablecer contraseña</a>');
+                $mailer->deliver('Hola ' . $cliente->nombre . ', para restablecersdadasd su contraseña haga click en el siguiente enlace: <br><a href="http://192.168.56.1/barber_appPHP/cliente/restablecerContrasena/' . $cliente->token . '">Restablecer contraseña</a>');
                 $status = true;
                 $message = "Cliente logged in";
                 $data = $cliente;
@@ -302,7 +334,7 @@ class ClienteController extends AppController
                 $message = "Ha ocurrido un error al enviar un correo a " . $myEmail;
                 $data = null;
             }
-            
+
             $this->set([
                 "status" => $status,
                 "message" => $message,
@@ -310,6 +342,25 @@ class ClienteController extends AppController
             ]);
 
             $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+        }
+    }
+
+    public function restablecerContrasena($token)
+    {
+        if ($this->request->is('post')) {
+            //Obtenemos el usuario que tiene ese token
+            $cliente = $this->Cliente->findByToken($token)->first();
+            /*echo "1##".$token.'<br>';
+            echo "2##".$cliente->clave.'<br>';*/
+            //Seteamos la nueva contraseña
+            $cliente->clave = $this->request->getData('clave');
+            /*echo "3##".$cliente->clave.'<br>';
+            debug($cliente);*/
+            if ($this->Cliente->save($cliente)) {
+                $this->Flash->success(__('La contraseña ha sido cambiada'));
+                return $this->redirect(['controller' => 'Cliente', 'action' => 'login']);
+            }
+            $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
 }

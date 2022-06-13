@@ -15,26 +15,37 @@
 </div>
 <?= $this->Html->css(['publicaciones']) ?>
 <div class="publicacion index content">
-<?php
-    if($allowAddPost){
+    <?php
+    if ($allowAddPost) {
     ?>
-    <a href="http://localhost:8765/publicacion/add"><button class="float-right" style="height: 70px"> <img src="/img/NewPost.png" style="width: 65px; height: 65px"></img> </button></a>
+        <a href="http://localhost:8765/publicacion/add"><button class="float-right" style="height: 70px"> <img src="/img/NewPost.png" style="width: 65px; height: 65px"></img> </button></a>
     <?php
     }
     ?>
     <?php foreach ($publicacionesInvertidas as $publicacion) : ?>
         <div class="tweet-wrap">
             <div class="tweet-header">
-                <img src="https://i.imgur.com/NtMjMeh.jpg" alt="" class="avator">
+                <?php 
+                $image_perfil_barbershop = "barbershop/default.png";
+                $publicacion_fecha_creacion = '';
+                if($publicacion->barbershopInfo->imagen_perfil!=null){
+                    $image_perfil_barbershop = 'barbershop/' .$publicacion->barbershopInfo->imagen_perfil;
+                }
+                if($publicacion->created != null){
+                    $publicacion_fecha_creacion = $publicacion->created->format('d/m/Y');
+                }
+                
+                ?>
+                <?= $this->Html->image($image_perfil_barbershop,  array('alt' => 'default.png', 'class' => 'avator')); ?>
                 <div class="tweet-header-info">
-                    <?= $publicacion->barbershopInfo->nombre; ?> <span>@BarberoDueño</span><span>01/18/2001 (En un futuro...)
+                    <?= $publicacion->barbershopInfo->nombre; ?> <span>@<?= $publicacion->barbershopInfo->nombre; ?></span><span><?= $publicacion_fecha_creacion; ?>
                     </span>
-                    <p> <?= $publicacion->contenido;?> </p>
+                    <p> <?= $publicacion->contenido; ?> </p>
                 </div>
             </div>
             <div class="tweet-img-wrap">
-                
-            <?= !file_exists($publicacion->image_urlServer) ? $this->Html->image($publicacion->image_urlServer,  array('alt' => '', 'class' => 'tweet-img')) : '' ?>
+
+                <?= !file_exists($publicacion->image_urlServer) ? $this->Html->image($publicacion->image_urlServer,  array('alt' => '', 'class' => 'tweet-img')) : '' ?>
             </div>
         </div>
     <?php endforeach; ?>
