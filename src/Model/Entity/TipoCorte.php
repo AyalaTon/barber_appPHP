@@ -9,7 +9,9 @@ use Cake\ORM\Entity;
  * TipoCorte Entity
  *
  * @property int $id
- * @property string $tipo
+ * @property string|null $nombre
+ * @property string|null $descripcion
+ * @property string|null $imagen
  */
 class TipoCorte extends Entity
 {
@@ -23,6 +25,8 @@ class TipoCorte extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'tipo' => true,
+        'nombre' => true,
+        'descripcion' => true,
+        'imagen' => true,
     ];
 }
