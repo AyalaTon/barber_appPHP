@@ -90,6 +90,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <li>
                             <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
                         </li>
+                        <li>
+                            <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar'); ?>
+                        </li>
                         <?php
                                 } else {
                                 ?>
