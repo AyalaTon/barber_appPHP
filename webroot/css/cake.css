@@ -311,6 +311,7 @@ th {
 .card_barberos_content {
     align-items: center;
     justify-content: center;
+    padding: 5px;
 }
 
 .dropdown {
