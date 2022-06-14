@@ -45,9 +45,18 @@ return [
              */
             //'port' => 'non_standard_port_number',
 
+<<<<<<< Updated upstream
             'username' => 'bf822f8a3e440d',
             'password' => '808e6055',
 
+=======
+            // 'username' => 'bf822f8a3e440d',
+            // 'password' => '808e6055',
+            'username' => 'root',
+            'password' => '',
+
+            // 'database' => 'heroku_06fd63244285041',
+>>>>>>> Stashed changes
             'database' => 'heroku_06fd63244285041',
             /*
              * If not using the default 'public' schema with the PostgreSQL driver

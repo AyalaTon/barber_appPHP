@@ -258,4 +258,10 @@ class ClienteController extends AppController
             $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
+    public function miPerfil($id = null){
+        $cliente = $this->Cliente->get($id);
+        $this->set(compact('cliente'));
+        $this->set('_serialize', ['cliente']);
+    }
+
 }
