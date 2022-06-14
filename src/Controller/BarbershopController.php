@@ -41,6 +41,15 @@ class BarbershopController extends AppController
         $this->set(compact('barbershop'));
     }
 
+    public function ver($id = null)
+    {
+        $barbershop = $this->Barbershop->get($id, [
+            'contain' => ['Barbero', 'Publicacion'],
+        ]);
+
+        $this->set(compact('barbershop'));
+    }
+
     /**
      * Add method
      *
