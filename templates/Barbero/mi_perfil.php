@@ -18,11 +18,8 @@ if ($this->request->getAttributes()['identity'] != null) {
 <div class="row" >
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
 
         </div>
-
-
 
     </aside>
     <div class="column-responsive column-80">
@@ -32,8 +29,8 @@ if ($this->request->getAttributes()['identity'] != null) {
             
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5" ><img class="img-foto-usuario" width="150px" src="<?= $image_url ?>">
-                    <span class="font-weight-bold">Edogaru</span>
-                    <span class="text-black-50">edogaru@mail.com.my</span><span></span>
+                    <span class="font-weight-bold">  </span>
+                    <span class="text-black-50"> </span><span></span>
                 </div>
            
             </div>
