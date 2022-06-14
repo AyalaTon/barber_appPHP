@@ -8,7 +8,7 @@ body {
 }
 
 .profile-button {
-  background: rgb(99, 39, 120)!important;
+  background: rgb(209, 20, 13)!important;
   box-shadow: none !important;
   border: none 
 }
@@ -18,12 +18,12 @@ body {
 }
 
 .profile-button:focus {
-  background: #682773 !important;
+  background: #a12708 !important;
   box-shadow: none !important
 }
 
 .profile-button:active {
-  background: #682773 !important;
+  background: #dd340a !important;
   box-shadow: none !important
 }
 
@@ -46,4 +46,11 @@ body {
 form i {
   margin-left: -30px;
   cursor: pointer;
+}
+
+.img-foto-usuario {
+  width: 49x;
+  height: 150px;
+  border-radius: 9999%;
+  border: solid rgb(163, 163, 163) 6px;
 }
