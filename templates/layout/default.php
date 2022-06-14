@@ -67,17 +67,17 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
         <?php
         if ($this->request->getAttributes()['identity'] != null) {
-        ?>
-        <div class="top-nav-links">
-            <div class="dropdown">
-                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                <div class="dropdown-content">
-                    <ul>
-                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
-                        <li>
-                            <?= $this->Html->link('Perfil', $url_link . '/view/' . $user_data['id']); ?>
-                        </li>
-                        <!-- Si es Barbero lista 👇 -->
+            ?>
+            <div class="top-nav-links">
+                <div class="dropdown">
+                    <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
+                    <div class="dropdown-content">
+                        <ul>
+                            <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
+                            <li>
+                                <?= $this->Html->link('Perfil', $url_link . '/mi_perfil/' . $user_data['id']); ?>
+                            </li>
+                        </ul>
                         <?php
                             if ($tipoUser == 'barbero') {
                             ?>

@@ -93,9 +93,6 @@ class StringType extends BaseType implements OptionalConvertInterface
         if ($value === null || is_array($value)) {
             return null;
         }
-        if(is_object($value)){
-            return (string)'';
-        }
 
         return (string)$value;
     }

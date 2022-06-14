@@ -87,7 +87,34 @@ class BarberoController extends AppController
             $barbero = $this->Barbero->patchEntity($barbero, $this->request->getData());
             if ($this->Barbero->save($barbero)) {
                 $this->Flash->success(__('The barbero has been saved.'));
-
+            //Si el barbero no tiene ningún error
+            if (!$barbero->getErrors) {
+                //Obtener imagen de perfil
+                $image = $this->request->getData('imagen_perfil');
+                //Obtenemos el nombre de la imagen
+                $name = $image->getClientFilename();
+                //Si el nombre de la imagen no está vacío, es porque no seleccionó niguna imágen
+                if ($name !== '') {
+                    //Obtenemos la extensión de la imagen
+                    $ext = substr(strtolower(strrchr($name, '.')), 1);
+                    //Si no existe el directorio para guardar la imagen de perfil la creamos
+                    if (!is_dir(WWW_ROOT . 'img' . DS . 'perfil')) {
+                        mkdir(WWW_ROOT . 'img' . DS . 'perfil', 0775);
+                    }
+                    //Establecemos la ruta dónde queremos guardar la imagen
+                    $targetPath = WWW_ROOT . 'img' . DS . 'perfil' . DS . $barbero->usuario . '.' . $ext;
+                    //Movemos la imagen a la carpeta
+                    if ($name)
+                        $image->moveTo($targetPath);
+                    //Guardamos el registro
+                    $barbero->imagen_perfil = $barbero->usuario . '.' . $ext;
+                } else {
+                    //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
+                    $barbero->imagen_perfil = 'default.png';
+                }
+            } else {
+                $barbero->imagen_perfil = 'default.png';
+            }
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The barbero could not be saved. Please, try again.'));
@@ -95,6 +122,7 @@ class BarberoController extends AppController
         $barbershop = $this->Barbero->Barbershop->find('list', ['limit' => 200])->all();
         $this->set(compact('barbero', 'barbershop'));
     }
+
 
     /**
      * Delete method
@@ -280,5 +308,13 @@ class BarberoController extends AppController
             }
             $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
+    }
+
+    public function miPerfil($id = null){
+        $barbero = $this->Barbero->get($id, [
+            'contain' => ['Barbershop', 'CalificacionCliente', 'Corte', 'HorarioBarbero', 'ListaNegra'],
+        ]);
+
+        $this->set(compact('barbero'));
     }
 }
