@@ -26,8 +26,7 @@
                 </div>
             </div>
             <?php
-            if (sizeof($barbershop->barbero) > 3) {
-                for ($i = 0; sizeof($barbershop->barbero) > $i; $i = $i + 3) {
+            for ($i = 0; sizeof($barbershop->barbero) >= $i; $i = $i + 3) {
             ?>
             <div class="row ">
                 <?php if (isset($barbershop->barbero[$i])) { ?>
@@ -35,7 +34,7 @@
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
-                            <?= $this->Html->image('perfil/'.$barbershop->barbero[$i]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
+                            <?= $this->Html->image('perfil/' . $barbershop->barbero[$i]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
                         </div>
                         <div class="column column-40">
                             <h5 style="margin: 0 !important;">
@@ -43,7 +42,7 @@
                             </h5>
                         </div>
                         <div class="column column-30">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -53,7 +52,7 @@
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
-                            <?= $this->Html->image('perfil/'.$barbershop->barbero[$i + 1]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
+                            <?= $this->Html->image('perfil/' . $barbershop->barbero[$i + 1]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
                         </div>
                         <div class="column column-40">
                             <h5 style="margin: 0 !important;">
@@ -61,7 +60,7 @@
                             </h5>
                         </div>
                         <div class="column column-30">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -71,7 +70,7 @@
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
-                            <?= $this->Html->image('perfil/'.$barbershop->barbero[$i + 2]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
+                            <?= $this->Html->image('perfil/' . $barbershop->barbero[$i + 2]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
                         </div>
                         <div class="column-responsive column-40">
                             <h5 style="margin: 0 !important;">
@@ -79,14 +78,14 @@
                             </h5>
                         </div>
                         <div class="column column-30">
-                            
+
                         </div>
                     </div>
                 </div>
                 <?php } ?>
             </div>
             <?php }
-            } ?>
+            ?>
             <!--
             <div class="related">
                 <h4><?= __('Related Barbero') ?></h4>
