@@ -79,29 +79,45 @@ class HorarioBarberoController extends AppController
             // set values to horario barbero
             $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
             if ($this->request->getData()['dias'] == 0) {
-                $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
-                $horarioBarbero->barbero_id = $_SESSION['Auth']['id'];
-                $horarioBarbero->fecha = $this->request->getData('fecha_desde');
-                $horarioBarbero->hora_inicio = $this->request->getData('hora_inicio');
-                $horarioBarbero->hora_fin = $this->request->getData('hora_fin');
-                $horarioBarbero->disponible = true;
-                if ($this->HorarioBarbero->save($horarioBarbero)) {
+
+                $horaDesde = new FrozenTime($this->request->getData('hora_inicio'));
+                $horaHasta = new FrozenTime($this->request->getData('hora_fin'));
+
+                try {
+                    while ($horaDesde != $horaHasta) {
+                        $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+                        $horarioBarbero->barbero_id = $_SESSION['Auth']['id'];
+                        $horarioBarbero->fecha = $this->request->getData('fecha_desde');
+                        $horarioBarbero->hora_inicio = $horaDesde->format('H:i:s');
+                        $horaDesde = $horaDesde->modify('+30 minutes');
+                        $horarioBarbero->hora_fin = $horaDesde->format('H:i:s');
+                        $horarioBarbero->disponible = true;
+                        $this->HorarioBarbero->save($horarioBarbero);
+                    }
                     $this->Flash->success(__('El horario se ha guardado correctamente.'));
                     return $this->redirect(['action' => 'index']);
+                } catch (\Exception $e) {
+                    $this->Flash->error(__('Los horarios no se pudieron guardar. Por favor, intente nuevamente.'));
                 }
             } else if ($this->request->getData()['dias'] == 1 || $this->request->getData()['dias'] == 2 || $this->request->getData()['dias'] == 3) {
                 $fechaDesde = new FrozenDate($this->request->getData('fecha_desde'));
                 $fechaHasta = new FrozenDate($this->request->getData('fecha_hasta'));
+                $horaDesde = new FrozenTime($this->request->getData('hora_inicio'));
+                $horaHasta = new FrozenTime($this->request->getData('hora_fin'));
 
                 try {
                     while ($fechaDesde <= $fechaHasta) {
-                        $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
-                        $horarioBarbero->barbero_id = $_SESSION['Auth']['id'];
-                        $horarioBarbero->fecha = $fechaDesde;
-                        $horarioBarbero->hora_inicio = $this->request->getData('hora_inicio');
-                        $horarioBarbero->hora_fin = $this->request->getData('hora_fin');
-                        $horarioBarbero->disponible = true;
-                        $this->HorarioBarbero->save($horarioBarbero);
+                        $hora_desde_w = $horaDesde;
+                        while ($hora_desde_w != $horaHasta) {
+                            $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+                            $horarioBarbero->barbero_id = $_SESSION['Auth']['id'];
+                            $horarioBarbero->fecha = $fechaDesde;
+                            $horarioBarbero->hora_inicio = $hora_desde_w->format('H:i:s');
+                            $hora_desde_w = $hora_desde_w->modify('+30 minutes');
+                            $horarioBarbero->hora_fin = $hora_desde_w->format('H:i:s');
+                            $horarioBarbero->disponible = true;
+                            $this->HorarioBarbero->save($horarioBarbero);
+                        }
                         $fechaDesde = $fechaDesde->modify('+1 day');
                     }
                     $this->Flash->success(__('Los horarios se han guardado correctamente.'));
