@@ -325,6 +325,7 @@ class ClienteController extends AppController
                 ->setFrom('tapelau@tapelau.com.uy')
                 ->setSubject('Restablecer contraseña');
             try {
+                $this->Cliente->save($cliente);
                 $mailer->deliver('Hola ' . $cliente->nombre . ', para restablecersdadasd su contraseña haga click en el siguiente enlace: <br><a href="http://192.168.56.1/barber_appPHP/cliente/restablecerContrasena/' . $cliente->token . '">Restablecer contraseña</a>');
                 $status = true;
                 $message = "Cliente logged in";
@@ -345,22 +346,33 @@ class ClienteController extends AppController
         }
     }
 
-    public function restablecerContrasena($token)
+    public function restablecerContrasena()
     {
+        $this->request->allowMethod(["post"]);
         if ($this->request->is('post')) {
-            //Obtenemos el usuario que tiene ese token
+            $token = $this->request->getData("token");
+            $newPassword =  $this->request->getData("password");
             $cliente = $this->Cliente->findByToken($token)->first();
-            /*echo "1##".$token.'<br>';
-            echo "2##".$cliente->clave.'<br>';*/
-            //Seteamos la nueva contraseña
-            $cliente->clave = $this->request->getData('clave');
-            /*echo "3##".$cliente->clave.'<br>';
-            debug($cliente);*/
-            if ($this->Cliente->save($cliente)) {
-                $this->Flash->success(__('La contraseña ha sido cambiada'));
-                return $this->redirect(['controller' => 'Cliente', 'action' => 'login']);
+            $cliente->clave = $newPassword;
+
+            try {
+                $this->Cliente->save($cliente);
+                $status = true;
+                $message = "Contraseña modificada con éxito.";
+                $data = $cliente;
+            } catch (Exception $e) {
+                $status = false;
+                $message = "No se ha podidio modificar la contraseña";
+                $data = null;
             }
-            $this->Flash->error(__('La contraseña no ha sido cambiada'));
+
+            $this->set([
+                "status" => $status,
+                "message" => $message,
+                "data" => $data
+            ]);
+
+            $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
         }
     }
 }
