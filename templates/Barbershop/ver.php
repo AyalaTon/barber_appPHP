@@ -30,7 +30,8 @@
             ?>
             <div class="row ">
                 <?php if (isset($barbershop->barbero[$i])) { ?>
-                <div class="column column-33 card_barberos">
+                <div onclick="window.location.href = '/corte/listado/<?= $barbershop->barbero[$i]->id; ?>';"
+                    class="column column-33 card_barberos">
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
@@ -41,14 +42,13 @@
                                 <b><?= h($barbershop->barbero[$i]->nombre) ?></b> Reservar
                             </h5>
                         </div>
-                        <div class="column column-30">
 
-                        </div>
                     </div>
                 </div>
                 <?php } ?>
                 <?php if (isset($barbershop->barbero[$i + 1])) { ?>
-                <div class="column column-33 card_barberos">
+                <div onclick="window.location.href = '/corte/listado/<?= $barbershop->barbero[$i + 1]->id; ?>';"
+                    class="column column-33 card_barberos">
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
@@ -59,14 +59,13 @@
                                 <b><?= h($barbershop->barbero[$i + 1]->nombre) ?></b> Reservar
                             </h5>
                         </div>
-                        <div class="column column-30">
 
-                        </div>
                     </div>
                 </div>
                 <?php } ?>
                 <?php if (isset($barbershop->barbero[$i + 1])) { ?>
-                <div class="column column-33 card_barberos">
+                <div onclick="window.location.href = '/corte/listado/<?= $barbershop->barbero[$i + 2]->id; ?>';"
+                    class="column column-33 card_barberos">
                     <div class="row card_barberos_content">
                         <div style="display:flex; align-items: center; justify-content: center;"
                             class="column column-30 ">
@@ -77,9 +76,7 @@
                                 <b><?= h($barbershop->barbero[$i + 2]->nombre) ?></b> Reservar
                             </h5>
                         </div>
-                        <div class="column column-30">
 
-                        </div>
                     </div>
                 </div>
                 <?php } ?>
@@ -154,3 +151,9 @@
         </div>
     </div>
 </div>
+
+<script>
+function irACortes() {
+
+}
+</script>

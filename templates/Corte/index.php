@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Corte[]|\Cake\Collection\CollectionInterface $corte
@@ -23,10 +24,11 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($corte as $corte): ?>
+                <?php foreach ($corte as $corte) : ?>
                 <tr>
                     <td><?= $this->Number->format($corte->id) ?></td>
-                    <td><?= $corte->has('barbero') ? $this->Html->link($corte->barbero->id, ['controller' => 'Barbero', 'action' => 'view', $corte->barbero->id]) : '' ?></td>
+                    <td><?= $corte->has('barbero') ? $this->Html->link($corte->barbero->id, ['controller' => 'Barbero', 'action' => 'view', $corte->barbero->id]) : '' ?>
+                    </td>
                     <td><?= h($corte->nombre) ?></td>
                     <td><?= h($corte->descripcion) ?></td>
                     <td> <img src='<?= h($corte->imagen) ?>'></td>
@@ -51,6 +53,7 @@
             <?= $this->Paginator->next(__('next') . ' >') ?>
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?>
+        </p>
     </div>
 </div>

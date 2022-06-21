@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -48,6 +49,23 @@ class ReservaController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
+    {
+        $reserva = $this->Reserva->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $reserva = $this->Reserva->patchEntity($reserva, $this->request->getData());
+            if ($this->Reserva->save($reserva)) {
+                $this->Flash->success(__('The reserva has been saved.'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
+        }
+        $cliente = $this->Reserva->Cliente->find('list', ['limit' => 200])->all();
+        $corte = $this->Reserva->Corte->find('list', ['limit' => 200])->all();
+        $this->set(compact('reserva', 'cliente', 'corte'));
+    }
+
+    public function corte($id_corte = null)
     {
         $reserva = $this->Reserva->newEmptyEntity();
         if ($this->request->is('post')) {

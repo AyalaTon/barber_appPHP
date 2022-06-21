@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -24,6 +25,15 @@ class CorteController extends AppController
         $corte = $this->paginate($this->Corte);
 
         $this->set(compact('corte'));
+    }
+
+    public function listado($id = null)
+    {
+        $coresDelBarbero = $this->Corte->findByBarberoId($id);
+        $cortes = $coresDelBarbero->toList();
+        // debug($cortes);
+        // exit;
+        $this->set(compact('cortes'));
     }
 
     /**
@@ -63,9 +73,9 @@ class CorteController extends AppController
             $this->Flash->error(__('The corte could not be saved. Please, try again.'));
         }
         $barbero = $this->Corte->Barbero->find('list', ['limit' => 200])->all();
-        
+
         // $tipoCorte = $this->loadModel('TipoCorte')->find('list', ['limit' => 200])->all(); 
-        $tipoCortes = $this->loadModel('TipoCorte')->find('all')->toArray(); 
+        $tipoCortes = $this->loadModel('TipoCorte')->find('all')->toArray();
         $tipoCortes2 = json_encode($tipoCortes);
         $listaNombre = null;
         foreach ($tipoCortes as $tipoCorte) {
@@ -108,9 +118,9 @@ class CorteController extends AppController
             $this->Flash->error(__('The corte could not be saved. Please, try again.'));
         }
         $barbero = $this->Corte->Barbero->find('list', ['limit' => 200])->all();
-        
+
         // $tipoCorte = $this->loadModel('TipoCorte')->find('list', ['limit' => 200])->all(); 
-        $tipoCortes = $this->loadModel('TipoCorte')->find('all')->toArray(); 
+        $tipoCortes = $this->loadModel('TipoCorte')->find('all')->toArray();
         $tipoCortes2 = json_encode($tipoCortes);
         $listaNombre = null;
         foreach ($tipoCortes as $tipoCorte) {
