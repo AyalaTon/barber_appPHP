@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\HorarioBarbero;
+
 /**
  * Reserva Controller
  *
@@ -77,9 +79,14 @@ class ReservaController extends AppController
             }
             $this->Flash->error(__('The reserva could not be saved. Please, try again.'));
         }
-        $cliente = $this->Reserva->Cliente->find('list', ['limit' => 200])->all();
-        $corte = $this->Reserva->Corte->find('list', ['limit' => 200])->all();
-        $this->set(compact('reserva', 'cliente', 'corte'));
+        $corte = $this->Reserva->Corte->findById($id_corte)->toArray()[0];
+        $horarios = $this->Reserva->Corte->Barbero->HorarioBarbero->find('all', [
+            'conditions' => ['HorarioBarbero.barbero_id =' => $corte['barbero_id'], 'HorarioBarbero.disponible =' => 1],
+        ])->toArray();
+        // debug($corte);
+        // debug($horarios);
+        // exit;
+        $this->set(compact('reserva', 'corte', 'horarios'));
     }
 
     /**
