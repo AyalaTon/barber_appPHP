@@ -162,7 +162,7 @@
             //alert("//TODO: REDIRECT TO "+feature.get('name')); //Al dar Lick en el icono se muestra la direccion //SE PUEDE HACER UN REDIRECT
 
             $(element).popover({
-                'placement': 'top',
+                'placement': 'left',
                 'animation': true,
                 'html': true,
                 //'content': '<p>' + feature.get('address') + ' patito color ' + feature.get('patito_color') + '</p>'
