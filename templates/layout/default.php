@@ -87,6 +87,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                                 if ($_SESSION['barberia_'] != null) {
                                 ?>
                         <li>
+                            <?= $this->Html->link('Mi Barberia', '/barbershop/ver/' . $_SESSION['barberia_']['id']); ?>
+                        </li>
+                        <li>
                             <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
                         </li>
                         <li>
