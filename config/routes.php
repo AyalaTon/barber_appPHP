@@ -113,6 +113,7 @@ return static function (RouteBuilder $routes) {
         $builder->connect("/cliente/obtener-cliente-por-usuario/{usuario}", ["controller" => "Cliente", "action" => "obtenerClientePorUsuario"]);
         $builder->connect("/cliente/olvidar-contrasena", ["controller" => "Cliente", "action" => "olvidarContrasena"]);
         $builder->connect("/cliente/restablecer-contrasena", ["controller" => "Cliente", "action" => "restablecerContrasena"]);
+        $builder->connect("/listar-barberias", ["controller" => "Cliente", "action" => "listarBarberias"]);
 
         //Builder para el controlador Barbero
         $builder->connect("/barbero/listar-barberos", ["controller" => "Barbero", "action" => "listarBarberos"]);
