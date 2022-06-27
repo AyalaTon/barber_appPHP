@@ -278,8 +278,8 @@ th {
 .img_perfil_barbershop {
     width: 12rem;
     height: 12rem;
-    border-radius: 9999%;
-    border: solid grey 2px;
+    /*border-radius: 9999%;
+    border: solid grey 2px;*/
 }
 
 .img_perfil_barbershop_card {

@@ -6,7 +6,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style type="text/css">
     body {
-        margin-bottom: 25px;
+        margin-bottom: 10px;
     }
 
     #map:focus {
@@ -27,6 +27,11 @@
         padding: 0 2rem;
         position: relative;
         width: 100%;
+    }
+
+    .popover{
+        margin: 0 auto;
+        position: absolute;
     }
 
     .popover-content {
@@ -51,7 +56,8 @@
                 'x' => (float)$barberia->longitud,
                 'y' => (float)$barberia->latitud,
                 'name' => $barberia->nombre,
-                'address' => $barberia->direccion
+                'address' => $barberia->direccion,
+                'imagen_perfil' => $barberia->imagen_perfil
             );
         }
     }
@@ -90,7 +96,8 @@
             geometry: coordinates,
             address: that.address,
             patito_color: that.color,
-            name: that.name
+            name: that.name,
+            imagen_perfil: that.imagen_perfil
         });
         feature.setStyle(
             new ol.style.Style({
@@ -156,10 +163,10 @@
 
             $(element).popover({
                 'placement': 'top',
-                'animation': false,
+                'animation': true,
                 'html': true,
                 //'content': '<p>' + feature.get('address') + ' patito color ' + feature.get('patito_color') + '</p>'
-                'content': '<div style="width:auto;"><img src="https://www.pngkey.com/png/detail/409-4092711_proximamente-png-proximamente.png" alt="Barberia" style="width:100%"><div class="container"><h4><b>' +
+                'content': '<div style="width:auto;"><img src=http://localhost/barber_appPHP/webroot/img/barbershop/'+feature.get('imagen_perfil')+' alt="Barberia" style="width:100%"><div class="container"><h4><b>' +
                     feature.get('name') + '</b></h4> <p>' + feature.get(
                         'address') +
                     `</p> </div><button style="width: -webkit-fill-available; color:white !important;" ><a href="barbershop/ver/` +

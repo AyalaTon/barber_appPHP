@@ -172,8 +172,8 @@ class ClienteController extends AppController
         if ($result->isValid()) {
             // redirect to /articles after login success
             $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Cliente',
-                'action' => 'index',
+                'controller' => 'Pages',
+                'action' => 'mapa',
             ]);
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();

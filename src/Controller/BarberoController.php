@@ -220,8 +220,8 @@ class BarberoController extends AppController
             }
 
             $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Barbero',
-                'action' => 'index',
+                'controller' => 'Pages',
+                'action' => 'mapa',
             ]);
             if (session_status() == PHP_SESSION_NONE) {
                 session_start();
