@@ -15,14 +15,29 @@
 </div>
 <?= $this->Html->css(['publicaciones']) ?>
 <div class="publicacion index content">
-<div class="tweet-wrap">
-        <form action="http://localhost:8765/publicacion/add">
-          <div class="tweetbox__input">
-            <input type="text" id="contenido" placeholder="¿En que estás pensando?" />
-          </div>
-          <button>Publicar</button>
-        </form>
-      </div>
+    <?php
+    if ($allowAddPost) {
+    ?>
+        <div class="tweet-wrap">
+            <?= $this->Form->create($publicacion, ['type' => 'file']) ?>
+            <fieldset>
+                <legend><?= __('CREAR PUBLICACIÓN') ?></legend>
+                <?php
+                echo $this->Form->control('contenido', array('label' => false));
+                echo $this->Form->control('imagen', array('type' => 'file','label'=>false));
+                ?>
+                <div hidden>
+                    <?php
+                    echo $this->Form->control('barbershop_id', ['options' => $barbershop, 'default' => $barbershopDeBarberoLogeado]);
+                    ?>
+                </div>
+            </fieldset>
+            <?= $this->Form->button(__('Publicar')) ?>
+            <?= $this->Form->end() ?>
+        </div>
+    <?php
+    }
+    ?>
     <?php
     if ($allowAddPost) {
     ?>
@@ -33,16 +48,16 @@
     <?php foreach ($publicacionesInvertidas as $publicacion) : ?>
         <div class="tweet-wrap">
             <div class="tweet-header">
-                <?php 
+                <?php
                 $image_perfil_barbershop = "barbershop/default.png";
                 $publicacion_fecha_creacion = '';
-                if($publicacion->barbershopInfo->imagen_perfil!=null){
-                    $image_perfil_barbershop = 'barbershop/' .$publicacion->barbershopInfo->imagen_perfil;
+                if ($publicacion->barbershopInfo->imagen_perfil != null) {
+                    $image_perfil_barbershop = 'barbershop/' . $publicacion->barbershopInfo->imagen_perfil;
                 }
-                if($publicacion->created != null){
+                if ($publicacion->created != null) {
                     $publicacion_fecha_creacion = $publicacion->created->format('d/m/Y');
                 }
-                
+
                 ?>
                 <?= $this->Html->image($image_perfil_barbershop,  array('alt' => 'default.png', 'class' => 'avator')); ?>
                 <div class="tweet-header-info">

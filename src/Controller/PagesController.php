@@ -23,6 +23,7 @@ use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 use Cake\View\Exception\MissingTemplateException;
+use Cake\Utility\Security;
 
 /**
  * Static content controller
@@ -80,7 +81,7 @@ class PagesController extends AppController
     public function mapa()
     {
         $barberias = $this->loadModel('Barbershop')->find('all');
-        $listaBarberias = Array();
+        $listaBarberias = array();
         foreach ($barberias as $barberia) :
             array_push($listaBarberias, $barberia);
         endforeach;
@@ -91,25 +92,67 @@ class PagesController extends AppController
     public function publicaciones()
     {
         $tipoUser = $_SESSION['tipo'];
-        if($tipoUser == 'barbero'){
+        if ($tipoUser == 'barbero') {
             $allowAddPost = true;
         } else {
             $allowAddPost = false;
-        } 
+        }
         //Encuentro todas las publicaciones
         $publicacion = $this->loadModel('Publicacion')->find('all');
-        $publicaciones = Array();
-        $publicacionesInvertidas = Array(); //Mas reciente primero
+        $publicaciones = array();
+        $publicacionesInvertidas = array(); //Mas reciente primero
         //Recorro todas las publicaciones y le seteo un campo barbershopInfo que contiene la información de la barbería 
         foreach ($publicacion as $publicacion) :
             $publicacion->barbershopInfo = $this->loadModel('Barbershop')->find('all')->where(['Barbershop.id' => $publicacion->barbershop_id])->first();
-            $publicacion->image_urlServer = 'http://localhost/barber_appPHP/webroot/img/publicaciones/'.$publicacion->imagen;
+            $publicacion->image_urlServer = 'http://localhost/barber_appPHP/webroot/img/publicaciones/' . $publicacion->imagen;
             array_push($publicaciones, $publicacion);
         endforeach;
         //Invierto el array para que el mas reciente sea el primero
-        for($i = count($publicaciones) - 1; $i >= 0; $i--) {
+        for ($i = count($publicaciones) - 1; $i >= 0; $i--) {
             array_push($publicacionesInvertidas, $publicaciones[$i]);
         }
-        $this->set(compact('publicacionesInvertidas','allowAddPost'));
+
+        if ($tipoUser == 'barbero') {
+            $publicacion = $this->loadModel('Publicacion')->newEmptyEntity();
+            $barberoLogeado = (int)$_SESSION['Auth']['id'];
+            if ($this->request->is('post')) {
+                $publicacion = $this->loadModel('Publicacion')->patchEntity($publicacion, $this->request->getData());
+                //Obtener imagen de perfil
+                $image = $this->request->getData('imagen');
+                // debug($image);
+                // exit;
+                //Obtenemos el nombre de la imagen
+                $name = $image->getClientFilename();
+                //Si el nombre de la imagen no está vacío, es porque no seleccionó niguna imágen
+                if ($name !== '') {
+                    //Obtenemos la extensión de la imagen
+                    $ext = substr(strtolower(strrchr($name, '.')), 1);
+                    //Si no existe el directorio para guardar la imagen de perfil la creamos
+                    if (!is_dir(WWW_ROOT . 'img' . DS . 'publicaciones')) {
+                        mkdir(WWW_ROOT . 'img' . DS . 'publicaciones', 0775);
+                    }
+                    //Establecemos la ruta dónde queremos guardar la imagen
+                    $myToken = Security::hash(Security::randomBytes(32), 'sha256', true);
+                    $targetPath = WWW_ROOT . 'img' . DS . 'publicaciones' . DS . $barberoLogeado . '-' . $myToken . '.' . $ext;
+                    //Movemos la imagen a la carpeta
+                    if ($name)
+                        $image->moveTo($targetPath);
+                    //Guardamos el registro
+                    $publicacion->imagen = $barberoLogeado . '-' . $myToken . '.' . $ext;
+                } else {
+                    //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
+                    $publicacion->imagen = null; //'defaultPost.png';
+                }
+                if ($this->loadModel('Publicacion')->save($publicacion)) {
+                    return $this->redirect(['controller' => 'Pages', 'action' => 'publicaciones']);
+                }
+            }
+            $barbershop =  $this->loadModel('Publicacion')->Barbershop->find('list', ['limit' => 200])->all();
+            $barbero = $this->loadModel('Barbero')->findById($barberoLogeado)->toList();
+            $barbershopDeBarberoLogeado = $this->loadModel('BarberoBarbershop')->find('all')->where(['BarberoBarbershop.barbero_id' => $barberoLogeado])->first()->barbershop_id;
+            $this->set(compact('publicacion', 'barbershopDeBarberoLogeado', 'barbershop', 'publicacionesInvertidas', 'allowAddPost'));
+        }else{
+            $this->set(compact('publicacionesInvertidas', 'allowAddPost'));
+        }
     }
 }
