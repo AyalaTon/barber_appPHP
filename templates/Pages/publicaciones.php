@@ -23,7 +23,7 @@
             <fieldset>
                 <legend><?= __('CREAR PUBLICACIÓN') ?></legend>
                 <?php
-                echo $this->Form->control('contenido', array('label' => false));
+                echo $this->Form->control('contenido', array('label' => false, 'placeholder' => '¿Qué está pasando?'));
                 echo $this->Form->control('imagen', array('type' => 'file','label'=>false));
                 ?>
                 <div hidden>
