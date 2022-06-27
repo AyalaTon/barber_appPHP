@@ -151,8 +151,8 @@ class BarbershopController extends AppController
             if ($this->Barbershop->save($barbershop)) {
                 $this->Flash->success(__('The barbershop has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-                // return $this->redirect(['controller' => 'Pages', 'action' => 'mapa']);
+                // return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'Pages', 'action' => 'mapa']);
             }
             $this->Flash->error(__('The barbershop could not be saved. Please, try again.'));
         }
