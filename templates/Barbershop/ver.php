@@ -10,7 +10,7 @@
         <div class="barbershop view content">
             <div class="row">
                 <div class="column column-25">
-                    <img class="img_perfil_barbershop" src="https://i.imgur.com/LuqJuye.jpg" alt="">
+                    <img class="img_perfil_barbershop" src="http://localhost/barber_appPHP/webroot/img/barbershop/<?=$barbershop->imagen_perfil?>" alt="">
                 </div>
                 <div class="column column-75">
                     <div class="row">
