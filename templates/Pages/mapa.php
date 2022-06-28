@@ -166,7 +166,7 @@
                 'animation': true,
                 'html': true,
                 //'content': '<p>' + feature.get('address') + ' patito color ' + feature.get('patito_color') + '</p>'
-                'content': '<div style="width:auto;"><img src=http://localhost/barber_appPHP/webroot/img/barbershop/'+feature.get('imagen_perfil')+' alt="Barberia" style="width:100%"><div class="container"><h4><b>' +
+                'content': '<div style="width:auto;"><img src=/img/barbershop/'+feature.get('imagen_perfil')+' alt="Barberia" style="width:100%"><div class="container"><h4><b>' +
                     feature.get('name') + '</b></h4> <p>' + feature.get(
                         'address') +
                     `</p> </div><button style="width: -webkit-fill-available; color:white !important;" ><a href="barbershop/ver/` +
