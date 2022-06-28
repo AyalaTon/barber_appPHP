@@ -13,8 +13,8 @@
             <?= $this->Form->create($reserva) ?>
             <fieldset>
                 <legend>Reservar hora</legend>
-                <input type="text" id="fecha" class="some-input"></input>
-                <div class="column-responsive column-40" hidden>
+                <input type="text" id="fecha" name="fecha_corte" class="some-input"></input>
+                <div id="contendedor_tabla" class="column-responsive" hidden>
 
                     <table id="tabla_horarios" hidden>
                         <thead>
@@ -31,8 +31,6 @@
                 </div>
 
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
         </div>
     </div>
 </div>
@@ -75,6 +73,7 @@ const picker = datepicker('.some-input', {
         const value = date.toLocaleDateString()
         input.value = value // => '1/1/2099'
     },
+    // position: 'c',
     // Cambio el formato de los dias a ES
     customDays: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
     // Cambio el formato de los meses a ES
@@ -106,7 +105,7 @@ const picker = datepicker('.some-input', {
                 fechas_pars[index] = fecha_pars;
             });
 
-            // Creo ek arreglo de horarios
+            // Creo el arreglo de horarios
             horarios = [];
 
             // Si la fecha seleccionada es una de las fechas disponible obtengo los horarios
@@ -130,8 +129,25 @@ const picker = datepicker('.some-input', {
                 });
                 // console.log(horarios);
 
-                // Tiempo de duración del corte
+                function convertirHoraADate(hora_string) {
+                    const [hours, minutes, seconds] = hora_string.split(':');
+                    const hora_date = new Date(0, 0, 0, +hours, +minutes, +seconds);
+                    return hora_date;
+                }
 
+                console.log('Horarios sin ordenar');
+                console.log(horarios);
+
+                horarios.sort((a, b) =>
+                    convertirHoraADate(a['hora_inicio']) > convertirHoraADate(b['hora_inicio']) ? 1 :
+                    convertirHoraADate(b['hora_inicio']) > convertirHoraADate(a['hora_inicio']) ? -1 :
+                    0
+                );
+
+                console.log('Horarios ordenados');
+                console.log(horarios);
+
+                // Tiempo de duración del corte
                 const [hours3, minutes3, seconds3] = corte['tiempo_estimado'].split(
                     ':');
 
@@ -146,15 +162,17 @@ const picker = datepicker('.some-input', {
                 if (parseInt(minutes3) > 0) {
                     intervalos += 1;
                 }
-                // console.log('Este corte requiere de 👇');
-                // console.log('Intervalos: ' + intervalos);
-                // console.log('Tiempo de duración del corte 👇');
-                // console.log(tiempo_duracion);
+
 
                 var horarios_utilizables = [];
 
+                var intervalos_tiempo = [];
+
+                var tiene_intervalos_necesarios = true;
                 if (horarios.length > 0) {
                     horarios.forEach(function(horario, i) {
+                        var intervalos_tiempo = [];
+
                         // Guardo horas, minutos y segundos de hora_inicio
                         const [hours1, minutes1, seconds1] = horario['hora_inicio'].split(
                             ':');
@@ -180,20 +198,25 @@ const picker = datepicker('.some-input', {
                         const hora_fin_del_corte = new Date(0, 0, 0, +hours4, +minutes4, +
                             seconds4);
 
-                        var hora = hora_fin_del_corte.getHours();
-                        var minutos = hora_fin_del_corte.getMinutes();
-                        var segundos = hora_fin_del_corte.getSeconds();
-                        if (hora_fin_del_corte.getHours() < 10) {
-                            hora = '0' + hora_fin_del_corte.getHours();
+                        function convertirDateAHora(fechaAConvertir) {
+                            var hora = fechaAConvertir.getHours();
+                            var minutos = fechaAConvertir.getMinutes();
+                            var segundos = fechaAConvertir.getSeconds();
+                            if (fechaAConvertir.getHours() < 10) {
+                                hora = '0' + fechaAConvertir.getHours();
+                            }
+                            if (fechaAConvertir.getMinutes() < 10) {
+                                minutos = '0' + fechaAConvertir.getMinutes();
+                            }
+                            if (fechaAConvertir.getSeconds() < 10) {
+                                segundos = '0' + fechaAConvertir.getSeconds();
+                            }
+                            const fecha_string = hora + ':' + minutos + ':' + segundos;
+                            return fecha_string;
                         }
-                        if (hora_fin_del_corte.getMinutes() < 10) {
-                            minutos = '0' + hora_fin_del_corte.getMinutes();
-                        }
-                        if (hora_fin_del_corte.getSeconds() < 10) {
-                            segundos = '0' + hora_fin_del_corte.getSeconds();
-                        }
-                        const hora_fin_corte_string = hora + ':' + minutos + ':' + segundos;
 
+                        const hora_fin_corte_string = convertirDateAHora(hora_fin_del_corte);
+                        console.log('Esta hora quiero ver: ' + hora_fin_corte_string);
 
 
                         if (horarios[i + intervalos - 1] !== undefined) {
@@ -203,15 +226,67 @@ const picker = datepicker('.some-input', {
                             for (var j = 0; j < horarios.length; j++) {
                                 if (horarios[j]['hora_fin'] === hora_fin_corte_string) {
                                     // console.log('Este sirve');
+                                    for (var n = 0; n < intervalos; n++) {
+                                        var hora_fn = new Date(
+                                            convertirHoraADate(horarios[j]['hora_fin'])
+                                            .getTime() - n * 30 * 60000); // Resto 30 minutos
 
-                                    horarios_utilizables.push({
-                                        'horario': horario,
-                                        'requiere_hasta': horarios[j],
-                                    });
-                                    break;
+                                        // Tomar el horarios[j][hora_fin] y restarle 30 minutos, 
+                                        // si existe continuar hasta que finalice el for. 
+                                        // Si en algun momento no existe, hacer un break
+
+                                        var hora_fin_previa = horarios.filter(
+                                            (obj) => obj['hora_fin'] === convertirDateAHora(
+                                                hora_fn)
+                                        );
+
+                                        intervalos_tiempo.push(hora_fin_previa);
+
+                                        if (hora_fin_previa.length === 0) {
+                                            tiene_intervalos_necesarios = false;
+                                            intervalos_tiempo = [];
+                                            break;
+                                        }
+                                        console.log('Hora fin previa')
+                                        console.log(hora_fin_previa);
+
+                                    }
+                                    if (tiene_intervalos_necesarios) {
+                                        horarios_utilizables.push({
+                                            'horario': horario,
+                                            'requiere_intervalos': intervalos_tiempo,
+                                        });
+                                        break;
+                                    }
+
                                 }
                             }
 
+                            // console.log('Esta hora de inicio interesan 👇');
+                            // console.log(hora_inicio);
+                            // console.log(hora_inicio.getTime());
+                            // console.log(new Date(hora_inicio.getTime() + ((2 * 30) * 60000)));
+
+                            // Esto todavia no anda //
+                            // for (var n = 0; n < intervalos; n++) {
+                            //     var hora_in = new Date(hora_inicio.getTime() + n * 30 * 60000);
+                            //     var hora_fn = new Date(hora_fin.getTime() + n * 30 * 60000);
+                            //     var horarioObtenido = horarios.filter((obj) => obj.hora_inicio ===
+                            //         convertirDateAHora(hora_in))
+                            //     console.log(hora_in);
+                            //     console.log(hora_fn);
+                            //     // console.log(hora_inicio);
+                            //     // console.log(hora_fin);
+                            //     intervalos_tiempo.push({
+                            //         'hora_inicio': convertirDateAHora(hora_in),
+                            //         'hora_fin': convertirDateAHora(hora_fn),
+                            //         'id': horarioObtenido[0]['id'],
+                            //     });
+
+                            // }
+                            // console.log('Estos son los intervalos que me interesan 👇');
+                            // console.log(intervalos_tiempo);
+                            // Esto todavia no anda //
                         }
 
 
@@ -221,28 +296,55 @@ const picker = datepicker('.some-input', {
 
                 // Find a <table> element with id="tabla_horarios":
 
-                var table = document.getElementById("tabla_body");
-                $('#tabla_horarios').show();
-                $("#tabla_body tr").remove();
-
-                horarios_utilizables.forEach(function(horario, i) {
-                    // Create an empty <tr> element and add it to the 1st position of the table:
-                    var row = table.insertRow();
-
-                    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                    var cell1 = row.insertCell();
-                    var cell2 = row.insertCell();
-                    var cell3 = row.insertCell();
-
-                    console.log(horario);
-
-                    // Add some text to the new cells:
-                    cell1.innerHTML = horario['horario']['hora_inicio'];
-                    cell2.innerHTML = horario['requiere_hasta']['hora_fin'];
-                    cell3.innerHTML = `<button>Reservar</button>`;
 
 
-                })
+                if (horarios_utilizables.length > 0) {
+                    var table = document.getElementById("tabla_body");
+                    $('#tabla_horarios').show();
+                    $("#tabla_body tr").remove();
+                    $("#no_existe").remove();
+                    horarios_utilizables.forEach(function(horario, i) {
+                        // Create an empty <tr> element and add it to the 1st position of the table:
+                        var row = table.insertRow();
+
+                        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+                        var cell1 = row.insertCell();
+                        var cell2 = row.insertCell();
+                        var cell3 = row.insertCell();
+                        var cell4 = row.insertCell();
+                        var cell5 = row.insertCell();
+
+                        // console.log('Este horario es el del html');
+                        // console.log(horario);
+
+                        // Add some text to the new cells:
+                        cell1.innerHTML = horario['horario']['hora_inicio'];
+                        cell2.innerHTML = horario['requiere_intervalos'][0][0]['hora_fin'];
+                        cell3.innerHTML = `<button type='submit' name='boton_presionado' value=` +
+                            i + `>Reservar</button>`;
+
+
+                        arreglo_id_horario = [];
+
+                        horario['requiere_intervalos'].forEach(function(horario, i) {
+                            arreglo_id_horario.push(horario[0]['id']);
+                        });
+
+                        cell4.innerHTML = '<input type="hidden" name="' + i + '" value=' +
+                            arreglo_id_horario + ' >';
+
+                        cell5.innerHTML = '<input type="hidden" name="h_i' + i + '" value=' +
+                            horario['horario']['hora_inicio'] + ' >';
+
+                        // console.log(arreglo_id_horario);
+
+                    })
+                } else {
+                    $('#tabla_horarios').hide();
+                    $('#contendedor_tabla').append(
+                        '<p id="no_existe">La duración de su corte excede los horarios disponibles para este día.</p>'
+                    )
+                }
 
 
             } else { // Si la fecha seleccionada no está como fecha disponible se emite un alert
@@ -258,12 +360,13 @@ const picker = datepicker('.some-input', {
             console.log(corte);
         } else if (date === undefined) {
             $('#tabla_horarios').hide();
+            $("#no_existe").remove();
         }
     },
 
 });
-
+picker.show();
 
 // Use JavaScript to change the calendar size.
-picker.calendarContainer.style.setProperty('font-size', '2rem');
+picker.calendarContainer.style.setProperty('font-size', '3rem');
 </script>
