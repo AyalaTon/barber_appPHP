@@ -104,7 +104,7 @@ class PagesController extends AppController
         //Recorro todas las publicaciones y le seteo un campo barbershopInfo que contiene la información de la barbería 
         foreach ($publicacion as $publicacion) :
             $publicacion->barbershopInfo = $this->loadModel('Barbershop')->find('all')->where(['Barbershop.id' => $publicacion->barbershop_id])->first();
-            $publicacion->image_urlServer = 'http://localhost/barber_appPHP/webroot/img/publicaciones/' . $publicacion->imagen;
+            $publicacion->image_urlServer = '/img/publicaciones/' . $publicacion->imagen;
             array_push($publicaciones, $publicacion);
         endforeach;
         //Invierto el array para que el mas reciente sea el primero
@@ -151,7 +151,7 @@ class PagesController extends AppController
             $barbero = $this->loadModel('Barbero')->findById($barberoLogeado)->toList();
             $barbershopDeBarberoLogeado = $this->loadModel('BarberoBarbershop')->find('all')->where(['BarberoBarbershop.barbero_id' => $barberoLogeado])->first()->barbershop_id;
             $this->set(compact('publicacion', 'barbershopDeBarberoLogeado', 'barbershop', 'publicacionesInvertidas', 'allowAddPost'));
-        }else{
+        } else {
             $this->set(compact('publicacionesInvertidas', 'allowAddPost'));
         }
     }
