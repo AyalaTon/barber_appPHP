@@ -339,7 +339,7 @@ th {
 }
 
 .card {
-    background: rgb(108, 108, 108);
+    background: #d33c43;
     background: linear-gradient(180deg, rgba(108, 108, 108, 0) 25%, rgba(179, 61, 61, 1) 100%);
     width: 30rem;
     height: 38rem;
