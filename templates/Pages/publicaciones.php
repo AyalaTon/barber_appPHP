@@ -9,6 +9,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <div class="barbero form">
     <?= $this->Flash->render() ?>
     <h3>Publicaciones</h3>
@@ -24,8 +25,16 @@
                 <legend><?= __('CREAR PUBLICACIÓN') ?></legend>
                 <?php
                 echo $this->Form->control('contenido', array('label' => false, 'placeholder' => '¿Qué está pasando?'));
-                echo $this->Form->control('imagen', array('type' => 'file', 'label' => false));
+                //echo $this->Form->control('imagen', array('type' => 'file', 'label' => false));
                 ?>
+                <div class="arrastrarysubir" for="imagen" id="image-event-label">
+                    <div id="drop_zone">Arrastra y suelta la imagen aquí</div>
+                    <input type="file" name="imagen" id="imagen">
+                </div>
+                <output id="list"></output>
+
+                
+
                 <div hidden>
                     <?php
                     echo $this->Form->control('barbershop_id', ['options' => $barbershop, 'default' => $barbershopDeBarberoLogeado]);
@@ -39,11 +48,6 @@
     }
     ?>
     <?php
-    if ($allowAddPost) {
-    ?>
-        <!--<a href="http://localhost:8765/publicacion/add"><button class="float-right" style="height: 70px"> <img src="/img/NewPost.png" style="width: 65px; height: 65px"></img> </button></a>-->
-    <?php
-    }
     ?>
     <?php foreach ($publicacionesInvertidas as $publicacion) : ?>
         <div class="tweet-wrap">
@@ -73,3 +77,19 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+<script>
+    // only to show it did change
+    $('#imagen').on('change', function upload(evt) {
+        console.log(this.files[0]);
+        document.getElementById('list').innerHTML = '<div id="ProgressBar"><div id="Progress"></div></div>';
+    });
+
+    // only to show where is the drop-zone:
+    $('#image-event-label').on('dragenter', function() {
+            this.classList.add('dragged-over');
+        })
+        .on('dragend drop dragexit dragleave', function() {
+            this.classList.remove('dragged-over');
+        });
+</script>
