@@ -40,7 +40,20 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->fetch('script') ?>
 </head>
 
-<body>
+<?php
+if ($_COOKIE["theme"] == "dark") {
+    $background = "#2a2b2e";
+    $background2 = "#121316";
+    $color = "#fff";
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
+
+
+<body style="background-color: <?php echo $background; ?>!important;">
     <?php
     $params = $this->request->getAttributes()['params'];
     $controlador = $params['controller'];
@@ -63,61 +76,70 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     }
     // $barbero = $_SESSION['Auth'];
     ?>
-    <nav class="top-nav" style="box-shadow: 0 4px 6px -6px #222;">
+    <nav class="top-nav"
+        style="background-color: <?php echo $background; ?>; border-bottom: 6px solid <?php echo $color; ?> box-shadow: 0 4px 6px -6px #222;">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build($url_link) ?>"><span>💈Tapelau💈</span></a>
+            <a style="text-decoration: none;" href="<?= $this->Url->build($url_link) ?>"><span
+                    style="color: <?php echo $color; ?> !important; ">💈Tapelau💈</span></a>
         </div>
         <?php
         if ($this->request->getAttributes()['identity'] != null) {
         ?>
         <div class="top-nav-links">
+            <label class="switch">
+                <input type="checkbox" id="toggleTheme" <?php if ($_COOKIE["theme"] == "dark") {
+                                                                echo "checked";
+                                                            } ?>>
+                <span class="slider round"></span>
+            </label>
             <div class="dropdown">
                 <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                <div class="dropdown-content">
-                    <ul>
+                <div class="dropdown-content"
+                    style="background-color: <?php echo $background2; ?>; color: <?php echo $color; ?> !important; ">
+                    <ul style="list-style-type: none !important; ">
                         <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
                         <li>
-                            <?= $this->Html->link('Perfil', $tipoUser . '/mi_perfil/' . $user_data['id']); ?>
+                            <?= $this->Html->link('Perfil', $tipoUser . '/mi_perfil/' . $user_data['id'], ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
                         </li>
-                    </ul>
-                    <?php
-                        if ($tipoUser == 'barbero') {
-                        ?>
 
-                    <!-- Si es Barbero con barberia lista 👇 -->
-                    <?php
-                            if ($_SESSION['barberia_'] != null) {
+                        <?php
+                            if ($tipoUser == 'barbero') {
                             ?>
-                    <li>
-                        <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
-                    </li>
-                    <li>
-                        <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar'); ?>
-                    </li>
-                    <?php
-                            } else {
+
+                        <!-- Si es Barbero con barberia lista 👇 -->
+                        <?php
+                                if ($_SESSION['barberia_'] != null) {
+                                ?>
+                        <li>
+                            <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <li>
+                            <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <?php
+                                } else {
+                                ?>
+                        <li>
+                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar'), ['style' => 'color:' . $color . '!important; text-decoration:none !important;']) ?>
+                        </li>
+                        <?php
+                                }
+                                ?>
+                        <li>
+                            <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index'), ['style' => 'color:' . $color . '!important; text-decoration:none !important;']) ?>
+                        </li>
+
+
+                        <!-- Si es Cliente lista 👇 -->
+                        <?php
+                            } else if ($tipoUser == 'cliente') {
                             ?>
-                    <li>
-                        <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
-                    </li>
-                    <?php
+
+                        <?php
                             }
                             ?>
-                    <li>
-                        <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index')) ?>
-                    </li>
-
-
-                    <!-- Si es Cliente lista 👇 -->
-                    <?php
-                        } else if ($tipoUser == 'cliente') {
-                        ?>
-
-                    <?php
-                        }
-                        ?>
                     </ul>
-                    <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
+                    <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar', 'style' => 'text-decoration:none !important;']); ?>
                 </div>
             </div>
 
@@ -143,14 +165,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 font-size: 4rem;
                 ">
             <a href="http://localhost:8765/mapa"
-                style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
-                    class="fas fa-map-marked-alt"></i>
-                <h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Barberías</h6>
+                style="text-decoration:none; display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
+                    style="color: <?php echo $color; ?> !important; " class="fas fa-map-marked-alt"></i>
+                <h6
+                    style="font-family:Arial;margin-bottom: 0;margin-top:1rem; color: <?php echo $color; ?> !important; ">
+                    Barberías</h6>
+
             </a>
             <a href="http://localhost:8765/publicaciones"
-                style="display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
-                    class="fas fa-inbox"></i>
-                <h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem">Publicaciones</h6>
+                style="text-decoration:none;  display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
+                    style="color: <?php echo $color; ?> !important; " class="fas fa-inbox"></i>
+                <h6
+                    style="font-family:Arial;margin-bottom: 0;margin-top:1rem; color: <?php echo $color; ?> !important; ">
+                    Publicaciones</h6>
             </a>
         </div>
         <?php
@@ -165,7 +192,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </main>
     <footer>
     </footer>
-
+    <script>
+    $("#toggleTheme").on('change', function() {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            document.cookie = "theme=dark";
+            location.reload();
+        } else {
+            $(this).attr('value', 'false');
+            document.cookie = "theme=light";
+            location.reload();
+        }
+    });
+    </script>
 </body>
 
 </html>

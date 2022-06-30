@@ -14,10 +14,6 @@
             <img src='<?= h($corte->imagen) ?>'>
             <h2><?= h($corte->nombre) ?></h2>
             <h4>Precio: <b>$<?= $this->Number->format($corte->precio) ?></b></h4>
-            <!--            
-            <div class="detalles">
-                <p><b>Descripción:</b> <?= h($corte->descripcion) ?></p>
-            </div> -->
         </div>
         <?php endforeach; ?>
     </section>

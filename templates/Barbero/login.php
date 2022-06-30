@@ -4,13 +4,13 @@
     <h3>Login</h3>
     <?= $this->Form->create() ?>
     <fieldset>
-        <legend><?= __('Please enter your username and password') ?></legend>
+        <legend><?= __('Por favor ingresa tu email y contraseña.') ?></legend>
         <?= $this->Form->control('email', ['required' => true]) ?>
-        <?= $this->Form->control('clave',['type'=>'password'], ['required' => true]) ?>
+        <?= $this->Form->control('clave', ['label' => 'Contraseña', 'type' => 'password', 'required' => true],) ?>
     </fieldset>
     <?= $this->Form->submit(__('Login')); ?>
-    <?= $this->Html->link(__('Olvide mi contraseña'), ['action' => 'olvidarContrasena'], ['class'=>'button']) ?>
+    <?= $this->Html->link(__('Olvide mi contraseña'), ['action' => 'olvidarContrasena'], ['class' => 'button']) ?>
     <?= $this->Form->end() ?>
-<!-- 
+    <!-- 
      -->
 </div>
