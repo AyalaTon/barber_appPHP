@@ -24,7 +24,7 @@
                 <legend><?= __('CREAR PUBLICACIÓN') ?></legend>
                 <?php
                 echo $this->Form->control('contenido', array('label' => false, 'placeholder' => '¿Qué está pasando?'));
-                echo $this->Form->control('imagen', array('type' => 'file','label'=>false));
+                echo $this->Form->control('imagen', array('type' => 'file', 'label' => false));
                 ?>
                 <div hidden>
                     <?php
@@ -61,7 +61,7 @@
                 ?>
                 <?= $this->Html->image($image_perfil_barbershop,  array('alt' => 'default.png', 'class' => 'avator')); ?>
                 <div class="tweet-header-info">
-                    <?= $publicacion->barbershopInfo->nombre; ?> <span>@<?= $publicacion->barbershopInfo->nombre; ?></span><span><?= $publicacion_fecha_creacion; ?>
+                    <b class="tweet-publicacion-nombre"><a href="http://localhost:8765/barbershop/ver/<?= $publicacion->barbershopInfo->id; ?>"><?= $publicacion->barbershopInfo->nombre; ?></a></b> <span>@<?= $publicacion->barbershopInfo->nombre; ?></span><span><?= $publicacion_fecha_creacion; ?>
                     </span>
                     <p> <?= $publicacion->contenido; ?> </p>
                 </div>

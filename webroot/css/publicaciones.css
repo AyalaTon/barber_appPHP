@@ -124,3 +124,49 @@ img {
         margin-left: auto;
     }
 }
+
+/*.tweet-publicacion-nombre{
+    cursor: pointer;
+}
+
+.tweet-publicacion-nombre:hover{
+    color: #35638b;
+}*/
+
+.tweet-publicacion-nombre {
+    background-image: linear-gradient(
+      to right,
+      #54b3d6,
+      #54b3d6 50%,
+      #000 50%
+    );
+    background-size: 200% 100%;
+    background-position: -100%;
+    display: inline-block;
+    padding: 5px 0;
+    position: relative;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }
+  
+  .tweet-publicacion-nombre:before{
+    content: '';
+    background: #54b3d6;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .tweet-publicacion-nombre:hover {
+   background-position: 0;
+  }
+  
+  .tweet-publicacion-nombre:hover::before{
+    width: 100%;
+  }

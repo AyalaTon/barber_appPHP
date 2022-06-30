@@ -86,16 +86,24 @@ class BarberoTable extends Table
             ->requirePresence('nombre', 'create')
             ->notEmptyString('nombre');
 
-        $validator
+            $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+            ->notEmptyString('email')
+            ->notBlank('clave');
 
-        $validator
+            $validator
             ->scalar('clave')
             ->maxLength('clave', 255)
             ->requirePresence('clave', 'create')
-            ->notEmptyString('clave');
+            ->notEmptyString('clave')
+            ->notBlank('clave')
+            ->add('clave', [
+        'length' => [
+            'rule' => ['minLength', 4],
+            'message' => 'La contraseña debe tener mínimo 4 carácteres.',
+        ]
+    ]);
 
         $validator
             ->sameAs('confirmar_clave', 'clave', 'Las contraseñas no coinciden!');
