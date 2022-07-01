@@ -155,4 +155,18 @@ class PagesController extends AppController
             $this->set(compact('publicacionesInvertidas', 'allowAddPost'));
         }
     }
+
+    
+    public function eliminarPublicacion(){
+        $id = $this->request->getData('publicacion_to_delete_id');
+        $publicacion = $this->loadModel('Publicacion')->get($id);
+        if ($this->loadModel('Publicacion')->delete($publicacion)) {
+            $this->Flash->success(__('La publicación ha sido eliminada con éxito.'));
+        } else {
+            $this->Flash->error(__('La publicación no pudo ser eliminada.'));
+        }
+
+        return $this->redirect(['action' => 'publicaciones']);
+
+    }
 }

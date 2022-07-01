@@ -4,12 +4,16 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Publicacion[]|\Cake\Collection\CollectionInterface $publicacion
  */
+
+use Seld\JsonLint\Undefined;
+
 ?>
 
 
 <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <div class="barbero form">
     <?= $this->Flash->render() ?>
     <h3>Publicaciones</h3>
@@ -33,7 +37,7 @@
                 </div>
                 <output id="list"></output>
 
-                
+
 
                 <div hidden>
                     <?php
@@ -65,8 +69,29 @@
                 ?>
                 <a href="http://localhost:8765/barbershop/ver/<?= $publicacion->barbershopInfo->id; ?>"><?= $this->Html->image($image_perfil_barbershop,  array('alt' => 'default.png', 'class' => 'avator')); ?></a>
                 <div class="tweet-header-info">
-                    <b class="tweet-publicacion-nombre"><a href="http://localhost:8765/barbershop/ver/<?= $publicacion->barbershopInfo->id; ?>"><?= $publicacion->barbershopInfo->nombre; ?></a></b> <span>@<?= $publicacion->barbershopInfo->nombre; ?></span><span><?= $publicacion_fecha_creacion; ?>
-                    </span>
+                    <div class="horizontal-container">
+                        <div>
+                            <b class="tweet-publicacion-nombre"><a href="http://localhost:8765/barbershop/ver/<?= $publicacion->barbershopInfo->id; ?>"><?= $publicacion->barbershopInfo->nombre; ?></a></b> <span>@<?= $publicacion->barbershopInfo->nombre; ?></span><span><?= $publicacion_fecha_creacion; ?>
+                            </span>
+                        </div>
+                        <?php
+                        $isBarberoLogeadoID = isset($barbershopDeBarberoLogeado);
+                        if ($isBarberoLogeadoID) {
+                            if ($barbershopDeBarberoLogeado == $publicacion->barbershopInfo->id) {
+                                echo $this->Form->create($publicacion, array('action' => 'Pages/eliminarPublicacion'));
+                                //echo $this->Form->create($publicacion, ['type' => 'put']);
+                        ?>
+
+                                <input type="hidden" name="publicacion_to_delete_id" value="<?= $publicacion->id; ?>">
+
+                                <div>
+                                    <button class="btnEliminar" type="submit"><i class="material-icons">delete</i></button>
+                                </div>
+                        <?php
+                                echo $this->Form->end();
+                            }
+                        } ?>
+                    </div>
                     <p> <?= $publicacion->contenido; ?> </p>
                 </div>
             </div>

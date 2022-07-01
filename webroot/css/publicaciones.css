@@ -263,3 +263,23 @@ img {
 	transition: .3s ease-in-out;
     cursor: pointer;
 }
+
+.horizontal-container{
+    display:flex;
+  }
+
+  .btnEliminar{
+    margin: auto;
+    padding: 1px;
+    margin-left: 50px;
+    cursor: pointer;
+    background-color: transparent;
+    border:none;
+    color: rgb(101, 99, 99);
+  }
+
+  .btnEliminar:hover{
+    color: red;
+    background-color: transparent;
+    border:none;
+  }
