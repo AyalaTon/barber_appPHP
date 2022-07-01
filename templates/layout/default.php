@@ -82,16 +82,16 @@ if ($_COOKIE["theme"] == "dark") {
             <a style="text-decoration: none;" href="<?= $this->Url->build($url_link) ?>"><span
                     style="color: <?php echo $color; ?> !important; ">💈Tapelau💈</span></a>
         </div>
-        <?php
-        if ($this->request->getAttributes()['identity'] != null) {
-        ?>
         <div class="top-nav-links">
             <label class="switch">
                 <input type="checkbox" id="toggleTheme" <?php if ($_COOKIE["theme"] == "dark") {
-                                                                echo "checked";
-                                                            } ?>>
+                                                            echo "checked";
+                                                        } ?>>
                 <span class="slider round"></span>
             </label>
+            <?php
+            if ($this->request->getAttributes()['identity'] != null) {
+            ?>
             <div class="dropdown">
                 <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
                 <div class="dropdown-content"
@@ -146,8 +146,8 @@ if ($_COOKIE["theme"] == "dark") {
         </div>
         <?php
 
-        }
-        ?>
+            }
+    ?>
     </nav>
     <nav class="top-nav">
         <?php

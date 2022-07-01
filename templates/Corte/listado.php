@@ -5,8 +5,20 @@
  * @var \App\Model\Entity\Corte[]|\Cake\Collection\CollectionInterface $corte
  */
 ?>
-<div class="corte index content">
-    <h1>Cortes disponibles</h1>
+
+<?php
+if ($_COOKIE["theme"] == "dark") {
+    $background = "#2a2b2e";
+    $background2 = "#121316";
+    $color = "#fff";
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
+<div style="background-color: <?php echo $background2; ?>!important;" class="corte index content">
+    <h1 style="color: <?php echo $color; ?> !important; ">Cortes disponibles</h1>
 
     <section class="cards">
         <?php foreach ($cortes as $corte) : ?>

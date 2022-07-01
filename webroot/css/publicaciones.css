@@ -19,7 +19,7 @@ img {
     margin-top: 2px;
     border-radius: 3px;
     padding: 30px;
-    border-bottom: 1px solid #e6ecf0;
+    /* border-bottom: 1px solid #e6ecf0; */
 }
 
 .tweet-header {
