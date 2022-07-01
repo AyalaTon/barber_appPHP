@@ -251,3 +251,15 @@ img {
     border-color: #1cbc00;
   }
 }
+
+.avator {
+	-webkit-transform: rotate(0) scale(1);
+	transform: rotate(0) scale(1);
+}
+.avator:hover{
+    -webkit-transform: rotate(15deg) scale(1.1);
+	transform: rotate(15deg) scale(1.1);
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+    cursor: pointer;
+}

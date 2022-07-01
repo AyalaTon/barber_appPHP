@@ -63,7 +63,7 @@
                 }
 
                 ?>
-                <?= $this->Html->image($image_perfil_barbershop,  array('alt' => 'default.png', 'class' => 'avator')); ?>
+                <a href="http://localhost:8765/barbershop/ver/<?= $publicacion->barbershopInfo->id; ?>"><?= $this->Html->image($image_perfil_barbershop,  array('alt' => 'default.png', 'class' => 'avator')); ?></a>
                 <div class="tweet-header-info">
                     <b class="tweet-publicacion-nombre"><a href="http://localhost:8765/barbershop/ver/<?= $publicacion->barbershopInfo->id; ?>"><?= $publicacion->barbershopInfo->nombre; ?></a></b> <span>@<?= $publicacion->barbershopInfo->nombre; ?></span><span><?= $publicacion_fecha_creacion; ?>
                     </span>
