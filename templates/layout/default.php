@@ -102,7 +102,7 @@ if ($_COOKIE["theme"] == "dark") {
                             <?= $this->Html->link('Perfil', $tipoUser . '/mi_perfil/' . $user_data['id'], ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
                         </li>
                         <li>
-                            <?= $this->Html->link('Mis reservas', $tipoUser . '/reservas/'); ?>
+                            <?= $this->Html->link('Mis reservas', $tipoUser . '/reservas/', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
                         </li>
                         <?php
                             if ($tipoUser == 'barbero') {

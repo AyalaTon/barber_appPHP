@@ -107,21 +107,17 @@ if ($_COOKIE["theme"] == "dark") {
                             }
                         } ?>
                 </div>
-                <p> <?= $publicacion->contenido; ?> </p>
+                <p style="color: <?php echo $color; ?> !important; "> <?= $publicacion->contenido; ?> </p>
             </div>
         </div>
         <div class="tweet-img-wrap">
-
             <?= !file_exists($publicacion->image_urlServer) ? $this->Html->image($publicacion->image_urlServer,  array('alt' => '', 'class' => 'tweet-img')) : '' ?>
         </div>
     </div>
-    <div class="tweet-img-wrap">
+    <?php endforeach; ?>
 
-        <?= !file_exists($publicacion->image_urlServer) ? $this->Html->image($publicacion->image_urlServer,  array('alt' => '', 'class' => 'tweet-img')) : '' ?>
-    </div>
 </div>
-<?php endforeach; ?>
-</div>
+
 
 <script>
 // only to show it did change
