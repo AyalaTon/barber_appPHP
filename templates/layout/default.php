@@ -61,13 +61,7 @@ if ($_COOKIE["theme"] == "dark") {
     if ($params['action'] == 'login' || $params['action'] == 'registrar') {
         $url_link = '/';
     } else {
-        if ($controlador == 'Barbero') {
-            $url_link = '/barbero';
-        } else if ($controlador == 'Cliente') {
-            $url_link = '/cliente';
-        } else {
-            $url_link = '/mapa';
-        }
+        $url_link = '/mapa';
     }
     if ($this->request->getAttributes()['identity'] != null) {
         $user_data = $_SESSION['Auth'];

@@ -14,7 +14,7 @@ if ($_COOKIE["theme"] == "dark") {
     <?= $this->Flash->render() ?>
     <h3 style="color: <?php echo $color; ?> !important; ">Login</h3>
     <?= $this->Form->create() ?>
-    <fieldset>
+    <fieldset style="color: <?php echo $color; ?> !important; ">
         <legend style="color: <?php echo $color; ?> !important; ">Por favor ingresa tu email y contraseña.</legend>
         <?= $this->Form->control('email', ['required' => true, 'style' => 'color: ' . $color . '!important;']) ?>
         <?= $this->Form->control('clave', ['label' => 'Contraseña', 'type' => 'password', 'required' => true, 'style' => 'color: ' . $color . '!important; '],) ?>
