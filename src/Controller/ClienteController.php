@@ -258,10 +258,27 @@ class ClienteController extends AppController
             $this->Flash->error(__('La contraseña no ha sido cambiada'));
         }
     }
-    public function miPerfil($id = null){
+    public function miPerfil($id = null)
+    {
         $cliente = $this->Cliente->get($id);
         $this->set(compact('cliente'));
         $this->set('_serialize', ['cliente']);
     }
 
+    public function reservas()
+    {
+        // debug($_SESSION['Auth']['id']);
+        $reservas = $this->Cliente->Reserva->findByClienteId($_SESSION['Auth']['id'])->toArray();
+        $cortes_reserva = [];
+        $barberos_reserva = [];
+        foreach ($reservas as $reserva) {
+            array_push($cortes_reserva, $this->Cliente->Reserva->Corte->findById($reserva['corte_id'])->first());
+        }
+        foreach ($cortes_reserva as $corte) {
+            array_push($barberos_reserva, $this->Cliente->Reserva->Corte->Barbero->findById($corte['barbero_id'])->first());
+        }
+        // debug($cortes_reserva);
+        // debug($barberos_reserva);
+        $this->set(compact('reservas', 'cortes_reserva', 'barberos_reserva'));
+    }
 }

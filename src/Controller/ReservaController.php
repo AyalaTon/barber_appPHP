@@ -85,8 +85,9 @@ class ReservaController extends AppController
             $id_cliente = (int) $_SESSION['Auth']['id'];
             $id_corte = (int) $id_corte;
 
+
             $fecha = new FrozenDate($fecha_corte);
-            $hora = new FrozenTime($horario_inicio);
+            $hora = $horario_inicio; //new FrozenTime($horario_inicio);
             $fecha_actual = FrozenTime::now()->i18nFormat('yyyy-MM-dd');
 
 
@@ -95,6 +96,7 @@ class ReservaController extends AppController
             $reserva->fecha_corte = $fecha;
             $reserva->hora_comienzo_corte = $hora;
             $reserva->fecha_reserva = $fecha_actual;
+
 
             $arreglo_horarios_update_array = explode(",", $arreglo_horarios_update);
 

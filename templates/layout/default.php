@@ -79,43 +79,45 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <li>
                             <?= $this->Html->link('Perfil', $tipoUser . '/mi_perfil/' . $user_data['id']); ?>
                         </li>
-                    </ul>
-                    <?php
-                        if ($tipoUser == 'barbero') {
-                        ?>
+                        <li>
+                            <?= $this->Html->link('Mis reservas', $tipoUser . '/reservas/'); ?>
+                        </li>
+                        <?php
+                            if ($tipoUser == 'barbero') {
+                            ?>
 
-                    <!-- Si es Barbero con barberia lista 👇 -->
-                    <?php
-                            if ($_SESSION['barberia_'] != null) {
+                        <!-- Si es Barbero con barberia lista 👇 -->
+                        <?php
+                                if ($_SESSION['barberia_'] != null) {
+                                ?>
+                        <li>
+                            <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
+                        </li>
+                        <li>
+                            <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar'); ?>
+                        </li>
+                        <?php
+                                } else {
+                                ?>
+                        <li>
+                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
+                        </li>
+                        <?php
+                                }
+                                ?>
+                        <li>
+                            <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index')) ?>
+                        </li>
+
+
+                        <!-- Si es Cliente lista 👇 -->
+                        <?php
+                            } else if ($tipoUser == 'cliente') {
                             ?>
-                    <li>
-                        <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar'); ?>
-                    </li>
-                    <li>
-                        <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar'); ?>
-                    </li>
-                    <?php
-                            } else {
-                            ?>
-                    <li>
-                        <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar')) ?>
-                    </li>
-                    <?php
+
+                        <?php
                             }
                             ?>
-                    <li>
-                        <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index')) ?>
-                    </li>
-
-
-                    <!-- Si es Cliente lista 👇 -->
-                    <?php
-                        } else if ($tipoUser == 'cliente') {
-                        ?>
-
-                    <?php
-                        }
-                        ?>
                     </ul>
                     <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar']); ?>
                 </div>
