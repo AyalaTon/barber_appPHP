@@ -5,155 +5,48 @@
  * @var \App\Model\Entity\Barbershop $barbershop
  */
 ?>
-<div class="row">
-    <div class="column-responsive">
-        <div class="barbershop view content">
+<?php
+if ($_COOKIE["theme"] == "dark") {
+    $background = "#2a2b2e";
+    $background2 = "#121316";
+    $color = "#fff";
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
+<div style="background-color: <?php echo $background2; ?>!important;" class="barbershop view content">
+    <div class="row">
+        <div class="column column-25">
+            <img class="img_perfil_barbershop" src="/img/barbershop/<?= $barbershop->imagen_perfil ?>" alt="">
+        </div>
+        <div class="column column-75">
             <div class="row">
-                <div class="column column-25">
-                    <img class="img_perfil_barbershop" src="/img/barbershop/<?=$barbershop->imagen_perfil?>" alt="">
-                </div>
-                <div class="column column-75">
-                    <div class="row">
-                        <h5>
-                            <b><?= h($barbershop->nombre) ?></b>
-                        </h5>
-                    </div>
-                    <div class="row">Dirección: <?= h($barbershop->direccion) ?></div>
-                    <div class="row">Teléfono: <?= h($barbershop->tel) ?> </div>
-                    <div class="row">Sitio web: <a href="<?= h($barbershop->website) ?>"> <?= h($barbershop->website) ?>
-                        </a>
-                    </div>
-                </div>
+                <h5>
+                    <b style="color: <?php echo $color; ?> !important; "><?= h($barbershop->nombre) ?></b>
+                </h5>
             </div>
-            <?php
-            for ($i = 0; sizeof($barbershop->barbero) >= $i; $i = $i + 3) {
-            ?>
-            <div class="row ">
-                <?php if (isset($barbershop->barbero[$i])) { ?>
-                <div onclick="window.location.href = '/corte/listado/<?= $barbershop->barbero[$i]->id; ?>';"
-                    class="column column-33 card_barberos">
-                    <div class="row card_barberos_content">
-                        <div style="display:flex; align-items: center; justify-content: center;"
-                            class="column column-30 ">
-                            <?= $this->Html->image('perfil/' . $barbershop->barbero[$i]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
-                        </div>
-                        <div class="column column-40">
-                            <h5 style="margin: 0 !important;">
-                                <b><?= h($barbershop->barbero[$i]->nombre) ?></b> Reservar
-                            </h5>
-                        </div>
-
-                    </div>
-                </div>
-                <?php } ?>
-                <?php if (isset($barbershop->barbero[$i + 1])) { ?>
-                <div onclick="window.location.href = '/corte/listado/<?= $barbershop->barbero[$i + 1]->id; ?>';"
-                    class="column column-33 card_barberos">
-                    <div class="row card_barberos_content">
-                        <div style="display:flex; align-items: center; justify-content: center;"
-                            class="column column-30 ">
-                            <?= $this->Html->image('perfil/' . $barbershop->barbero[$i + 1]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
-                        </div>
-                        <div class="column column-40">
-                            <h5 style="margin: 0 !important;">
-                                <b><?= h($barbershop->barbero[$i + 1]->nombre) ?></b> Reservar
-                            </h5>
-                        </div>
-
-                    </div>
-                </div>
-                <?php } ?>
-                <?php if (isset($barbershop->barbero[$i + 1])) { ?>
-                <div onclick="window.location.href = '/corte/listado/<?= $barbershop->barbero[$i + 2]->id; ?>';"
-                    class="column column-33 card_barberos">
-                    <div class="row card_barberos_content">
-                        <div style="display:flex; align-items: center; justify-content: center;"
-                            class="column column-30 ">
-                            <?= $this->Html->image('perfil/' . $barbershop->barbero[$i + 2]->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
-                        </div>
-                        <div class="column-responsive column-40">
-                            <h5 style="margin: 0 !important;">
-                                <b><?= h($barbershop->barbero[$i + 2]->nombre) ?></b> Reservar
-                            </h5>
-                        </div>
-
-                    </div>
-                </div>
-                <?php } ?>
+            <div class="row" style="color: <?php echo $color; ?> !important; "><b>Dirección:</b>
+                <?= h($barbershop->direccion) ?></div>
+            <div class="row" style="color: <?php echo $color; ?> !important; "><b>Teléfono:</b>
+                <?= h($barbershop->tel) ?>
             </div>
-            <?php }
-            ?>
-            <!--
-            <div class="related">
-                <h4><?= __('Related Barbero') ?></h4>
-                <?php if (!empty($barbershop->barbero)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Usuario') ?></th>
-                            <th><?= __('Nombre') ?></th>
-                            <th><?= __('Email') ?></th>
-                            <th><?= __('Clave') ?></th>
-                            <th><?= __('Imagen Perfil') ?></th>
-                            <th><?= __('Tel') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($barbershop->barbero as $barbero) : ?>
-                        <tr>
-                            <td><?= h($barbero->id) ?></td>
-                            <td><?= h($barbero->usuario) ?></td>
-                            <td><?= h($barbero->nombre) ?></td>
-                            <td><?= h($barbero->email) ?></td>
-                            <td><?= h($barbero->clave) ?></td>
-                            <td><?= h($barbero->imagen_perfil) ?></td>
-                            <td><?= h($barbero->tel) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Barbero', 'action' => 'view', $barbero->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Barbero', 'action' => 'edit', $barbero->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Barbero', 'action' => 'delete', $barbero->id], ['confirm' => __('Are you sure you want to delete # {0}?', $barbero->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
+            <div class="row" style="color: <?php echo $color; ?> !important; "><b>Sitio web:</b> <a
+                    href="<?= h($barbershop->website) ?>"> <?= h($barbershop->website) ?>
+                </a>
             </div>
-            <div class="related">
-                <h4><?= __('Related Publicacion') ?></h4>
-                <?php if (!empty($barbershop->publicacion)) : ?>
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <th><?= __('Id') ?></th>
-                            <th><?= __('Barbershop Id') ?></th>
-                            <th><?= __('Contenido') ?></th>
-                            <th><?= __('Imagen') ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
-                        </tr>
-                        <?php foreach ($barbershop->publicacion as $publicacion) : ?>
-                        <tr>
-                            <td><?= h($publicacion->id) ?></td>
-                            <td><?= h($publicacion->barbershop_id) ?></td>
-                            <td><?= h($publicacion->contenido) ?></td>
-                            <td><?= h($publicacion->imagen) ?></td>
-                            <td class="actions">
-                                <?= $this->Html->link(__('View'), ['controller' => 'Publicacion', 'action' => 'view', $publicacion->id]) ?>
-                                <?= $this->Html->link(__('Edit'), ['controller' => 'Publicacion', 'action' => 'edit', $publicacion->id]) ?>
-                                <?= $this->Form->postLink(__('Delete'), ['controller' => 'Publicacion', 'action' => 'delete', $publicacion->id], ['confirm' => __('Are you sure you want to delete # {0}?', $publicacion->id)]) ?>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </table>
-                </div>
-                <?php endif; ?>
-            </div>-->
         </div>
     </div>
+    <section class="cards">
+        <?php foreach ($barbershop->barbero as $barbero) : ?>
+        <div class="card_barberos" onclick="window.location.href = '/corte/listado/<?= $barbero->id; ?>';">
+            <?= $this->Html->image('perfil/' . $barbero->imagen_perfil,  array('alt' => '', 'class' => 'img_perfil_barbershop_card')); ?>
+            <div class="column_nombre_reserva">
+                <b><?= h($barbero->nombre) ?></b>
+                <p>Ver cortes</p>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </section>
 </div>
-
-<script>
-function irACortes() {
-
-}
-</script>

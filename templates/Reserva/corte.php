@@ -7,16 +7,28 @@
  * @var \Cake\Collection\CollectionInterface|string[] $corte
  */
 ?>
+<?php
+if ($_COOKIE["theme"] == "dark") {
+    $background = "#2a2b2e";
+    $background2 = "#121316";
+    $color = "#fff";
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
 <div class="row">
     <div class="column-responsive">
-        <div class="reserva form content">
+        <div class="reserva form content" style="background-color: <?php echo $background2; ?>!important;">
             <?= $this->Form->create($reserva) ?>
             <fieldset>
-                <legend>Reservar hora</legend>
-                <input type="text" id="fecha" name="fecha_corte" class="some-input"></input>
+                <legend style="color: <?php echo $color; ?> !important; ">Reservar hora</legend>
+                <input style="color: <?php echo $color; ?> !important; " type="text" id="fecha" name="fecha_corte"
+                    class="some-input"></input>
                 <div id="contendedor_tabla" class="column-responsive" hidden>
 
-                    <table id="tabla_horarios" hidden>
+                    <table style="color: <?php echo $color; ?> !important; " id="tabla_horarios" hidden>
                         <thead>
                             <tr>
                                 <th>Hora desde</th>

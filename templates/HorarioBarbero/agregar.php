@@ -6,23 +6,38 @@
  * @var \Cake\Collection\CollectionInterface|string[] $barbero
  */
 ?>
+<?php
+if ($_COOKIE["theme"] == "dark") {
+    $background = "#2a2b2e";
+    $background2 = "#121316";
+    $color = "#fff";
+    $colorDropdown = "#424952";
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+    $colorDropdown = "#363637";
+}
+?>
 <div class="row">
     <div class="column-responsive">
-        <div class="horarioBarbero form content">
+        <div class="horarioBarbero form content" style="background-color: <?php echo $background2; ?>!important;">
             <?= $this->Form->create($horarioBarbero) ?>
-            <fieldset>
+            <fieldset style="color: <?php echo $color; ?> !important; ">
                 <legend><?= __('Agregar horario') ?></legend>
                 <label>Tiempo</label>
-                <select name="dias" id="dias" required>
+                <select name="dias" id="dias" required style="color: <?php echo $colorDropdown; ?> !important; ">
                     <option value="0" selected>1 DIA</option>
                     <option value="1">1 SEMANA</option>
                     <option value="2">1 MES</option>
                     <option value="3">PERSONALIZADO</option>
                 </select>
                 <label>Fecha desde</label>
-                <input required type="date" label="Fecha desde" name="fecha_desde" id="fecha_desde" />
+                <input style="color: <?php echo $color; ?> !important; " required type="date" label="Fecha desde"
+                    name="fecha_desde" id="fecha_desde" />
                 <label hidden id="label_fecha_hasta">Fecha hasta</label>
-                <input hidden type="date" label="Fecha hasta" name="fecha_hasta" id="fecha_hasta" />
+                <input style="color: <?php echo $color; ?> !important; " hidden type="date" label="Fecha hasta"
+                    name="fecha_hasta" id="fecha_hasta" />
                 <?php
                 echo $this->Form->control('hora_inicio', ['label' => 'Hora de inicio de la jornada', 'step' => '1800']);
 
