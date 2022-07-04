@@ -8,13 +8,11 @@ use Cake\Mailer\Mailer;
 use Cake\Utility\Security;
 use Cake\Mailer\TransportFactory;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
-use Cake\ORM\Query;
 
 /**
  * Barbero Controller
  *
  * @property \App\Model\Table\BarberoTable $Barbero
- * @var \App\Model\Entity\BarberoBarbershop $BarberoBarbershop
  * @method \App\Model\Entity\Barbero[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class BarberoController extends AppController
@@ -85,39 +83,44 @@ class BarberoController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $barbero = $this->Barbero->patchEntity($barbero, $this->request->getData());
-            if ($this->Barbero->save($barbero)) {
+
                 $this->Flash->success(__('The barbero has been saved.'));
-                //Si el barbero no tiene ningún error
-                if (!$barbero->getErrors) {
-                    //Obtener imagen de perfil
-                    $image = $this->request->getData('imagen_perfil');
-                    //Obtenemos el nombre de la imagen
-                    $name = $image->getClientFilename();
-                    //Si el nombre de la imagen no está vacío, es porque no seleccionó niguna imágen
-                    if ($name !== '') {
-                        //Obtenemos la extensión de la imagen
-                        $ext = substr(strtolower(strrchr($name, '.')), 1);
-                        //Si no existe el directorio para guardar la imagen de perfil la creamos
-                        if (!is_dir(WWW_ROOT . 'img' . DS . 'perfil')) {
-                            mkdir(WWW_ROOT . 'img' . DS . 'perfil', 0775);
-                        }
-                        //Establecemos la ruta dónde queremos guardar la imagen
-                        $targetPath = WWW_ROOT . 'img' . DS . 'perfil' . DS . $barbero->usuario . '.' . $ext;
-                        //Movemos la imagen a la carpeta
-                        if ($name)
-                            $image->moveTo($targetPath);
-                        //Guardamos el registro
-                        $barbero->imagen_perfil = $barbero->usuario . '.' . $ext;
-                    } else {
-                        //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
-                        $barbero->imagen_perfil = 'default.png';
+            //Si el barbero no tiene ningún error
+            if (!$barbero->getErrors) {
+                //Obtener imagen de perfil
+                $image = $this->request->getData('imagen_perfil');
+                //Obtenemos el nombre de la imagen
+                $name = $image->getClientFilename();
+                //Si el nombre de la imagen no está vacío, es porque no seleccionó niguna imágen
+                if ($name !== '') {
+                    //Obtenemos la extensión de la imagen
+                    $ext = substr(strtolower(strrchr($name, '.')), 1);
+                    //Si no existe el directorio para guardar la imagen de perfil la creamos
+                    if (!is_dir(WWW_ROOT . 'img' . DS . 'perfil')) {
+                        mkdir(WWW_ROOT . 'img' . DS . 'perfil', 0775);
                     }
+                    //Establecemos la ruta dónde queremos guardar la imagen
+                    $targetPath = WWW_ROOT . 'img' . DS . 'perfil' . DS . $barbero->usuario . '.' . $ext;
+                    //Movemos la imagen a la carpeta
+                    if ($name)
+                        $image->moveTo($targetPath);
+                    //Guardamos el registro
+                    $barbero->imagen_perfil = $barbero->usuario . '.' . $ext;
                 } else {
+                    //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
                     $barbero->imagen_perfil = 'default.png';
                 }
+<<<<<<< Updated upstream
+            } else {
+                $barbero->imagen_perfil = 'default.png';
+            }
+=======
+               
+            if($this->Barbero->save($barbero)){
+                $this->Flash->success(__('Todo joya. Please, try again.'));
+>>>>>>> Stashed changes
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The barbero could not be saved. Please, try again.'));
         }
         $barbershop = $this->Barbero->Barbershop->find('list', ['limit' => 200])->all();
         $this->set(compact('barbero', 'barbershop'));
@@ -205,32 +208,12 @@ class BarberoController extends AppController
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-
-            //redirect to /articles after login success
-
-            $barberoLogeado = $result->getData()['id'];
-            // $barbero = $this->Barbero->get($barberoLogeado);
-            // $barberia = $this->BarberoBarbershop->find('all', ['conditions' => ['Barbero.id' => $barberoLogeado]])->first();
-            $query = $this->Barbero->find('all')->contain(['Barbershop'])->where(['Barbero.id' => $barberoLogeado]);
-            $barberias = $query->first()['barbershop'];
-            $barberia_ = null;
-
-            foreach ($barberias as $barberia) {
-                $barberia_ = $barberia;
-            }
-
+            // redirect to /articles after login success
             $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Pages',
-                'action' => 'mapa',
+                'controller' => 'Barbero',
+                'action' => 'index',
             ]);
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-            // if (!isset($_SESSION)) {
-            //     session_start();
-            // }
             $_SESSION["tipo"] =  "barbero";
-            $_SESSION["barberia_"] =  $barberia_;
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed
@@ -310,44 +293,11 @@ class BarberoController extends AppController
         }
     }
 
-    public function miPerfil($id = null)
-    {
+    public function miPerfil($id = null){
         $barbero = $this->Barbero->get($id, [
             'contain' => ['Barbershop', 'CalificacionCliente', 'Corte', 'HorarioBarbero', 'ListaNegra'],
         ]);
 
         $this->set(compact('barbero'));
-    }
-
-    public function reservas()
-    {
-        // debug($_SESSION['Auth']['id']);
-        $cortes_de_barbero = $this->Barbero->Corte->findByBarberoId($_SESSION['Auth']['id'])->toArray();
-        $reservas = [];
-        $cortes_reserva = [];
-        $clientes_reserva = [];
-        foreach ($cortes_de_barbero as $corte) {
-            $reserva = $this->Barbero->Corte->Reserva->findByCorteId($corte['id'])->toArray();
-
-            if (sizeof($reserva) > 0) {
-                foreach ($reserva as $res) {
-                    array_push($reservas, $res);
-                }
-            }
-        }
-        // debug($cortes_de_barbero);
-        // debug($reservas);
-
-        foreach ($reservas as $reserva) {
-            array_push($cortes_reserva, $this->Barbero->Corte->findById($reserva['corte_id'])->first());
-        }
-        foreach ($reservas as $reserva) {
-            array_push($clientes_reserva, $this->Barbero->Corte->Reserva->Cliente->findById($reserva['cliente_id'])->first());
-        }
-
-        // debug($clientes_reserva);
-        // debug($cortes_reserva);
-        // debug($barberos_reserva);
-        $this->set(compact('reservas', 'cortes_reserva', 'clientes_reserva'));
     }
 }
