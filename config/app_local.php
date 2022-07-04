@@ -36,15 +36,17 @@ return [
      */
     'Datasources' => [
         'default' => [
-            'host' => 'us-cdbr-east-05.cleardb.net',
-            'username' => 'bf822f8a3e440d',
-            'password' => '808e6055',
+            // 'host' => 'us-cdbr-east-05.cleardb.net',
+            // 'username' => 'bf822f8a3e440d',
+            // 'password' => '808e6055',
+            // 'database' => 'heroku_06fd63244285041',
+
+            'host' => 'localhost',
+            'username' => 'root',
+            'password' => '',
             'database' => 'heroku_06fd63244285041',
 
-            // 'host' => 'localhost',
-            // 'username' => 'root',
-            // 'password' => '',
-            // 'database' => 'heroku_06fd63244285041',
+            'port' => 3308,
 
             // 'host' => 'localhost',
             // 'username' => 'root',

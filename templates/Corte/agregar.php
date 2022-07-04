@@ -11,12 +11,14 @@ $isTheme = isset($_COOKIE["theme"]);
 if ($isTheme) {
     if ($_COOKIE["theme"] == "dark") {
         $background = "#2a2b2e";
-        $background2 = "#121316";
+        $background2 = "#34373B";
         $color = "#fff";
+        $colorDropdown = "#80868f";
     } else {
         $background = "#f5f7fa";
         $background2 = "#f9f9f9";
         $color = "#363637";
+        $colorDropdown = "#363637";
     }
 } else {
     $background = "#f5f7fa";
@@ -25,12 +27,6 @@ if ($isTheme) {
 }
 ?>
 <div class="row">
-    <!-- <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('List Corte'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside> -->
     <div class="column-responsive">
         <div class="corte form content" style="background-color: <?php echo $background2; ?>!important;">
             <?= $this->Form->create($corte) ?>
@@ -52,11 +48,8 @@ if ($isTheme) {
                 echo $this->Form->control('tiempo_estimado', ['step' => '1800', 'default' => '00:30:00', 'min' => '00:30:00', 'max' => '05:00:00']);
                 ?>
             </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->button(__('Agregar corte')) ?>
             <?= $this->Form->end() ?>
-            <!-- <?php
-                    // echo $this->html->link('tipoCorte', ['options' => $tipoCorte]);
-                    ?> -->
         </div>
     </div>
 </div>

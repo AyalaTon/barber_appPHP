@@ -77,7 +77,9 @@ class HorarioBarberoController extends AppController
         if ($this->request->is('post')) {
 
             // set values to horario barbero
-            $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+            // $horarioBarbero = $this->HorarioBarbero->newEmptyEntity();
+            // exit;
+
             if ($this->request->getData()['dias'] == 0) {
 
                 $horaDesde = new FrozenTime($this->request->getData('hora_inicio'));

@@ -75,7 +75,6 @@ class ReservaController extends AppController
         if ($this->request->is('post')) {
             // debug($this->request->getData());
 
-
             // $reserva = $this->Reserva->patchEntity($reserva, $this->request->getData());
             $fecha_corte = $this->request->getData()['fecha_corte'];
             $boton_presionado = $this->request->getData()['boton_presionado'];
@@ -112,10 +111,11 @@ class ReservaController extends AppController
 
             // debug([$fecha_corte, $arreglo_horarios_update, $horario_inicio, $id_cliente, $id_corte]);
             // exit;
+            // debug();
             if ($this->Reserva->save($reserva)) {
                 $this->Flash->success(__('La reserva fue realizada con éxito.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' =>  $_SESSION['tipo'], 'action' => 'reservas']);
             }
             $this->Flash->error(__('La reserva no pudo ser realizada con éxito. Por favor, intente nuevamente.'));
         }

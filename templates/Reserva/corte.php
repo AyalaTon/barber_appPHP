@@ -60,6 +60,7 @@ if ($isTheme) {
 const fechas_disponibles = <?php echo json_encode($horarios); ?>;
 const corte = <?php echo json_encode($corte); ?>;
 
+
 // Creo el arreglo de fechas 
 const fechas_arrego = [];
 
@@ -70,9 +71,10 @@ fechas_disponibles.forEach(function(fecha, index) {
 });
 
 
+
 // Creo un arreglo sin fechas repetidas
 const fechas_unicas = [...new Set(fechas_arrego)];
-console.log(fechas_unicas);
+
 
 // Creo un arreglo con las fechas parseadas
 const parsed_fechas = [];
@@ -82,7 +84,6 @@ fechas_unicas.forEach(function(fecha, index) {
     parsed_fechas[index] = fecha_sin_error;
 })
 
-console.log(parsed_fechas);
 // Creo el datepicker para seleccionar las fechas
 const picker = datepicker('.some-input', {
     // Agrego los puntos en el calendario
@@ -102,8 +103,7 @@ const picker = datepicker('.some-input', {
 
     // Funcion para saber cuandos se selecciona una fecha
     onSelect: (instance, date) => {
-        console.log(instance);
-        console.log(date);
+
         if (date !== undefined) {
             // Creo un arreglo con fechas parseadas
             const fechas_pars = [];
@@ -111,8 +111,12 @@ const picker = datepicker('.some-input', {
             if (mess < 10) {
                 mess = '0' + mess;
             }
+            var diaa = date.getDate();
+            if (diaa < 10) {
+                diaa = '0' + diaa;
+            }
             // Obtengo la fecha seleccionada con el mismo formato.
-            const fecha_seleccionada = date.getFullYear() + '-' + mess + '-' + date.getDate();
+            const fecha_seleccionada = date.getFullYear() + '-' + mess + '-' + diaa;
 
             // Recorro las fechas parseadas y guardo las mismas
             parsed_fechas.forEach(function(fecha, index) {
@@ -120,7 +124,11 @@ const picker = datepicker('.some-input', {
                 if (mes < 10) {
                     mes = '0' + mes;
                 }
-                fecha_pars = fecha.getFullYear() + '-' + mes + '-' + fecha.getDate();
+                var dia = fecha.getDate();
+                if (dia < 10) {
+                    dia = '0' + dia;
+                }
+                fecha_pars = fecha.getFullYear() + '-' + mes + '-' + dia;
                 fechas_pars[index] = fecha_pars;
             });
 
@@ -129,13 +137,12 @@ const picker = datepicker('.some-input', {
 
             // Si la fecha seleccionada es una de las fechas disponible obtengo los horarios
             if (fechas_pars.includes(fecha_seleccionada)) {
-                // console.log('Mostrar los horarios de la fecha');
-                // console.log(fecha_seleccionada);
-                // console.log(fechas_disponibles);
+
 
                 // Recorro las fechas disponibles 
                 var indice = 0;
                 fechas_disponibles.forEach(function(fecha) {
+
                     if (fecha['fecha'] === fecha_seleccionada) {
                         // Cuando la encuentro guardo como objeto la hora de inicio y la hora de fin
                         horarios[indice] = {
@@ -146,7 +153,7 @@ const picker = datepicker('.some-input', {
                         indice++;
                     }
                 });
-                // console.log(horarios);
+
 
                 function convertirHoraADate(hora_string) {
                     const [hours, minutes, seconds] = hora_string.split(':');
@@ -154,8 +161,7 @@ const picker = datepicker('.some-input', {
                     return hora_date;
                 }
 
-                console.log('Horarios sin ordenar');
-                console.log(horarios);
+
 
                 horarios.sort((a, b) =>
                     convertirHoraADate(a['hora_inicio']) > convertirHoraADate(b['hora_inicio']) ? 1 :
@@ -163,8 +169,7 @@ const picker = datepicker('.some-input', {
                     0
                 );
 
-                console.log('Horarios ordenados');
-                console.log(horarios);
+
 
                 // Tiempo de duración del corte
                 const [hours3, minutes3, seconds3] = corte['tiempo_estimado'].split(
@@ -235,16 +240,14 @@ const picker = datepicker('.some-input', {
                         }
 
                         const hora_fin_corte_string = convertirDateAHora(hora_fin_del_corte);
-                        console.log('Esta hora quiero ver: ' + hora_fin_corte_string);
 
 
                         if (horarios[i + intervalos - 1] !== undefined) {
 
-                            // console.log('entró acá');
 
                             for (var j = 0; j < horarios.length; j++) {
                                 if (horarios[j]['hora_fin'] === hora_fin_corte_string) {
-                                    // console.log('Este sirve');
+
                                     for (var n = 0; n < intervalos; n++) {
                                         var hora_fn = new Date(
                                             convertirHoraADate(horarios[j]['hora_fin'])
@@ -266,8 +269,7 @@ const picker = datepicker('.some-input', {
                                             intervalos_tiempo = [];
                                             break;
                                         }
-                                        console.log('Hora fin previa')
-                                        console.log(hora_fin_previa);
+
 
                                     }
                                     if (tiene_intervalos_necesarios) {
@@ -280,32 +282,6 @@ const picker = datepicker('.some-input', {
 
                                 }
                             }
-
-                            // console.log('Esta hora de inicio interesan 👇');
-                            // console.log(hora_inicio);
-                            // console.log(hora_inicio.getTime());
-                            // console.log(new Date(hora_inicio.getTime() + ((2 * 30) * 60000)));
-
-                            // Esto todavia no anda //
-                            // for (var n = 0; n < intervalos; n++) {
-                            //     var hora_in = new Date(hora_inicio.getTime() + n * 30 * 60000);
-                            //     var hora_fn = new Date(hora_fin.getTime() + n * 30 * 60000);
-                            //     var horarioObtenido = horarios.filter((obj) => obj.hora_inicio ===
-                            //         convertirDateAHora(hora_in))
-                            //     console.log(hora_in);
-                            //     console.log(hora_fn);
-                            //     // console.log(hora_inicio);
-                            //     // console.log(hora_fin);
-                            //     intervalos_tiempo.push({
-                            //         'hora_inicio': convertirDateAHora(hora_in),
-                            //         'hora_fin': convertirDateAHora(hora_fn),
-                            //         'id': horarioObtenido[0]['id'],
-                            //     });
-
-                            // }
-                            // console.log('Estos son los intervalos que me interesan 👇');
-                            // console.log(intervalos_tiempo);
-                            // Esto todavia no anda //
                         }
 
 
@@ -314,8 +290,6 @@ const picker = datepicker('.some-input', {
 
 
                 // Find a <table> element with id="tabla_horarios":
-
-
 
                 if (horarios_utilizables.length > 0) {
                     var table = document.getElementById("tabla_body");
@@ -332,9 +306,6 @@ const picker = datepicker('.some-input', {
                         var cell3 = row.insertCell();
                         var cell4 = row.insertCell();
                         var cell5 = row.insertCell();
-
-                        // console.log('Este horario es el del html');
-                        // console.log(horario);
 
                         // Add some text to the new cells:
                         cell1.innerHTML = horario['horario']['hora_inicio'];
@@ -355,7 +326,6 @@ const picker = datepicker('.some-input', {
                         cell5.innerHTML = '<input type="hidden" name="h_i' + i + '" value=' +
                             horario['horario']['hora_inicio'] + ' >';
 
-                        // console.log(arreglo_id_horario);
 
                     })
                 } else {
@@ -370,13 +340,6 @@ const picker = datepicker('.some-input', {
 
                 alert('Esta fecha no tiene horarios disponibles');
             }
-
-            console.log('Horarios utilizables 👇');
-            console.log(horarios_utilizables);
-            console.log('Horarios 👇');
-            console.log(horarios);
-            console.log('Corte 👇');
-            console.log(corte);
         } else if (date === undefined) {
             $('#tabla_horarios').hide();
             $("#no_existe").remove();

@@ -327,9 +327,12 @@ class BarberoController extends AppController
         $cortes_reserva = [];
         $clientes_reserva = [];
         foreach ($cortes_de_barbero as $corte) {
-            $reserva = $this->Barbero->Corte->Reserva->findByCorteId($corte['id'])->first();
-            if ($reserva) {
-                array_push($reservas, $reserva);
+            $reserva = $this->Barbero->Corte->Reserva->findByCorteId($corte['id'])->toArray();
+
+            if (sizeof($reserva) > 0) {
+                foreach ($reserva as $res) {
+                    array_push($reservas, $res);
+                }
             }
         }
         // debug($cortes_de_barbero);
