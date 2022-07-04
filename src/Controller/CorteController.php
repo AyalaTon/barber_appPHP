@@ -23,17 +23,17 @@ class CorteController extends AppController
             'contain' => ['Barbero'],
         ];
         $corte = $this->paginate($this->Corte);
+        $barberoLogeado = (int) $_SESSION['Auth']['id'];
 
-        $this->set(compact('corte'));
+        $this->set(compact('corte', 'barberoLogeado'));
     }
 
     public function listado($id = null)
     {
         $coresDelBarbero = $this->Corte->findByBarberoId($id);
+        $barbero = $this->loadModel('Barbero')->findById($id)->toList();
         $cortes = $coresDelBarbero->toList();
-        // debug($cortes);
-        // exit;
-        $this->set(compact('cortes'));
+        $this->set(compact('cortes', 'barbero'));
     }
 
     /**

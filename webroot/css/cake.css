@@ -489,3 +489,41 @@ input:checked+.slider:before {
 
 
 /* Creado por Pablo FIN*/
+/* Creado por Pablo FIN*/
+
+/* Creado por Milton */
+.zoom {
+    /* padding: 50px;
+    background-color: green; */
+    transition: transform .2s;
+    /* width: 200px; */
+    /* height: 200px; */
+    /* margin: 0 auto; */
+}
+
+.zoom:hover {
+    /* margin: 0 auto; */
+    -ms-transform: scale(2); /* IE 9 */
+    -webkit-transform: scale(2); /* Safari 3-8 */
+    /* position: absolute; */
+    transform: scale(2); 
+  }
+
+  .modulee {
+    width: 50rem;
+    /* margin: 0 0 1em 0; */
+    overflow: hidden;
+  }
+  
+  .modulee p {
+    margin: 0;
+  }
+  
+  .line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+
+
+/* Creado por Milton FIN*/

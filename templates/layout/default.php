@@ -77,9 +77,11 @@ if ($isTheme) {
     }
     // $barbero = $_SESSION['Auth'];
     ?>
-    <nav class="top-nav" style="background-color: <?php echo $background; ?>; border-bottom: 6px solid <?php echo $color; ?> box-shadow: 0 4px 6px -6px #222;">
+    <nav class="top-nav"
+        style="background-color: <?php echo $background; ?>; border-bottom: 6px solid <?php echo $color; ?> box-shadow: 0 4px 6px -6px #222;">
         <div class="top-nav-title">
-            <a style="text-decoration: none;" href="<?= $this->Url->build($url_link) ?>"><span style="color: <?php echo $color; ?> !important; ">💈Tapelau💈</span></a>
+            <a style="text-decoration: none;" href="<?= $this->Url->build($url_link) ?>"><span
+                    style="color: <?php echo $color; ?> !important; ">💈Tapelau💈</span></a>
         </div>
         <div class="top-nav-links">
             <label class="switch">
@@ -93,60 +95,64 @@ if ($isTheme) {
             <?php
             if ($this->request->getAttributes()['identity'] != null) {
             ?>
-                <div class="dropdown">
-                    <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
-                    <div class="dropdown-content" style="background-color: <?php echo $background2; ?>; color: <?php echo $color; ?> !important; ">
-                        <ul style="list-style-type: none !important; ">
-                            <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
-                            <li>
-                                <?= $this->Html->link('Perfil', $tipoUser . '/mi_perfil/' . $user_data['id'], ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
-                            </li>
-                            <li>
-                                <?= $this->Html->link('Mis reservas', $tipoUser . '/reservas/', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
-                            </li>
-                            <?php
+            <div class="dropdown">
+                <span><?= $this->Html->image($image_url,  array('alt' => $image_url, 'class' => 'img_perfil')); ?></span>
+                <div class="dropdown-content"
+                    style="background-color: <?php echo $background2; ?>; color: <?php echo $color; ?> !important; ">
+                    <ul style="list-style-type: none !important; ">
+                        <!-- Se lista el menu del usuario, ya sea barbero o cliente. -->
+                        <li>
+                            <?= $this->Html->link('Perfil', $tipoUser . '/mi_perfil/' . $user_data['id'], ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <li>
+                            <?= $this->Html->link('Mis reservas', $tipoUser . '/reservas/', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <?php
                             if ($tipoUser == 'barbero') {
                             ?>
 
-                                <!-- Si es Barbero con barberia lista 👇 -->
-                                <?php
+                        <!-- Si es Barbero con barberia lista 👇 -->
+                        <?php
                                 if ($_SESSION['barberia_'] != null) {
                                 ?>
-                                    <li>
-                                        <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
-                                    </li>
-                                    <li>
-                                        <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
-                                    </li>
-                                <?php
+                        <li>
+                            <?= $this->Html->link('Mi Barberia', '/barbershop/ver/' . $_SESSION['barberia_']['id'], ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <li>
+                            <?= $this->Html->link('Invitar a barbería', '/barbershop/invitar', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <li>
+                            <?= $this->Html->link('Agregar horarios', '/horariobarbero/agregar', ['style' => 'color:' . $color . '!important; text-decoration:none !important;']); ?>
+                        </li>
+                        <?php
                                 } else {
                                 ?>
-                                    <li>
-                                        <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar'), ['style' => 'color:' . $color . '!important; text-decoration:none !important;']) ?>
-                                    </li>
-                                <?php
+                        <li>
+                            <?= $this->Html->link(('Nueva Barberia'), array('controller' => 'Barbershop', 'action' => 'agregar'), ['style' => 'color:' . $color . '!important; text-decoration:none !important;']) ?>
+                        </li>
+                        <?php
                                 }
                                 ?>
-                                <li>
-                                    <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index'), ['style' => 'color:' . $color . '!important; text-decoration:none !important;']) ?>
-                                </li>
+                        <li>
+                            <?= $this->Html->link(('Cortes'), array('controller' => 'Corte', 'action' => 'index'), ['style' => 'color:' . $color . '!important; text-decoration:none !important;']) ?>
+                        </li>
 
 
-                                <!-- Si es Cliente lista 👇 -->
-                            <?php
+                        <!-- Si es Cliente lista 👇 -->
+                        <?php
                             } else if ($tipoUser == 'cliente') {
                             ?>
 
-                            <?php
+                        <?php
                             }
                             ?>
-                        </ul>
-                        <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar', 'style' => 'text-decoration:none !important;']); ?>
-                    </div>
+                    </ul>
+                    <?= $this->Html->link('Cerrar sesión', ['controller' => $_SESSION['tipo'], 'action' => 'logout'], ['class' => 'button float-right boton_cerrar', 'style' => 'text-decoration:none !important;']); ?>
                 </div>
+            </div>
 
         </div>
-    <?php
+        <?php
 
             }
     ?>
@@ -156,7 +162,7 @@ if ($isTheme) {
         if ($this->request->getAttributes()['identity'] != null) {
 
         ?>
-            <div class="top-nav-links" style="
+        <div class="top-nav-links" style="
                 display: flex;
                 justify-content: space-around;
                 padding: 10px;
@@ -166,16 +172,22 @@ if ($isTheme) {
                 text-align: center;
                 font-size: 4rem;
                 ">
-                <a href="http://localhost:8765/mapa" style="text-decoration:none; display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i style="color: <?php echo $color; ?> !important; " class="fas fa-map-marked-alt"></i>
-                    <h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem; color: <?php echo $color; ?> !important; ">
-                        Barberías</h6>
+            <a href="http://localhost:8765/mapa"
+                style="text-decoration:none; display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
+                    style="color: <?php echo $color; ?> !important; " class="fas fa-map-marked-alt"></i>
+                <h6
+                    style="font-family:Arial;margin-bottom: 0;margin-top:1rem; color: <?php echo $color; ?> !important; ">
+                    Barberías</h6>
 
-                </a>
-                <a href="http://localhost:8765/publicaciones" style="text-decoration:none;  display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i style="color: <?php echo $color; ?> !important; " class="fas fa-inbox"></i>
-                    <h6 style="font-family:Arial;margin-bottom: 0;margin-top:1rem; color: <?php echo $color; ?> !important; ">
-                        Publicaciones</h6>
-                </a>
-            </div>
+            </a>
+            <a href="http://localhost:8765/publicaciones"
+                style="text-decoration:none;  display:flex; flex-direction:column; justify-content: space-between; height:100%;"><i
+                    style="color: <?php echo $color; ?> !important; " class="fas fa-inbox"></i>
+                <h6
+                    style="font-family:Arial;margin-bottom: 0;margin-top:1rem; color: <?php echo $color; ?> !important; ">
+                    Publicaciones</h6>
+            </a>
+        </div>
         <?php
         }
         ?>
@@ -189,17 +201,17 @@ if ($isTheme) {
     <footer>
     </footer>
     <script>
-        $("#toggleTheme").on('change', function() {
-            if ($(this).is(':checked')) {
-                $(this).attr('value', 'true');
-                document.cookie = "theme=dark";
-                location.reload();
-            } else {
-                $(this).attr('value', 'false');
-                document.cookie = "theme=light";
-                location.reload();
-            }
-        });
+    $("#toggleTheme").on('change', function() {
+        if ($(this).is(':checked')) {
+            $(this).attr('value', 'true');
+            document.cookie = "theme=dark";
+            location.reload();
+        } else {
+            $(this).attr('value', 'false');
+            document.cookie = "theme=light";
+            location.reload();
+        }
+    });
     </script>
 </body>
 
