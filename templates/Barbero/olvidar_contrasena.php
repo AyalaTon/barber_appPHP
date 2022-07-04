@@ -1,8 +1,15 @@
 <?php
-if ($_COOKIE["theme"] == "dark") {
-    $background = "#2a2b2e";
-    $background2 = "#121316";
-    $color = "#fff";
+$isTheme = isset($_COOKIE["theme"]);
+if ($isTheme) {
+    if ($_COOKIE["theme"] == "dark") {
+        $background = "#2a2b2e";
+        $background2 = "#34373B";
+        $color = "#fff";
+    } else {
+        $background = "#f5f7fa";
+        $background2 = "#f9f9f9";
+        $color = "#363637";
+    }
 } else {
     $background = "#f5f7fa";
     $background2 = "#f9f9f9";

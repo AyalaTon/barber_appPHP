@@ -7,16 +7,21 @@
  */
 ?>
 <?php
-if ($_COOKIE["theme"] == "dark") {
-    $background = "#2a2b2e";
-    $background2 = "#121316";
-    $color = "#fff";
-    $colorDropdown = "#424952";
+$isTheme = isset($_COOKIE["theme"]);
+if ($isTheme) {
+    if ($_COOKIE["theme"] == "dark") {
+        $background = "#2a2b2e";
+        $background2 = "#121316";
+        $color = "#fff";
+    } else {
+        $background = "#f5f7fa";
+        $background2 = "#f9f9f9";
+        $color = "#363637";
+    }
 } else {
     $background = "#f5f7fa";
     $background2 = "#f9f9f9";
     $color = "#363637";
-    $colorDropdown = "#363637";
 }
 ?>
 <div class="row">
