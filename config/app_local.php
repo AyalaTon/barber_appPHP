@@ -36,6 +36,7 @@ return [
      */
     'Datasources' => [
         'default' => [
+<<<<<<< Updated upstream
             // 'host' => 'us-cdbr-east-05.cleardb.net',
             'host' => 'localhost',
             /*
@@ -44,6 +45,12 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
+=======
+            'host' => 'localhost',
+            'username' => 'root',
+            'password' => '',
+            'database' => 'bdphp',
+>>>>>>> Stashed changes
 
             'username' => 'root',
             'password' => '',

@@ -42,8 +42,21 @@ if ($this->request->getAttributes()['identity'] != null) {
                     <div class="col-md-6"><label class="labels">Nombre</label><input type="text" class="form-control" value="<?= h($barbero->nombre) ?>" placeholder="surname"></div>
                     <div class="col-md-6"><label class="labels">Usuario</label><input type="text" class="form-control" placeholder="first name" value="<?= h($barbero->usuario) ?>"></div>
                 </div>
+<<<<<<< Updated upstream
                 <div class="row mt-3">
                     <div class="col-md-12"><label class="labels">Tel</label><input type="text" class="form-control" placeholder="enter phone number" value="<?= h($barbero->tel) ?>"></div>
+=======
+            </div>
+
+            <div class="editar-datos-login">
+                <div class="p-3 py-5">
+                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control"
+                            placeholder="experience" value="<?= h($barbero->email) ?>"></div> <br>
+                     <!-- <div class="col-md-12"><label class="labels">Contraseña </label><input type="password" 
+                            class="form-control" placeholder="additional details" id="password"
+                            value="<?= h($barbero->clave) ?> "> <i class="bi bi-eye-slash" id="togglePassword"
+                            style="margin-left: -30px; cursor: pointer;"> </i> </div>-->
+>>>>>>> Stashed changes
                 </div>
               
             </div>

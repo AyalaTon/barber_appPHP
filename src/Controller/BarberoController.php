@@ -83,7 +83,7 @@ class BarberoController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $barbero = $this->Barbero->patchEntity($barbero, $this->request->getData());
-            if ($this->Barbero->save($barbero)) {
+
                 $this->Flash->success(__('The barbero has been saved.'));
             //Si el barbero no tiene ningún error
             if (!$barbero->getErrors) {
@@ -110,12 +110,17 @@ class BarberoController extends AppController
                     //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
                     $barbero->imagen_perfil = 'default.png';
                 }
+<<<<<<< Updated upstream
             } else {
                 $barbero->imagen_perfil = 'default.png';
             }
+=======
+               
+            if($this->Barbero->save($barbero)){
+                $this->Flash->success(__('Todo joya. Please, try again.'));
+>>>>>>> Stashed changes
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The barbero could not be saved. Please, try again.'));
         }
         $barbershop = $this->Barbero->Barbershop->find('list', ['limit' => 200])->all();
         $this->set(compact('barbero', 'barbershop'));

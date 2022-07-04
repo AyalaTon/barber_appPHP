@@ -41,11 +41,16 @@ if ($this->request->getAttributes()['identity'] != null) {
                     echo $this->Form->control('usuario');
                     echo $this->Form->control('nombre');
                     echo $this->Form->control('email');
-                    echo $this->Form->control('clave');
-                    echo $this->Form->control('imagen_perfil', ['type' => 'file']);
+
+                    echo $this->Form->control('imagen_perfil', ['type' => 'file', 'label' => 'Imagen de Perfil', 'required' => true]);
                     echo $this->Form->control('tel');
+                    ?>
+                <div hidden> 
+                <?php
+                    echo $this->Form->control('clave');
                     echo $this->Form->control('barbershop._ids', ['options' => $barbershop]);
                 ?>
+                 </div>
             </fieldset>
   
             <?= $this->Html->link(__('Cancelar'),['action' => 'mi_perfil', $barbero->id], ['class' => 'button']) ?>

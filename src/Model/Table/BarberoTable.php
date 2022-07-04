@@ -102,7 +102,6 @@ class BarberoTable extends Table
 
         $validator
             ->scalar('imagen_perfil')
-            ->maxLength('imagen_perfil', 500)
             ->allowEmptyFile('imagen_perfil');
 
         $validator
