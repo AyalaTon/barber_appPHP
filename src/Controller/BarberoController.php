@@ -84,7 +84,7 @@ class BarberoController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $barbero = $this->Barbero->patchEntity($barbero, $this->request->getData());
 
-                $this->Flash->success(__('The barbero has been saved.'));
+            $this->Flash->success(__('The barbero has been saved.'));
             //Si el barbero no tiene ningún error
             if (!$barbero->getErrors) {
                 //Obtener imagen de perfil
@@ -110,15 +110,12 @@ class BarberoController extends AppController
                     //En caso de que no haya seleccionado ninguna imágen, se le asigna una por defecto
                     $barbero->imagen_perfil = 'default.png';
                 }
-<<<<<<< Updated upstream
             } else {
                 $barbero->imagen_perfil = 'default.png';
             }
-=======
-               
-            if($this->Barbero->save($barbero)){
+
+            if ($this->Barbero->save($barbero)) {
                 $this->Flash->success(__('Todo joya. Please, try again.'));
->>>>>>> Stashed changes
                 return $this->redirect(['action' => 'index']);
             }
         }
@@ -293,7 +290,8 @@ class BarberoController extends AppController
         }
     }
 
-    public function miPerfil($id = null){
+    public function miPerfil($id = null)
+    {
         $barbero = $this->Barbero->get($id, [
             'contain' => ['Barbershop', 'CalificacionCliente', 'Corte', 'HorarioBarbero', 'ListaNegra'],
         ]);
