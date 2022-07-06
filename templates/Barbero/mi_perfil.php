@@ -21,8 +21,6 @@ if ($this->request->getAttributes()['identity'] != null) {
     <div class="column-responsive ">
         <div class="barbero view content">
 
-
-
             <div class="col-md-3 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="img-foto-usuario"
                         width="150px" src="<?= $image_url ?>">

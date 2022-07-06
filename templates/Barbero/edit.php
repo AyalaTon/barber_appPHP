@@ -16,18 +16,15 @@ if ($this->request->getAttributes()['identity'] != null) {
 <?php echo $this->Html->script('webroot\js\ocultar_contraseña.js'); ?>
 
 <div class="row">
-
     <div class="column-responsive ">
         <div class="barbero form content">
             <?= $this->Form->create($barbero, ['type' => 'file']) ?>
             <fieldset>
-                <legend></legend>
+                <legend>Modificar mis datos</legend>
 
                 <div class="col-md-3 border-right">
-                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
-                            class="img-foto-usuario" width="150px" src="<?= $image_url ?>">
-                        <span class="font-weight-bold"></span>
-                        <span class="text-black-50"></span><span></span>
+                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                        <img class="img-foto-usuario" width="150px" src="<?= $image_url ?>">
                     </div>
                 </div>
 

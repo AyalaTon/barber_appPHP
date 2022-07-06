@@ -48,11 +48,8 @@ if ($this->request->getAttributes()['identity'] != null) {
             <div class="editar-datos-login">
                 <div class="p-3 py-5">
                     <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control"
-                            placeholder="experience" value="<?= h($cliente->email) ?>"></div> <br>
-                    <div class="col-md-12"><label class="labels">Contraseña </label><input type="password"
-                            class="form-control" placeholder="additional details" id="password"
-                            value="<?= h($cliente->clave) ?> "> <i class="bi bi-eye-slash" id="togglePassword"
-                            style="margin-left: -30px; cursor: pointer;"> </i> </div>
+                            placeholder="experience" value="<?= h($cliente->email) ?>">
+                    </div> <br>
                 </div>
             </div>
             <?= $this->Html->link(__('Edit Cliente'), ['action' => 'edit', $cliente->id], ['class' => 'button']) ?>
