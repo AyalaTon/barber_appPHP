@@ -29,8 +29,8 @@ if ($isTheme) {
             echo $this->Form->control('email', ['label' => 'Email', 'required' => true, 'style' => 'color: ' . $color . '!important;']);
             echo $this->Form->control('clave', ['type' => 'password', 'label' => 'Contraseña', 'required' => true, 'style' => 'color: ' . $color . '!important;']);
             echo $this->Form->control('confirmar_clave', ['type' => 'password', 'label' => 'Confirmar Contraseña', 'required' => true, 'style' => 'color: ' . $color . '!important;']);
-            echo $this->Form->control('imagen_perfil', ['type' => 'file', 'label' => 'Imagen de Perfil', 'required' => true, 'style' => 'color: ' . $color . '!important;']);
-            echo $this->Form->control('tel', ['label' => 'Teléfono', 'required' => true, 'style' => 'color: ' . $color . '!important;']);
+            echo $this->Form->control('imagen_perfil', ['type' => 'file', 'label' => 'Imagen de Perfil', 'style' => 'color: ' . $color . '!important;']);
+            echo $this->Form->control('tel', ['label' => 'Teléfono', 'style' => 'color: ' . $color . '!important;']);
             ?>
             <div hidden>
                 <?php

@@ -77,7 +77,7 @@ if ($isTheme) {
                 </div>
 
 
-                <?= $this->Html->link(__('Edit Barbero'), ['action' => 'edit', $barbero->id], ['class' => 'button']) ?>
+                <?= $this->Html->link(__('Editar Perfil'), ['action' => 'edit', $barbero->id], ['class' => 'button']) ?>
 
             </div>
         </div>

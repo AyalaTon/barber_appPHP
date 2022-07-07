@@ -10,7 +10,7 @@ $isTheme = isset($_COOKIE["theme"]);
 if ($isTheme) {
     if ($_COOKIE["theme"] == "dark") {
         $background = "#2a2b2e";
-        $background2 = "#121316";
+        $background2 = "#34373B";
         $color = "#fff";
     } else {
         $background = "#f5f7fa";
