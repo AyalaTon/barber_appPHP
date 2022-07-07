@@ -6,9 +6,34 @@
  * @var \Cake\Collection\CollectionInterface|string[] $barbero
  */
 ?>
+<?php
+$isTheme = isset($_COOKIE["theme"]);
+if ($isTheme) {
+    if ($_COOKIE["theme"] == "dark") {
+        $background = "#2a2b2e";
+        $background2 = "#34373B";
+        $color = "#fff";
+    } else {
+        $background = "#f5f7fa";
+        $background2 = "#f9f9f9";
+        $color = "#363637";
+    }
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
+<style>
+    input,
+    select,
+    textarea {
+        color: <?php echo $color; ?> !important;
+    }
+</style>
 <div class="row">
     <div class="column-responsive">
-        <div class="barbershop form content">
+        <div style="background-color:<?php echo $background2; ?>!important; color: <?php echo $color; ?>!important;" class="barbershop form content">
             <?= $this->Form->create($barbershop, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Add Barbershop') ?></legend>
@@ -16,6 +41,7 @@
                 echo $this->Form->control('nombre');
                 ?>
                 <legend>Seleccione en el mapa el lugar donde se encuentra la barbería</legend>
+
                 <body onload='init();'>
                     <div id="Map" style="height: 400px"></div>
                 </body>
@@ -77,13 +103,13 @@
 
     function reverseGeocode(coordLon, coordLat) {
         return fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + coordLon + '&lat=' + coordLat)
-        .then((response) => { 
-            return response.json().then((data) => {
-                return data;
-            }).catch((err) => {
-                console.log(err);
-            }) 
-        });
+            .then((response) => {
+                return response.json().then((data) => {
+                    return data;
+                }).catch((err) => {
+                    console.log(err);
+                })
+            });
         /*return fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + coordLon + '&lat=' + coordLat)
             .then(function(response) {
                 return response.json();
