@@ -9,15 +9,32 @@ if ($this->request->getAttributes()['identity'] != null) {
     $image_url = '/img/perfil/' . $user_data['imagen_perfil'];
 }
 ?>
-
+<?php
+$isTheme = isset($_COOKIE["theme"]);
+if ($isTheme) {
+    if ($_COOKIE["theme"] == "dark") {
+        $background = "#2a2b2e";
+        $background2 = "#34373B";
+        $color = "#fff";
+    } else {
+        $background = "#f5f7fa";
+        $background2 = "#f9f9f9";
+        $color = "#363637";
+    }
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
 <?= $this->Html->css(['mi_perfil']) ?>
 <?php echo $this->Html->script('webroot\js\ocultar_contraseña.js'); ?>
 
 <div class="row">
     <div class="column-responsive">
-        <div class="cliente form content">
+        <div class="cliente form content" style="background-color: <?php echo $background2; ?>!important;">
             <?= $this->Form->create($cliente) ?>
-            <fieldset>
+            <fieldset style="color: <?php echo $color; ?> !important; ">
                 <legend>Modificar mis datos</legend>
                 <div class="col-md-3 border-right">
                     <div class="d-flex flex-column align-items-center text-center p-3 py-5">
@@ -25,11 +42,11 @@ if ($this->request->getAttributes()['identity'] != null) {
                     </div>
                 </div>
                 <?php
-                echo $this->Form->control('usuario');
-                echo $this->Form->control('nombre');
-                echo $this->Form->control('email');
+                echo $this->Form->control('usuario', ['label' => 'Usuario', 'style' => 'color: ' . $color . ' !important; ']);
+                echo $this->Form->control('nombre', ['label' => 'Nombre', 'style' => 'color: ' . $color . ' !important; ']);
+                echo $this->Form->control('email', ['label' => 'Email', 'style' => 'color: ' . $color . ' !important; ']);
                 echo $this->Form->control('imagen_perfil', ['type' => 'file', 'label' => 'Imagen de Perfil', 'required' => true]);
-                echo $this->Form->control('tel');
+                echo $this->Form->control('tel', ['label' => 'Tel', 'style' => 'color: ' . $color . ' !important; ']);
                 ?>
                 <div hidden>
                     <?php
