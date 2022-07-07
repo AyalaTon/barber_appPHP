@@ -8,11 +8,13 @@ use Cake\Mailer\Mailer;
 use Cake\Utility\Security;
 use Cake\Mailer\TransportFactory;
 use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Cake\ORM\Query;
 
 /**
  * Barbero Controller
  *
  * @property \App\Model\Table\BarberoTable $Barbero
+ * @var \App\Model\Entity\BarberoBarbershop $BarberoBarbershop
  * @method \App\Model\Entity\Barbero[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class BarberoController extends AppController
@@ -205,12 +207,32 @@ class BarberoController extends AppController
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            // redirect to /articles after login success
+
+            //redirect to /articles after login success
+
+            $barberoLogeado = $result->getData()['id'];
+            // $barbero = $this->Barbero->get($barberoLogeado);
+            // $barberia = $this->BarberoBarbershop->find('all', ['conditions' => ['Barbero.id' => $barberoLogeado]])->first();
+            $query = $this->Barbero->find('all')->contain(['Barbershop'])->where(['Barbero.id' => $barberoLogeado]);
+            $barberias = $query->first()['barbershop'];
+            $barberia_ = null;
+
+            foreach ($barberias as $barberia) {
+                $barberia_ = $barberia;
+            }
+
             $redirect = $this->request->getQuery('redirect', [
-                'controller' => 'Barbero',
-                'action' => 'index',
+                'controller' => 'Pages',
+                'action' => 'mapa',
             ]);
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            // if (!isset($_SESSION)) {
+            //     session_start();
+            // }
             $_SESSION["tipo"] =  "barbero";
+            $_SESSION["barberia_"] =  $barberia_;
             return $this->redirect($redirect);
         }
         // display error if user submitted and authentication failed
@@ -297,5 +319,32 @@ class BarberoController extends AppController
         ]);
 
         $this->set(compact('barbero'));
+    }
+
+    public function reservas()
+    {
+        // debug($_SESSION['Auth']['id']);
+        $cortes_de_barbero = $this->Barbero->Corte->findByBarberoId($_SESSION['Auth']['id'])->toArray();
+        $reservas = [];
+        $cortes_reserva = [];
+        $clientes_reserva = [];
+        foreach ($cortes_de_barbero as $corte) {
+            $reserva = $this->Barbero->Corte->Reserva->findByCorteId($corte['id'])->toArray();
+
+            if (sizeof($reserva) > 0) {
+                foreach ($reserva as $res) {
+                    array_push($reservas, $res);
+                }
+            }
+        }
+
+        foreach ($reservas as $reserva) {
+            array_push($cortes_reserva, $this->Barbero->Corte->findById($reserva['corte_id'])->first());
+        }
+        foreach ($reservas as $reserva) {
+            array_push($clientes_reserva, $this->Barbero->Corte->Reserva->Cliente->findById($reserva['cliente_id'])->first());
+        }
+
+        $this->set(compact('reservas', 'cortes_reserva', 'clientes_reserva'));
     }
 }
