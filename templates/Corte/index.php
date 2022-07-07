@@ -5,11 +5,29 @@
  * @var \App\Model\Entity\Corte[]|\Cake\Collection\CollectionInterface $corte
  */
 ?>
-<div class="corte index content">
+<?php
+$isTheme = isset($_COOKIE["theme"]);
+if ($isTheme) {
+    if ($_COOKIE["theme"] == "dark") {
+        $background = "#2a2b2e";
+        $background2 = "#34373B";
+        $color = "#fff";
+    } else {
+        $background = "#f5f7fa";
+        $background2 = "#f9f9f9";
+        $color = "#363637";
+    }
+} else {
+    $background = "#f5f7fa";
+    $background2 = "#f9f9f9";
+    $color = "#363637";
+}
+?>
+<div class="corte index content" style="background-color: <?php echo $background2; ?>!important;">
     <?= $this->Html->link(__('Nuevo Corte'), ['action' => 'agregar'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Corte') ?></h3>
+    <h3 style="color: <?php echo $color; ?> !important; "><?= __('Corte') ?></h3>
     <div class="table-responsive">
-        <table>
+        <table style="color: <?php echo $color; ?> !important; ">
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -21,17 +39,21 @@
             </thead>
             <tbody>
                 <?php foreach ($corte as $corte) : ?>
-                    <?php 
-                    if($corte->barbero->id == $barberoLogeado){ // MUESTRA SOLO LOS CORTES DEL BARBERO ACTUAL
+                <?php
+                    if ($corte->barbero->id == $barberoLogeado) { // MUESTRA SOLO LOS CORTES DEL BARBERO ACTUAL
                     ?>
                 <tr>
                     <td><?= h($corte->nombre) ?></td>
-                    <td> <div class="modulee line-clamp"> <p>  <?= h($corte->descripcion) ?> </p> </div></td>
+                    <td>
+                        <div class="modulee line-clamp">
+                            <p> <?= h($corte->descripcion) ?> </p>
+                        </div>
+                    </td>
                     <td> <img class="zoom" src='<?= h($corte->imagen) ?>'></td>
                     <td><?= $this->Number->format($corte->precio) ?></td>
                     <td><?= h($corte->tiempo_estimado) ?></td>
                 </tr>
-                    <?php 
+                <?php
                     }
                     ?>
                 <?php endforeach; ?>

@@ -204,11 +204,11 @@ if ($isTheme) {
     $("#toggleTheme").on('change', function() {
         if ($(this).is(':checked')) {
             $(this).attr('value', 'true');
-            document.cookie = "theme=dark";
+            document.cookie = "theme=dark; path=/;";
             location.reload();
         } else {
             $(this).attr('value', 'false');
-            document.cookie = "theme=light";
+            document.cookie = "theme=light; path=/;";
             location.reload();
         }
     });
