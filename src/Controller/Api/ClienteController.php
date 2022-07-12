@@ -410,8 +410,9 @@ class ClienteController extends AppController
             $barberoId= $this->Cliente->Reserva->Corte->findById($reserva['corte_id'])->first()->barbero_id;
             $reservax['corte'] = $this->Cliente->Reserva->Corte->findById($reserva['corte_id'])->first()->nombre;
             $reservax['barbero'] = $this->loadModel('Barbero')->findById($barberoId)->first()->nombre;
-            $reservax['hora_comienzo_corte'] = $reserva->hora_comienzo_corte;
             $reservax['fecha_corte'] = $reserva->fecha_corte;
+            $reservax['hora_comienzo_corte'] = $reserva->hora_comienzo_corte;
+            $reservax['fecha_reservada'] = $reserva->fecha_reserva;
             array_push($listaReserva, $reservax);
         }
 
