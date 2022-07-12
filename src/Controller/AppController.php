@@ -80,6 +80,7 @@ class AppController extends Controller
             'obtenerClientePorUsuario',
             'listarBarberias',
             'obtenerReservasCliente',
+            'obtenerBarberia',
 
             //API-Barberos:
             'listarBarberos',

@@ -424,4 +424,24 @@ class ClienteController extends AppController
 
         $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
     }
+
+    public function obtenerBarberia(){
+        $this->request->allowMethod(["get"]);
+
+        $barberia_id = $this->request->getParam("id");
+
+        //$barberia = $this->loadModel('Barbershop')->findById($barberia_id)->first();
+
+        $barberia = $this->loadModel('Barbershop')->get($barberia_id, [
+            'contain' => ['Barbero'],
+        ]);
+
+        $this->set([
+            "status" => true,
+            "message" => "Lista Barberías",
+            "data" => $barberia
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
+    }
 }
