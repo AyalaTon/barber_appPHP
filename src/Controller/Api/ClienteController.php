@@ -377,7 +377,6 @@ class ClienteController extends AppController
     }
 
     public function listarBarberias(){
-
         $this->request->allowMethod(["get"]);
 
         $barberias = $this->loadModel('Barbershop')->find('all')->toArray();
@@ -389,6 +388,39 @@ class ClienteController extends AppController
         ]);
 
         $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
-    
+    }
+
+    public function obtenerReservasCliente(){
+        $this->request->allowMethod(["get"]);
+
+        $cliente_id = $this->request->getParam("id");
+        $reservas = $this->loadModel('Reserva')->find('all')->where(['cliente_id' => $cliente_id])->toArray();
+
+        $cortes_reserva = [];
+        $barberos_reserva = [];
+        $listaReserva = [];
+        foreach ($reservas as $reserva) {
+            array_push($cortes_reserva, $this->Cliente->Reserva->Corte->findById($reserva['corte_id'])->first());
+        }
+        foreach ($cortes_reserva as $corte) {
+            array_push($barberos_reserva, $this->Cliente->Reserva->Corte->Barbero->findById($corte['barbero_id'])->first());
+        }
+
+        foreach ($reservas as $reserva) {
+            $barberoId= $this->Cliente->Reserva->Corte->findById($reserva['corte_id'])->first()->barbero_id;
+            $reservax['corte'] = $this->Cliente->Reserva->Corte->findById($reserva['corte_id'])->first()->nombre;
+            $reservax['barbero'] = $this->loadModel('Barbero')->findById($barberoId)->first()->nombre;
+            $reservax['hora_comienzo_corte'] = $reserva->hora_comienzo_corte;
+            $reservax['fecha_corte'] = $reserva->fecha_corte;
+            array_push($listaReserva, $reservax);
+        }
+
+        $this->set([
+            "status" => true,
+            "message" => "Lista Reservas",
+            "data" => $listaReserva
+        ]);
+
+        $this->viewBuilder()->setOption("serialize", ["status", "message", "data"]);
     }
 }
